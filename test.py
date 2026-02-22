@@ -2,6 +2,8 @@ import requests # needed for talking to mGBA-Http
 import ollama # needed to run LLM
 import time # needed for sleep
 
+from textAnalysis.textAnalyzer import TextAnalyzer # needed for text analysis
+
 class AIplayer:
     """
     The base class for the AI to make decisions about the game
@@ -16,6 +18,10 @@ class AIplayer:
         print("Preloading Ollama model...")
         response = ollama.chat(model='gemma3:4b-it-qat', messages=[{'role': 'system', 'content': f'Say boot up successful'}])
         print(response.message.content)
+
+        print("Initializing Text Analyzer...")
+        self.textAnalyzer = TextAnalyzer(language='en')
+        print("Text Analyzer initialized.")
 
 
 
@@ -98,6 +104,7 @@ if __name__ == '__main__':
 
         aiPlayer.getScreenShot()
         time.sleep(0.1)
+        aiPlayer.textAnalyzer.extractText('./screenshot.png')
         choice = aiPlayer.makeChoice()
         time.sleep(0.1)
         commands = choice.split('\n')
