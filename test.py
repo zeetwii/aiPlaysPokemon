@@ -3,6 +3,8 @@ import ollama # needed to run LLM
 import time # needed for sleep
 
 from textAnalysis.textAnalyzer import TextAnalyzer # needed for text analysis
+from locationTracking.locationTracker import LocationTracker
+
 
 class AIplayer:
     """
@@ -23,6 +25,10 @@ class AIplayer:
         self.textAnalyzer = TextAnalyzer(language='en')
         print("Text Analyzer initialized.")
 
+        print("Initializing Location Tracker...")
+        self.locationTracker = LocationTracker()
+        print("Location Tracker initialized.")
+
 
 
     def makeChoice(self):
@@ -30,11 +36,19 @@ class AIplayer:
         Method for having the model make decisions about what to do next
         """
 
+        locationResult = self.locationTracker.locatePlayer('./screenshot.png')
+
+        locationString = f"The location tracker has determined that the player is currently at {locationResult['position']} on the map {locationResult['mapName']} with confidence {locationResult['confidence']}.  "
+
+        print(locationString)
+
+
+
         response = ollama.chat(
             model='gemma3:4b-it-qat',
             messages=[{
                 'role': 'user',
-                'content': 'You are playing Pokemon Leaf Green.  Attached is the current screenshot of the game.  You can interact and control what is happening on the screen by sending back any combination of the following commands: Left, Right, Up, Down, A, B, Start, Select.  You can chain together commands but can only do a single command per line.  For example to move up and to the right you would respond with: Up\nRight\n',
+                'content': f'You are playing Pokemon Leaf Green.  Attached is the current screenshot of the game.  {locationString}  You can interact and control what is happening on the screen by sending back any combination of the following commands: Left, Right, Up, Down, A, B, Start, Select.  You can chain together commands but can only do a single command per line.  For example to move up and to the right you would respond with: Up\nRight\n',
                 'images': ['./screenshot.png']
             }]
         )
@@ -47,11 +61,13 @@ class AIplayer:
         Gets the current screenshot from the game and saves it locally
         """
 
-        response = requests.post('http://localhost:5000/core/screenshot', params={
-            'path': r'C:\Users\zeetw\Documents\GitHub\aiPlaysPokemon\screenshot.png'
-        })
-
-        print(f'Screenshot saved with status code: {response.status_code}, response: {response.text}')
+        try:
+            response = requests.post('http://localhost:5000/core/screenshot', params={
+                'path': r'C:\Users\zeetw\Documents\GitHub\aiPlaysPokemon\screenshot.png'
+            }, timeout=5)
+            print(f'Screenshot saved with status code: {response.status_code}, response: {response.text}')
+        except requests.exceptions.Timeout:
+            print('Screenshot request timed out - check that mGBA has the Lua script loaded')
 
     def sendInput(self, inputCommand):
         """
