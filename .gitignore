@@ -207,4 +207,10 @@ marimo/_lsp/
 __marimo__/
 
 # mGBA files
-/mGBA
+/mGBA/*
+
+# track important mgba files
+!/mGBA/mgba_server.lua
+!/mGBA/mgba_client.py
+!/mGBA/README.md
+
