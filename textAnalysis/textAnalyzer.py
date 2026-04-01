@@ -29,7 +29,7 @@ class TextAnalyzer:
 
         # Loop through the results and print the text and confidence levels
         for (bbox, text, confidence) in result:
-            print(f'Text: {text}, Confidence: {confidence}')
+            #print(f'Text: {text}, Confidence: {confidence}')
             foundText.append((text, confidence))
 
         return foundText
@@ -38,5 +38,12 @@ if __name__ == "__main__":
     # Example usage
     textAnalyzer = TextAnalyzer(language='en')
 
-    print ("Extracting text from screenshot.png...")
-    extractedText = textAnalyzer.extractText('../screenshot.png')
+    print("Text Analyzer Initialized. You can now extract text from images.\n")
+
+    while True:
+        imagePath = input("Enter the path to the image file (default: '../screenshot.png'): ") or '../screenshot.png'
+        extractedText = textAnalyzer.extractText(imagePath)
+        print("Extracted Text and Confidence Levels:")
+        for text, confidence in extractedText:
+            print(f'Text: {text}, Confidence: {confidence}')
+        print("\nPress Ctrl+C to exit or continue to extract text from another image.\n")
