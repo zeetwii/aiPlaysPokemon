@@ -182,11 +182,85 @@ local SB2_SECURITY_KEY   = 0x0F20  -- 4 bytes (XOR key for money/item qty)
 -- Badge flags are 0x820 through 0x827
 local BADGE_FLAG_START   = 0x0820
 
--- ROM data table addresses (FireRed/LeafGreen US v1.0)
-local ROM_POKEMON_NAMES  = 0x08245EE0  -- 11 bytes per name (Gen3 encoded)
-local ROM_MOVE_NAMES     = 0x08247094  -- 13 bytes per move name
-local ROM_ITEM_DATA      = 0x083DB028  -- 44 bytes per item (name = first 14)
-local ROM_BASE_STATS     = 0x08254784  -- 28 bytes per species
+-- ROM data table addresses (auto-detected per version)
+-- These are set by detectRomVersion() at startup, using FR v1.0 as the
+-- reference base and applying a version-specific byte offset.
+local ROM_POKEMON_NAMES  = 0  -- 11 bytes per name (Gen3 encoded)
+local ROM_MOVE_NAMES     = 0  -- 13 bytes per move name
+local ROM_ITEM_DATA      = 0  -- 44 bytes per item (name = first 14)
+local ROM_BASE_STATS     = 0  -- 28 bytes per species
+local ROM_VERSION_NAME   = "Unknown"
+
+--- Detect ROM version and set correct ROM data table addresses.
+--- Pokemon names, move names, and base stats are in the 0x0824-0x0825 ROM range
+--- and share a consistent version shift. Item data is in a different ROM region
+--- (0x083D) with its own shift, so we locate it by scanning for a known pattern.
+local function detectRomVersion()
+    if emu:platform() ~= C.PLATFORM.GBA then return false end
+
+    local rawCode = emu:getGameCode()
+    local romVer  = emu:read8(0x080000BC)  -- 0 = v1.0, 1 = v1.1
+
+    -- getGameCode() may return "BPGE" or "AGB-BPGE" depending on mGBA version;
+    -- extract the 4-char product code from whichever format we get.
+    local gameCode = rawCode:sub(-4)  -- last 4 characters
+
+    -- Base addresses (FireRed US v1.0) for the 0x0824-0x0825 region tables
+    local BASE_NAMES = 0x08245EE0
+    local BASE_MOVES = 0x08247094
+    local BASE_STATS = 0x08254784
+
+    -- Byte offset from FR v1.0 for tables in the 0x0824-0x0825 region:
+    --   FR v1.0:  +0x00    LG v1.0:  -0x24
+    --   FR v1.1:  +0x70    LG v1.1:  +0x4C
+    local shift
+    if     gameCode == "BPRE" and romVer == 0 then shift = 0x00;  ROM_VERSION_NAME = "FireRed v1.0"
+    elseif gameCode == "BPRE" and romVer == 1 then shift = 0x70;  ROM_VERSION_NAME = "FireRed v1.1"
+    elseif gameCode == "BPGE" and romVer == 0 then shift = -0x24; ROM_VERSION_NAME = "LeafGreen v1.0"
+    elseif gameCode == "BPGE" and romVer == 1 then shift = 0x4C;  ROM_VERSION_NAME = "LeafGreen v1.1"
+    else
+        ROM_VERSION_NAME = rawCode .. " rev" .. romVer .. " (unsupported)"
+        return false
+    end
+
+    ROM_POKEMON_NAMES = BASE_NAMES + shift
+    ROM_MOVE_NAMES    = BASE_MOVES + shift
+    ROM_BASE_STATS    = BASE_STATS + shift
+
+    -- Item data table is in a different ROM region (0x083D) where the FR/LG
+    -- shift differs from the 0x0824 region.  Locate it by scanning for the
+    -- Gen3-encoded name "MASTER BALL" (item index 1, at byte offset 44).
+    -- Pattern: M A S T E R <sp> B A L L
+    local masterBallPattern = string.char(
+        0xC7, 0xBB, 0xCD, 0xCE, 0xBF, 0xCC, 0x00, 0xBC, 0xBB, 0xC6, 0xC6)
+
+    -- Search a 128KB window around the expected address
+    local searchBase  = 0x083D0000
+    local searchLen   = 0x20000  -- 128KB
+    local chunkSize   = 4096
+    local patLen      = #masterBallPattern
+    local found       = false
+
+    for offset = 0, searchLen - chunkSize, chunkSize do
+        local chunk = emu:readRange(searchBase + offset, chunkSize + patLen)
+        -- Search for pattern in this chunk
+        local idx = chunk:find(masterBallPattern, 1, true)
+        if idx then
+            -- Found! Master Ball is item #1, at 44 bytes into the table
+            ROM_ITEM_DATA = searchBase + offset + (idx - 1) - 44
+            found = true
+            break
+        end
+    end
+
+    if not found then
+        -- Fallback: use the same shift (will be wrong but at least won't crash)
+        ROM_ITEM_DATA = 0x083DB028 + shift
+        log("WARNING: Could not locate item data table by ROM scan; names may be wrong")
+    end
+
+    return true
+end
 
 -- Bag pocket sizes (number of item slots)
 local BAG_ITEMS_SIZE     = 42
@@ -593,10 +667,9 @@ local function handleGameState()
         return "ERR|GAME_STATE requires a GBA game\n"
     end
 
-    -- Check game compatibility
-    local gameCode = emu:getGameCode()
-    if gameCode ~= "BPRE" and gameCode ~= "BPGE" then
-        return "ERR|GAME_STATE supports FireRed/LeafGreen only (got " .. gameCode .. ")\n"
+    -- Check ROM version was detected
+    if ROM_BASE_STATS == 0 then
+        return "ERR|GAME_STATE unsupported ROM: " .. ROM_VERSION_NAME .. "\n"
     end
 
     -- Chase DMA pointers to locate save blocks in current RAM
@@ -644,7 +717,7 @@ local function handleGameState()
 
     -- ---- Assemble State ----
     local state = {
-        game = gameCode == "BPRE" and "FireRed" or "LeafGreen",
+        game = ROM_VERSION_NAME,
         player = {
             name       = playerName,
             trainer_id = trainerId,
@@ -771,15 +844,15 @@ local function startServer()
     log("Buttons: A, B, START, SELECT, UP, DOWN, LEFT, RIGHT" ..
         (keyMap.L and ", L, R" or ""))
 
-    -- Show detected game info
+    -- Detect game version and set ROM addresses
     if emu:platform() == C.PLATFORM.GBA then
-        local code = emu:getGameCode()
-        if code == "BPRE" then
-            log("Detected: Pokemon FireRed (US) - GAME_STATE enabled")
-        elseif code == "BPGE" then
-            log("Detected: Pokemon LeafGreen (US) - GAME_STATE enabled")
+        if detectRomVersion() then
+            log("Detected: " .. ROM_VERSION_NAME .. " - GAME_STATE enabled")
+            log("  ROM tables: Names=0x" .. string.format("%08X", ROM_POKEMON_NAMES)
+                .. " Stats=0x" .. string.format("%08X", ROM_BASE_STATS)
+                .. " Items=0x" .. string.format("%08X", ROM_ITEM_DATA))
         else
-            log("Game code: " .. code .. " - GAME_STATE may not work")
+            log("Game: " .. ROM_VERSION_NAME .. " - GAME_STATE may not work")
         end
     end
 end

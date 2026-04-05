@@ -119,6 +119,8 @@ def game_state(sock: socket.socket):
         print(f"  {i+1}. {pk['nickname']} ({pk['species']}) Lv{pk['level']}  "
               f"HP:{pk['hp']}/{pk['max_hp']}  {types}  {pk['nature']}  "
               f"Ability:{pk['ability']}{status}")
+        print(f"     Stats: ATK:{pk['attack']}  DEF:{pk['defense']}  "
+              f"SpATK:{pk['sp_attack']}  SpDEF:{pk['sp_defense']}  SPD:{pk['speed']}")
         moves = [m["name"] for m in pk.get("moves", [])]
         print(f"     Moves: {', '.join(moves)}")
 
