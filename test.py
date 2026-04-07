@@ -32,7 +32,7 @@ class AIplayer:
 
         # preload the ollama model
         print("Preloading Ollama model...")
-        response = ollama.chat(model='gemma3:4b-it-qat', messages=[{'role': 'system', 'content': f'Say boot up successful'}])
+        response = ollama.chat(model='gemma4:e4b', messages=[{'role': 'system', 'content': f'Say boot up successful'}])
         print(response.message.content)
 
         print("Initializing Text Analyzer...")
@@ -59,7 +59,7 @@ class AIplayer:
 
 
         response = ollama.chat(
-            model='gemma3:4b-it-qat',
+            model='gemma4:e4b',
             messages=[{
                 'role': 'user',
                 'content': f'You are playing Pokemon Leaf Green.  Attached is the current screenshot of the game.  {locationString}  You can interact and control what is happening on the screen by sending back any combination of the following commands: Left, Right, Up, Down, A, B, Start, Select.  You can chain together commands but can only do a single command per line.  For example to move up and to the right you would respond with: Up\nRight\n',
