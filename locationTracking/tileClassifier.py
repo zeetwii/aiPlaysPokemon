@@ -36,6 +36,7 @@ Tile Types:
     10 = warp (teleport pad, stairs, cave entrance)
     11 = strength_boulder (movable boulder)
     12 = smashable_rock (rock smash obstacle)
+    13 = item (special item on the ground — labeled with item name)
 
 Output:
     JSON files saved to locationTracking/tileData/<mapName>.json
@@ -46,7 +47,8 @@ Output:
         "tileSize": 16,
         "widthTiles": 24,
         "heightTiles": 20,
-        "tiles": [[0, 0, 2, ...], ...]   // 2D array [row][col] of tile type ints
+        "tiles": [[0, 0, 2, ...], ...],  // 2D array [row][col] of tile type ints
+        "items": {"5,10": "Master Ball", "3,7": "Rare Candy"}  // "row,col" -> item name
     }
 """
 
@@ -75,6 +77,7 @@ TILE_TYPES = {
     10: {"name": "warp",             "color": (150, 0, 255, 140),"key": "w"},
     11: {"name": "strength_boulder", "color": (139, 90, 43, 140),"key": "b"},
     12: {"name": "smashable_rock",   "color": (169, 120, 73, 140),"key": "r"},
+    13: {"name": "item",             "color": (255, 215, 0, 180), "key": "i"},
 }
 
 
@@ -101,6 +104,7 @@ class TileClassifier:
         self.undoStack = []
         self.currentStroke = []  # tiles modified in current drag
         self.isDragging = False
+        self.itemLabels = {}  # "row,col" -> item name string
         self.zoom = 2.0
         self.panX = 0
         self.panY = 0
@@ -308,14 +312,17 @@ class TileClassifier:
             with open(jsonPath, 'r') as f:
                 data = json.load(f)
             self.tileGrid = data.get('tiles', [])
+            self.itemLabels = data.get('items', {})
             # Validate dimensions
             if len(self.tileGrid) != self.heightTiles or \
                (self.tileGrid and len(self.tileGrid[0]) != self.widthTiles):
                 print(f"Warning: existing JSON dimensions don't match image, reinitializing")
                 self.tileGrid = [[0] * self.widthTiles for _ in range(self.heightTiles)]
+                self.itemLabels = {}
             self.statusBar.config(text=f"Loaded existing tile data from {jsonPath}")
         else:
             self.tileGrid = [[0] * self.widthTiles for _ in range(self.heightTiles)]
+            self.itemLabels = {}
             self.statusBar.config(text=f"New map: {self.mapName} ({self.widthTiles}x{self.heightTiles} tiles)")
 
         self.undoStack = []
@@ -456,6 +463,9 @@ class TileClassifier:
         if self.tileGrid[row][col] == tType:
             return False
         self.currentStroke.append((row, col, self.tileGrid[row][col]))
+        # Remove item label if this tile is no longer an item
+        if self.tileGrid[row][col] == 13 and tType != 13:
+            self.itemLabels.pop(f"{row},{col}", None)
         self.tileGrid[row][col] = tType
         self._updateOverlayTile(row, col, tType)
         self.hasUnsavedChanges = True
@@ -530,6 +540,12 @@ class TileClassifier:
             self._floodFill(col, row, self.currentType)
             return
 
+        # Clicking an existing item tile with item type selected → relabel it
+        if self.currentType == 13 and col is not None and row is not None:
+            if self.tileGrid[row][col] == 13:
+                self._promptItemLabel([(row, col)])
+                return
+
         self.isDragging = True
         self.currentStroke = []
         if self._paintBrush(col, row, self.currentType):
@@ -546,6 +562,10 @@ class TileClassifier:
     def _onLeftUp(self, event):
         if self.isDragging and self.currentStroke:
             self.undoStack.append(self.currentStroke)
+            if self.currentType == 13:
+                newItemTiles = [(r, c) for r, c, _ in self.currentStroke]
+                if newItemTiles:
+                    self._promptItemLabel(newItemTiles)
         self.currentStroke = []
         self.isDragging = False
         self._updateStats()
@@ -605,8 +625,12 @@ class TileClassifier:
         if col is not None and row is not None:
             tType = self.tileGrid[row][col]
             typeName = TILE_TYPES[tType]["name"]
+            itemInfo = ""
+            if tType == 13:
+                label = self.itemLabels.get(f"{row},{col}", "(unlabeled)")
+                itemInfo = f"  [{label}]"
             self.statusBar.config(
-                text=f"Tile ({col}, {row})  Type: {typeName}  |  "
+                text=f"Tile ({col}, {row})  Type: {typeName}{itemInfo}  |  "
                      f"Brush: {self.brushSize.get()}x{self.brushSize.get()}  |  "
                      f"Zoom: {self.zoom:.1f}x"
             )
@@ -651,6 +675,24 @@ class TileClassifier:
         typeName = TILE_TYPES[typeId]["name"]
         self.statusBar.config(text=f"Selected: {typeName}")
 
+    # ── Item Labeling ────────────────────────────────────────────────────
+
+    def _promptItemLabel(self, tiles):
+        """Prompt for an item name and assign it to the given (row, col) tiles."""
+        from tkinter import simpledialog
+        existing = self.itemLabels.get(f"{tiles[0][0]},{tiles[0][1]}", "") if len(tiles) == 1 else ""
+        label = simpledialog.askstring(
+            "Item Label", "Enter item name:",
+            initialvalue=existing, parent=self.root
+        )
+        if label is not None:
+            for row, col in tiles:
+                if label:
+                    self.itemLabels[f"{row},{col}"] = label
+                else:
+                    self.itemLabels.pop(f"{row},{col}", None)
+            self.hasUnsavedChanges = True
+
     # ── Undo ─────────────────────────────────────────────────────────────
 
     def _undo(self):
@@ -660,6 +702,9 @@ class TileClassifier:
             return
         stroke = self.undoStack.pop()
         for row, col, oldType in reversed(stroke):
+            # If reverting an item tile back to non-item, remove its label
+            if self.tileGrid[row][col] == 13 and oldType != 13:
+                self.itemLabels.pop(f"{row},{col}", None)
             self.tileGrid[row][col] = oldType
         self._rebuildOverlay()
         self._render()
@@ -679,7 +724,8 @@ class TileClassifier:
             "tileSize": TILE_SIZE,
             "widthTiles": self.widthTiles,
             "heightTiles": self.heightTiles,
-            "tiles": self.tileGrid
+            "tiles": self.tileGrid,
+            "items": self.itemLabels
         }
 
         outPath = os.path.join(self.outputDir, f'{self.mapName}.json')
