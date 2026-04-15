@@ -1,0 +1,92 @@
+{
+  "maps": {
+    "Celadon_Chief_House_FRLG": {
+      "imageFile": "Celadon_Chief_House_FRLG.png",
+      "widthTiles": 11,
+      "heightTiles": 9,
+      "connections": []
+    },
+    "Player_Bedroom_FRLG": {
+      "imageFile": "Player_Bedroom_FRLG.png",
+      "widthTiles": 12,
+      "heightTiles": 9,
+      "connections": [
+        {
+          "type": "door",
+          "fromTile": [
+            10,
+            2
+          ],
+          "toMap": "Pallet_Town_Red's_House_FRLG",
+          "toTile": [
+            10,
+            2
+          ]
+        }
+      ]
+    },
+    "Pallet_Town_Red's_House_FRLG": {
+      "imageFile": "Pallet_Town_Red's_House_FRLG.png",
+      "widthTiles": 13,
+      "heightTiles": 10,
+      "connections": [
+        {
+          "type": "door",
+          "fromTile": [
+            10,
+            2
+          ],
+          "toMap": "Player_Bedroom_FRLG",
+          "toTile": [
+            10,
+            2
+          ]
+        },
+        {
+          "type": "door",
+          "fromTile": [
+            4,
+            8
+          ],
+          "toMap": "PalletTown",
+          "toTile": [
+            6,
+            8
+          ]
+        }
+      ]
+    },
+    "CeladonCity": {
+      "imageFile": "CeladonCity.png",
+      "widthTiles": 60,
+      "heightTiles": 40,
+      "connections": []
+    },
+    "PalletTown": {
+      "imageFile": "PalletTown.png",
+      "widthTiles": 24,
+      "heightTiles": 20,
+      "connections": [
+        {
+          "type": "door",
+          "fromTile": [
+            6,
+            7
+          ],
+          "toMap": "Pallet_Town_Red's_House_FRLG",
+          "toTile": [
+            4,
+            8
+          ]
+        }
+      ]
+    },
+    "PalletTown-ProfessorOak'sLab": {
+      "imageFile": "PalletTown-ProfessorOak'sLab.jpg",
+      "widthTiles": 22,
+      "heightTiles": 26,
+      "connections": []
+    }
+  },
+  "landmarks": {}
+}
