@@ -12,7 +12,7 @@
       "heightTiles": 9,
       "connections": [
         {
-          "type": "door",
+          "type": "stairs",
           "fromTile": [
             10,
             2
@@ -33,18 +33,6 @@
         {
           "type": "door",
           "fromTile": [
-            10,
-            2
-          ],
-          "toMap": "Player_Bedroom_FRLG",
-          "toTile": [
-            10,
-            2
-          ]
-        },
-        {
-          "type": "door",
-          "fromTile": [
             4,
             8
           ],
@@ -52,6 +40,18 @@
           "toTile": [
             6,
             8
+          ]
+        },
+        {
+          "type": "stairs",
+          "fromTile": [
+            10,
+            2
+          ],
+          "toMap": "Player_Bedroom_FRLG",
+          "toTile": [
+            10,
+            2
           ]
         }
       ]
@@ -78,6 +78,44 @@
             4,
             8
           ]
+        },
+        {
+          "type": "door",
+          "fromTile": [
+            15,
+            7
+          ],
+          "toMap": "Rival's_house_map_FRLG",
+          "toTile": [
+            10,
+            2
+          ]
+        },
+        {
+          "type": "door",
+          "fromTile": [
+            16,
+            13
+          ],
+          "toMap": "PalletTown-ProfessorOak'sLab",
+          "toTile": [
+            10,
+            2
+          ]
+        },
+        {
+          "type": "edge",
+          "fromTile": [
+            12,
+            0
+          ],
+          "toMap": "Route01",
+          "toTile": [
+            10,
+            2
+          ],
+          "direction": "north",
+          "width": 2
         }
       ]
     },
