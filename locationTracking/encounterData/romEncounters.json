@@ -1,0 +1,6550 @@
+{
+  "2,27": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "2,28": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "2,29": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "2,30": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "2,31": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "2,32": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "2,33": [
+    {
+      "species": "UNOWN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "1,0": [
+    {
+      "species": "CATERPIE",
+      "levelMin": 3,
+      "levelMax": 5,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "WEEDLE",
+      "levelMin": 3,
+      "levelMax": 5,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "KAKUNA",
+      "levelMin": 5,
+      "levelMax": 5,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "METAPOD",
+      "levelMin": 4,
+      "levelMax": 6,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "PIKACHU",
+      "levelMin": 3,
+      "levelMax": 5,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,1": [
+    {
+      "species": "ZUBAT",
+      "levelMin": 7,
+      "levelMax": 10,
+      "rate": 58,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 7,
+      "levelMax": 9,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "PARAS",
+      "levelMin": 8,
+      "levelMax": 8,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CLEFAIRY",
+      "levelMin": 8,
+      "levelMax": 8,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,2": [
+    {
+      "species": "PARAS",
+      "levelMin": 5,
+      "levelMax": 10,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "1,3": [
+    {
+      "species": "ZUBAT",
+      "levelMin": 8,
+      "levelMax": 11,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 9,
+      "levelMax": 10,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PARAS",
+      "levelMin": 10,
+      "levelMax": 12,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "CLEFAIRY",
+      "levelMin": 10,
+      "levelMax": 12,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,4": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,37": [
+    {
+      "species": "DIGLETT",
+      "levelMin": 15,
+      "levelMax": 22,
+      "rate": 83,
+      "method": "grass"
+    },
+    {
+      "species": "DUGTRIO",
+      "levelMin": 29,
+      "levelMax": 31,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,39": [
+    {
+      "species": "MACHOP",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ONIX",
+      "levelMin": 40,
+      "levelMax": 46,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSLASH",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MAROWAK",
+      "levelMin": 44,
+      "levelMax": 46,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 44,
+      "levelMax": 46,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,40": [
+    {
+      "species": "MACHOP",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PRIMEAPE",
+      "levelMin": 42,
+      "levelMax": 42,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ONIX",
+      "levelMin": 45,
+      "levelMax": 48,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSLASH",
+      "levelMin": 46,
+      "levelMax": 46,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 46,
+      "levelMax": 46,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MAROWAK",
+      "levelMin": 46,
+      "levelMax": 48,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 46,
+      "levelMax": 48,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,41": [
+    {
+      "species": "MACHOP",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ONIX",
+      "levelMin": 40,
+      "levelMax": 46,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSLASH",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MAROWAK",
+      "levelMin": 44,
+      "levelMax": 46,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 44,
+      "levelMax": 46,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,59": [
+    {
+      "species": "GRIMER",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 32,
+      "levelMax": 36,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VULPIX",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 26,
+      "levelMax": 28,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "KOFFING",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MUK",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,60": [
+    {
+      "species": "GRIMER",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 32,
+      "levelMax": 36,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VULPIX",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 26,
+      "levelMax": 28,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "KOFFING",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MUK",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,61": [
+    {
+      "species": "GRIMER",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 32,
+      "levelMax": 36,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VULPIX",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 26,
+      "levelMax": 28,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "KOFFING",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MUK",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,62": [
+    {
+      "species": "GRIMER",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 34,
+      "levelMax": 38,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "VULPIX",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "KOFFING",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MUK",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 26,
+      "levelMax": 26,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,63": [
+    {
+      "species": "RHYHORN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "EXEGGCUTE",
+      "levelMin": 24,
+      "levelMax": 25,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORINA",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORINO",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PARASECT",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PINSIR",
+      "levelMin": 23,
+      "levelMax": 23,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CHANSEY",
+      "levelMin": 23,
+      "levelMax": 23,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SEAKING",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRATINI",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRAGONAIR",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,64": [
+    {
+      "species": "NIDORAN?",
+      "levelMin": 24,
+      "levelMax": 24,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "DODUO",
+      "levelMin": 26,
+      "levelMax": 26,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "EXEGGCUTE",
+      "levelMin": 23,
+      "levelMax": 25,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PARAS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORINA",
+      "levelMin": 33,
+      "levelMax": 33,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 24,
+      "levelMax": 24,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PARASECT",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "KANGASKHAN",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PINSIR",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SEAKING",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRATINI",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRAGONAIR",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,65": [
+    {
+      "species": "RHYHORN",
+      "levelMin": 26,
+      "levelMax": 26,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "EXEGGCUTE",
+      "levelMin": 25,
+      "levelMax": 27,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PARAS",
+      "levelMin": 23,
+      "levelMax": 23,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORINA",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORINO",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "VENOMOTH",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CHANSEY",
+      "levelMin": 26,
+      "levelMax": 26,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "TAUROS",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SEAKING",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRATINI",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRAGONAIR",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,66": [
+    {
+      "species": "DODUO",
+      "levelMin": 26,
+      "levelMax": 26,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "EXEGGCUTE",
+      "levelMin": 25,
+      "levelMax": 27,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 23,
+      "levelMax": 23,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORINA",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "VENOMOTH",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "TAUROS",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "KANGASKHAN",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SEAKING",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRATINI",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "DRAGONAIR",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,72": [
+    {
+      "species": "MAGNETON",
+      "levelMin": 49,
+      "levelMax": 49,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PARASECT",
+      "levelMin": 49,
+      "levelMax": 58,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 46,
+      "levelMax": 55,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 46,
+      "levelMax": 46,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PRIMEAPE",
+      "levelMin": 52,
+      "levelMax": 61,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 52,
+      "levelMax": 61,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ELECTRODE",
+      "levelMin": 58,
+      "levelMax": 58,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WOBBUFFET",
+      "levelMin": 55,
+      "levelMax": 55,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 40,
+      "levelMax": 55,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 40,
+      "levelMax": 55,
+      "rate": 40,
+      "method": "rocksmash"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "1,73": [
+    {
+      "species": "GOLBAT",
+      "levelMin": 49,
+      "levelMax": 58,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 49,
+      "levelMax": 49,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MAGNETON",
+      "levelMin": 52,
+      "levelMax": 52,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PARASECT",
+      "levelMin": 52,
+      "levelMax": 61,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "KADABRA",
+      "levelMin": 55,
+      "levelMax": 64,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 55,
+      "levelMax": 64,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "WOBBUFFET",
+      "levelMin": 58,
+      "levelMax": 58,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ELECTRODE",
+      "levelMin": 61,
+      "levelMax": 61,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 35,
+      "levelMax": 55,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 45,
+      "levelMax": 60,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,74": [
+    {
+      "species": "KADABRA",
+      "levelMin": 58,
+      "levelMax": 67,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 58,
+      "levelMax": 67,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MAGNETON",
+      "levelMin": 55,
+      "levelMax": 55,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PARASECT",
+      "levelMin": 55,
+      "levelMax": 64,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 52,
+      "levelMax": 61,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 52,
+      "levelMax": 52,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ELECTRODE",
+      "levelMin": 64,
+      "levelMax": 64,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WOBBUFFET",
+      "levelMin": 61,
+      "levelMax": 61,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 40,
+      "levelMax": 60,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 50,
+      "levelMax": 65,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 40,
+      "levelMax": 60,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 50,
+      "levelMax": 65,
+      "rate": 40,
+      "method": "rocksmash"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,81": [
+    {
+      "species": "ZUBAT",
+      "levelMin": 15,
+      "levelMax": 16,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 15,
+      "levelMax": 17,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "MANKEY",
+      "levelMin": 16,
+      "levelMax": 17,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 16,
+      "levelMax": 17,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ONIX",
+      "levelMin": 13,
+      "levelMax": 15,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,82": [
+    {
+      "species": "ZUBAT",
+      "levelMin": 15,
+      "levelMax": 16,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 15,
+      "levelMax": 17,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "MANKEY",
+      "levelMin": 16,
+      "levelMax": 17,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 17,
+      "levelMax": 17,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ONIX",
+      "levelMin": 13,
+      "levelMax": 17,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 5,
+      "levelMax": 30,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,83": [
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 26,
+      "levelMax": 33,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 26,
+      "levelMax": 30,
+      "rate": 25,
+      "method": "grass"
+    }
+  ],
+  "1,84": [
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 29,
+      "levelMax": 31,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 28,
+      "levelMax": 28,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 26,
+      "levelMax": 30,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 33,
+      "levelMax": 35,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,85": [
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 22,
+      "levelMax": 24,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 26,
+      "levelMax": 30,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 25,
+      "method": "grass"
+    }
+  ],
+  "1,86": [
+    {
+      "species": "SEEL",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 24,
+      "levelMax": 24,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 26,
+      "levelMax": 30,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 25,
+      "levelMax": 30,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 30,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 30,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,87": [
+    {
+      "species": "SEEL",
+      "levelMin": 30,
+      "levelMax": 34,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 26,
+      "levelMax": 30,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 34,
+      "levelMax": 36,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 25,
+      "levelMax": 30,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 30,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 30,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,90": [
+    {
+      "species": "GASTLY",
+      "levelMin": 13,
+      "levelMax": 19,
+      "rate": 75,
+      "method": "grass"
+    },
+    {
+      "species": "CUBONE",
+      "levelMin": 15,
+      "levelMax": 17,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 20,
+      "levelMax": 20,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,91": [
+    {
+      "species": "GASTLY",
+      "levelMin": 13,
+      "levelMax": 19,
+      "rate": 75,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 20,
+      "levelMax": 20,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CUBONE",
+      "levelMin": 15,
+      "levelMax": 17,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,92": [
+    {
+      "species": "GASTLY",
+      "levelMin": 13,
+      "levelMax": 19,
+      "rate": 75,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 20,
+      "levelMax": 20,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CUBONE",
+      "levelMin": 15,
+      "levelMax": 17,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,93": [
+    {
+      "species": "GASTLY",
+      "levelMin": 14,
+      "levelMax": 19,
+      "rate": 67,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 21,
+      "levelMax": 23,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "CUBONE",
+      "levelMin": 17,
+      "levelMax": 19,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,94": [
+    {
+      "species": "GASTLY",
+      "levelMin": 15,
+      "levelMax": 19,
+      "rate": 58,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 23,
+      "levelMax": 25,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "CUBONE",
+      "levelMin": 17,
+      "levelMax": 19,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "1,95": [
+    {
+      "species": "VOLTORB",
+      "levelMin": 22,
+      "levelMax": 25,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MAGNEMITE",
+      "levelMin": 22,
+      "levelMax": 25,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PIKACHU",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "MAGNETON",
+      "levelMin": 31,
+      "levelMax": 34,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "1,97": [
+    {
+      "species": "PONYTA",
+      "levelMin": 30,
+      "levelMax": 36,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SPEAROW",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 35,
+      "levelMax": 35,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 33,
+      "levelMax": 33,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MAGMAR",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "RAPIDASH",
+      "levelMin": 39,
+      "levelMax": 42,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 5,
+      "levelMax": 30,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,98": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 29,
+      "levelMax": 37,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 31,
+      "levelMax": 39,
+      "rate": 50,
+      "method": "grass"
+    }
+  ],
+  "1,99": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 30,
+      "levelMax": 34,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 32,
+      "levelMax": 36,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 5,
+      "levelMax": 30,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,100": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 29,
+      "levelMax": 37,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 31,
+      "levelMax": 39,
+      "rate": 50,
+      "method": "grass"
+    }
+  ],
+  "1,103": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 32,
+      "levelMax": 40,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOP",
+      "levelMin": 34,
+      "levelMax": 38,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "MACHOKE",
+      "levelMin": 40,
+      "levelMax": 42,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,104": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 34,
+      "levelMax": 42,
+      "rate": 58,
+      "method": "grass"
+    },
+    {
+      "species": "SLUGMA",
+      "levelMin": 24,
+      "levelMax": 30,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,105": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 40,
+      "levelMax": 44,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "SLUGMA",
+      "levelMin": 22,
+      "levelMax": 32,
+      "rate": 58,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,106": [
+    {
+      "species": "SLUGMA",
+      "levelMin": 18,
+      "levelMax": 36,
+      "rate": 100,
+      "method": "grass"
+    },
+    {
+      "species": "SLUGMA",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "rocksmash"
+    },
+    {
+      "species": "MAGCARGO",
+      "levelMin": 25,
+      "levelMax": 45,
+      "rate": 60,
+      "method": "rocksmash"
+    }
+  ],
+  "1,107": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 40,
+      "levelMax": 44,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "SLUGMA",
+      "levelMin": 22,
+      "levelMax": 32,
+      "rate": 58,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,108": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 34,
+      "levelMax": 42,
+      "rate": 58,
+      "method": "grass"
+    },
+    {
+      "species": "SLUGMA",
+      "levelMin": 24,
+      "levelMax": 30,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "1,109": [
+    {
+      "species": "PIDGEOTTO",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 35,
+      "levelMax": 35,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 32,
+      "levelMax": 32,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "DROWZEE",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "EXEGGCUTE",
+      "levelMin": 35,
+      "levelMax": 35,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "VENOMOTH",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "HYPNO",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SEAKING",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "1,110": [
+    {
+      "species": "SEEL",
+      "levelMin": 43,
+      "levelMax": 47,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 45,
+      "levelMax": 48,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 49,
+      "levelMax": 53,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "MARILL",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "1,111": [
+    {
+      "species": "SWINUB",
+      "levelMin": 23,
+      "levelMax": 31,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 45,
+      "levelMax": 48,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 45,
+      "levelMax": 45,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SNEASEL",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,112": [
+    {
+      "species": "SWINUB",
+      "levelMin": 23,
+      "levelMax": 31,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 45,
+      "levelMax": 48,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SEEL",
+      "levelMin": 45,
+      "levelMax": 45,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SNEASEL",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "1,113": [
+    {
+      "species": "SEEL",
+      "levelMin": 43,
+      "levelMax": 47,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 45,
+      "levelMax": 48,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "DEWGONG",
+      "levelMin": 49,
+      "levelMax": 53,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 45,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 45,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "LAPRAS",
+      "levelMin": 30,
+      "levelMax": 45,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,121": [
+    {
+      "species": "LEDYBA",
+      "levelMin": 9,
+      "levelMax": 14,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "KAKUNA",
+      "levelMin": 9,
+      "levelMax": 9,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CATERPIE",
+      "levelMin": 6,
+      "levelMax": 6,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WEEDLE",
+      "levelMin": 6,
+      "levelMax": 6,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HERACROSS",
+      "levelMin": 15,
+      "levelMax": 30,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "METAPOD",
+      "levelMin": 9,
+      "levelMax": 9,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SPINARAK",
+      "levelMin": 9,
+      "levelMax": 14,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,13": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,14": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,15": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,16": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,17": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,18": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,19": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,20": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,21": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,22": [
+    {
+      "species": "GASTLY",
+      "levelMin": 38,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 43,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "2,23": [
+    {
+      "species": "GASTLY",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 15,
+      "levelMax": 22,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "2,24": [
+    {
+      "species": "GASTLY",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 15,
+      "levelMax": 22,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "2,25": [
+    {
+      "species": "GASTLY",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 15,
+      "levelMax": 22,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "2,26": [
+    {
+      "species": "GASTLY",
+      "levelMin": 40,
+      "levelMax": 40,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ZUBAT",
+      "levelMin": 37,
+      "levelMax": 37,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "HAUNTER",
+      "levelMin": 44,
+      "levelMax": 52,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "GOLBAT",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MISDREAVUS",
+      "levelMin": 15,
+      "levelMax": 22,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "3,45": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PONYTA",
+      "levelMin": 31,
+      "levelMax": 34,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 36,
+      "levelMax": 36,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "RAPIDASH",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 5,
+      "levelMax": 30,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "rocksmash"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,46": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 31,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TANGELA",
+      "levelMin": 33,
+      "levelMax": 35,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 36,
+      "levelMax": 40,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,47": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 30,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 36,
+      "levelMax": 38,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 36,
+      "levelMax": 36,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,48": [
+    {
+      "species": "PIDGEY",
+      "levelMin": 29,
+      "levelMax": 32,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 36,
+      "levelMax": 36,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEOTTO",
+      "levelMin": 34,
+      "levelMax": 40,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 34,
+      "levelMax": 34,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 31,
+      "levelMax": 31,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 37,
+      "levelMax": 40,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,49": [
+    {
+      "species": "DUNSPARCE",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 100,
+      "method": "grass"
+    }
+  ],
+  "3,54": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "HOPPIP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,55": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "HOPPIP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,56": [
+    {
+      "species": "PIDGEY",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SENTRET",
+      "levelMin": 10,
+      "levelMax": 15,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEOTTO",
+      "levelMin": 48,
+      "levelMax": 50,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "HOPPIP",
+      "levelMin": 10,
+      "levelMax": 15,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 47,
+      "levelMax": 50,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "HOPPIP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,57": [
+    {
+      "species": "HOPPIP",
+      "levelMin": 6,
+      "levelMax": 16,
+      "rate": 100,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "HOPPIP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,58": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,59": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,60": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SENTRET",
+      "levelMin": 10,
+      "levelMax": 15,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 48,
+      "levelMax": 50,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 48,
+      "levelMax": 48,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 47,
+      "levelMax": 50,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,61": [
+    {
+      "species": "NATU",
+      "levelMin": 15,
+      "levelMax": 20,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SPEAROW",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "YANMA",
+      "levelMin": 18,
+      "levelMax": 18,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MARILL",
+      "levelMin": 15,
+      "levelMax": 15,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 49,
+      "levelMax": 49,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 43,
+      "levelMax": 43,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WOBBUFFET",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 49,
+      "levelMax": 52,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MARILL",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,62": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MANTINE",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,63": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SENTRET",
+      "levelMin": 10,
+      "levelMax": 15,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PHANPY",
+      "levelMin": 10,
+      "levelMax": 15,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 48,
+      "levelMax": 50,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 41,
+      "levelMax": 41,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 47,
+      "levelMax": 50,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,64": [
+    {
+      "species": "GEODUDE",
+      "levelMin": 46,
+      "levelMax": 46,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PHANPY",
+      "levelMin": 15,
+      "levelMax": 15,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CUBONE",
+      "levelMin": 46,
+      "levelMax": 46,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 50,
+      "levelMax": 50,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MAROWAK",
+      "levelMin": 52,
+      "levelMax": 52,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 43,
+      "levelMax": 43,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "ONIX",
+      "levelMin": 54,
+      "levelMax": 54,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "LARVITAR",
+      "levelMin": 15,
+      "levelMax": 20,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PERSIAN",
+      "levelMin": 49,
+      "levelMax": 52,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "GEODUDE",
+      "levelMin": 25,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "rocksmash"
+    },
+    {
+      "species": "GRAVELER",
+      "levelMin": 30,
+      "levelMax": 50,
+      "rate": 40,
+      "method": "rocksmash"
+    }
+  ],
+  "3,65": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MANTINE",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "REMORAID",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,19": [
+    {
+      "species": "PIDGEY",
+      "levelMin": 2,
+      "levelMax": 5,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 2,
+      "levelMax": 4,
+      "rate": 50,
+      "method": "grass"
+    }
+  ],
+  "3,20": [
+    {
+      "species": "RATTATA",
+      "levelMin": 2,
+      "levelMax": 5,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 2,
+      "levelMax": 5,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "CATERPIE",
+      "levelMin": 4,
+      "levelMax": 5,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "WEEDLE",
+      "levelMin": 4,
+      "levelMax": 5,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,21": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 6,
+      "levelMax": 8,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 6,
+      "levelMax": 7,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MANKEY",
+      "levelMin": 7,
+      "levelMax": 7,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 6,
+      "levelMax": 7,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "JIGGLYPUFF",
+      "levelMin": 3,
+      "levelMax": 7,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "NIDORAN?",
+      "levelMin": 6,
+      "levelMax": 6,
+      "rate": 8,
+      "method": "grass"
+    }
+  ],
+  "3,22": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 8,
+      "levelMax": 12,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 8,
+      "levelMax": 12,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSHREW",
+      "levelMin": 6,
+      "levelMax": 12,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "MANKEY",
+      "levelMin": 10,
+      "levelMax": 12,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,23": [
+    {
+      "species": "MEOWTH",
+      "levelMin": 10,
+      "levelMax": 16,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 13,
+      "levelMax": 16,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 13,
+      "levelMax": 16,
+      "rate": 25,
+      "method": "grass"
+    }
+  ],
+  "3,24": [
+    {
+      "species": "MEOWTH",
+      "levelMin": 10,
+      "levelMax": 16,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 13,
+      "levelMax": 16,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 13,
+      "levelMax": 16,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,25": [
+    {
+      "species": "PIDGEY",
+      "levelMin": 19,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 17,
+      "levelMax": 20,
+      "rate": 50,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 19,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VULPIX",
+      "levelMin": 18,
+      "levelMax": 20,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,26": [
+    {
+      "species": "PIDGEY",
+      "levelMin": 18,
+      "levelMax": 20,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "MEOWTH",
+      "levelMin": 18,
+      "levelMax": 20,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "VULPIX",
+      "levelMin": 15,
+      "levelMax": 18,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSHREW",
+      "levelMin": 17,
+      "levelMax": 19,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "3,27": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 13,
+      "levelMax": 17,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 14,
+      "levelMax": 17,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSHREW",
+      "levelMin": 11,
+      "levelMax": 17,
+      "rate": 33,
+      "method": "grass"
+    }
+  ],
+  "3,28": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 13,
+      "levelMax": 17,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "VOLTORB",
+      "levelMin": 14,
+      "levelMax": 17,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSHREW",
+      "levelMin": 11,
+      "levelMax": 17,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,29": [
+    {
+      "species": "SANDSHREW",
+      "levelMin": 12,
+      "levelMax": 15,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "SPEAROW",
+      "levelMin": 13,
+      "levelMax": 17,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "DROWZEE",
+      "levelMin": 11,
+      "levelMax": 15,
+      "rate": 33,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,30": [
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 24,
+      "levelMax": 26,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 23,
+      "levelMax": 27,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,31": [
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 24,
+      "levelMax": 26,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 25,
+      "levelMax": 27,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEOTTO",
+      "levelMin": 29,
+      "levelMax": 29,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,32": [
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 24,
+      "levelMax": 26,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 23,
+      "levelMax": 23,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 27,
+      "levelMax": 27,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 30,
+      "levelMax": 30,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEOTTO",
+      "levelMin": 29,
+      "levelMax": 29,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,33": [
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 22,
+      "levelMax": 26,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "VENONAT",
+      "levelMin": 24,
+      "levelMax": 26,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 25,
+      "levelMax": 27,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DITTO",
+      "levelMin": 25,
+      "levelMax": 25,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEOTTO",
+      "levelMin": 29,
+      "levelMax": 29,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "WEEPINBELL",
+      "levelMin": 28,
+      "levelMax": 30,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,34": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 20,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DODUO",
+      "levelMin": 18,
+      "levelMax": 22,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 18,
+      "levelMax": 22,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 23,
+      "levelMax": 25,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,35": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 20,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DODUO",
+      "levelMin": 24,
+      "levelMax": 28,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 25,
+      "levelMax": 29,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 25,
+      "levelMax": 27,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,36": [
+    {
+      "species": "SPEAROW",
+      "levelMin": 20,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "DODUO",
+      "levelMin": 24,
+      "levelMax": 28,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATICATE",
+      "levelMin": 25,
+      "levelMax": 29,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 25,
+      "levelMax": 29,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "RATTATA",
+      "levelMin": 22,
+      "levelMax": 22,
+      "rate": 17,
+      "method": "grass"
+    }
+  ],
+  "3,37": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,38": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,39": [
+    {
+      "species": "TANGELA",
+      "levelMin": 17,
+      "levelMax": 28,
+      "rate": 100,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,40": [
+    {
+      "species": "TANGELA",
+      "levelMin": 17,
+      "levelMax": 28,
+      "rate": 100,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,41": [
+    {
+      "species": "RATTATA",
+      "levelMin": 2,
+      "levelMax": 5,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "MANKEY",
+      "levelMin": 2,
+      "levelMax": 5,
+      "rate": 42,
+      "method": "grass"
+    },
+    {
+      "species": "SPEAROW",
+      "levelMin": 3,
+      "levelMax": 5,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,42": [
+    {
+      "species": "MANKEY",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "FEAROW",
+      "levelMin": 40,
+      "levelMax": 44,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SPEAROW",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSHREW",
+      "levelMin": 32,
+      "levelMax": 34,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "PRIMEAPE",
+      "levelMin": 42,
+      "levelMax": 42,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SANDSLASH",
+      "levelMin": 44,
+      "levelMax": 44,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,43": [
+    {
+      "species": "WEEDLE",
+      "levelMin": 7,
+      "levelMax": 7,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CATERPIE",
+      "levelMin": 7,
+      "levelMax": 7,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 11,
+      "levelMax": 13,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 12,
+      "levelMax": 14,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "ABRA",
+      "levelMin": 8,
+      "levelMax": 12,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "METAPOD",
+      "levelMin": 8,
+      "levelMax": 8,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "KAKUNA",
+      "levelMin": 8,
+      "levelMax": 8,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,44": [
+    {
+      "species": "WEEDLE",
+      "levelMin": 8,
+      "levelMax": 8,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "CATERPIE",
+      "levelMin": 8,
+      "levelMax": 8,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "PIDGEY",
+      "levelMin": 11,
+      "levelMax": 13,
+      "rate": 17,
+      "method": "grass"
+    },
+    {
+      "species": "BELLSPROUT",
+      "levelMin": 12,
+      "levelMax": 14,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "ABRA",
+      "levelMin": 9,
+      "levelMax": 13,
+      "rate": 25,
+      "method": "grass"
+    },
+    {
+      "species": "METAPOD",
+      "levelMin": 9,
+      "levelMax": 9,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "KAKUNA",
+      "levelMin": 9,
+      "levelMax": 9,
+      "rate": 8,
+      "method": "grass"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,0": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,1": [
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,3": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 40,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,5": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,6": [
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 80,
+      "method": "water"
+    },
+    {
+      "species": "KOFFING",
+      "levelMin": 30,
+      "levelMax": 40,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 90,
+      "method": "fishing"
+    },
+    {
+      "species": "GRIMER",
+      "levelMin": 30,
+      "levelMax": 40,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,7": [
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 20,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SEAKING",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,8": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 100,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "HORSEA",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWBRO",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,12": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 60,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "3,15": [
+    {
+      "species": "MARILL",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 80,
+      "method": "water"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 5,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWAG",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 20,
+      "method": "fishing"
+    },
+    {
+      "species": "GOLDEEN",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "POLIWHIRL",
+      "levelMin": 20,
+      "levelMax": 30,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 15,
+      "levelMax": 35,
+      "rate": 20,
+      "method": "fishing"
+    }
+  ],
+  "3,16": [
+    {
+      "species": "TENTACOOL",
+      "levelMin": 5,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "HOPPIP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 20,
+      "method": "water"
+    },
+    {
+      "species": "TENTACRUEL",
+      "levelMin": 35,
+      "levelMax": 40,
+      "rate": 40,
+      "method": "water"
+    },
+    {
+      "species": "MAGIKARP",
+      "levelMin": 5,
+      "levelMax": 15,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "KRABBY",
+      "levelMin": 5,
+      "levelMax": 25,
+      "rate": 30,
+      "method": "fishing"
+    },
+    {
+      "species": "STARYU",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "GYARADOS",
+      "levelMin": 15,
+      "levelMax": 25,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "KINGLER",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    },
+    {
+      "species": "SLOWPOKE",
+      "levelMin": 25,
+      "levelMax": 35,
+      "rate": 10,
+      "method": "fishing"
+    }
+  ],
+  "1,122": [
+    {
+      "species": "SMEARGLE",
+      "levelMin": 18,
+      "levelMax": 28,
+      "rate": 100,
+      "method": "grass"
+    }
+  ]
+}

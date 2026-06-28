@@ -55,9 +55,27 @@ DOOR = 9
 WARP = 10
 STRENGTH_BOULDER = 11
 SMASHABLE_ROCK = 12
+ITEM = 13
+PERSISTENT_OBJECT = 14
 
 # Which tile types can be walked on normally
 WALKABLE_TYPES = {WALKABLE, TALL_GRASS, DOOR, WARP, UNKNOWN}
+
+# Obstacle tile -> the field-move capability required to pass it.  A* treats
+# these as blocked unless the matching capability is supplied (HM + badge).
+CONDITIONAL_OBSTACLES = {
+    CUTTABLE: "cut",
+    WATER: "surf",
+    STRENGTH_BOULDER: "strength",
+    SMASHABLE_ROCK: "rocksmash",
+}
+
+# Dynamic exit target written by mapEditor for shared interiors (Pokemon Center,
+# Mart). Resolved at runtime against the warp stack — see _resolveToMap.
+RETURN_TARGET = "@return"
+
+# Tiles you interact with from an adjacent square rather than stepping onto.
+INTERACTABLE_TYPES = {ITEM, PERSISTENT_OBJECT, BLOCKED}
 
 # Movement cost modifiers (higher = less preferred)
 TILE_COSTS = {
@@ -101,15 +119,24 @@ class Pathfinder:
         self.tileData = {}      # mapName -> {tiles: [[int]], widthTiles, heightTiles}
         self.connections = {}   # mapName -> [connection dicts]
         self.landmarks = {}     # landmarkId -> {map, tile, label}
+        self.instances = {}     # instanceId -> {template, label, homeMap, returnTile}
         self.mapGraph = defaultdict(list)  # mapName -> [(neighborMap, connection)]
+
+        # Semantic indexes (built from tile data) for high-level queries.
+        self.itemIndex = defaultdict(list)      # itemName(lower) -> [(map, col, row)]
+        self.objectIndex = defaultdict(list)    # category -> [(map, col, row, name)]
+        self.speciesIndex = defaultdict(list)   # species(lower) -> [(map, col, row, patchId)]
 
         self._loadTileData(tileDataDir)
         self._loadConnections(connectionDataDir)
         self._buildMapGraph()
+        self._buildSemanticIndexes()
 
         print(f"Pathfinder: {len(self.tileData)} maps, "
               f"{sum(len(c) for c in self.connections.values())} connections, "
-              f"{len(self.landmarks)} landmarks")
+              f"{len(self.landmarks)} landmarks, "
+              f"{sum(len(v) for v in self.objectIndex.values())} objects, "
+              f"{len(self.speciesIndex)} catchable species")
 
     def _loadTileData(self, tileDataDir):
         """Load all tile classification JSONs."""
@@ -139,14 +166,46 @@ class Pathfinder:
             self.connections[mapName] = mapData.get('connections', [])
 
         self.landmarks = data.get('landmarks', {})
+        self.instances = data.get('instances', {})
 
     def _buildMapGraph(self):
-        """Build a high-level graph of map-to-map connections."""
+        """Build a high-level graph of map-to-map connections.
+
+        '@return' edges are skipped here because they have no static target —
+        they are resolved at route time against the warp stack.
+        """
         for mapName, conns in self.connections.items():
             for conn in conns:
                 toMap = conn.get('toMap', '')
-                if toMap:
+                if toMap and toMap != RETURN_TARGET:
                     self.mapGraph[mapName].append((toMap, conn))
+
+    def _buildSemanticIndexes(self):
+        """Index items, persistent objects, and grass encounters for queries.
+
+        Note the legacy coordinate quirk: items/objects dicts are keyed
+        "row,col" (see mapEditor.py), while grass-patch tile lists are [col,row].
+        """
+        for mapName, data in self.tileData.items():
+            for key, name in data.get('items', {}).items():
+                row, col = (int(x) for x in key.split(','))
+                self.itemIndex[name.lower()].append((mapName, col, row))
+
+            cats = data.get('objectCategories', {})
+            for key, name in data.get('objects', {}).items():
+                row, col = (int(x) for x in key.split(','))
+                category = cats.get(key, 'other')
+                self.objectIndex[category].append((mapName, col, row, name))
+
+            for patch in data.get('grassPatches', []):
+                species_seen = {e['species'].lower() for e in patch.get('encounters', [])}
+                tiles = patch.get('tiles', [])
+                if not tiles:
+                    continue
+                col, row = tiles[0]  # representative tile to walk into
+                for species in species_seen:
+                    self.speciesIndex[species].append(
+                        (mapName, col, row, patch.get('id', '')))
 
     # ── High-Level Navigation ────────────────────────────────────────────
 
@@ -186,9 +245,15 @@ class Pathfinder:
 
         return self._pathToDirections(path)
 
-    def findPath(self, fromMap, fromTile, toMap, toTile):
+    def findPath(self, fromMap, fromTile, toMap, toTile, capabilities=None,
+                 warpStack=None):
         """
         Find a path from one map+tile to another.
+
+        Args:
+            capabilities: optional set of field-move capabilities (gates obstacles).
+            warpStack: optional list of {"map":, "tile":[col,row]} entries used to
+                resolve '@return' exits from shared interiors.
 
         Returns:
             list of (mapName, col, row) waypoints, or None.
@@ -198,44 +263,78 @@ class Pathfinder:
 
         # Same map? Just do tile-level A*
         if fromMap == toMap:
-            tilePath = self._astarTiles(fromMap, fromTile, toTile)
+            tilePath = self._astarTiles(fromMap, fromTile, toTile, capabilities)
             if tilePath:
                 return [(fromMap, c, r) for c, r in tilePath]
             return None
 
         # Different maps: find map sequence first
-        mapRoute = self._findMapRoute(fromMap, toMap)
+        mapRoute = self._findMapRoute(fromMap, toMap, warpStack)
         if mapRoute is None:
             print(f"Pathfinder: No route from {fromMap} to {toMap}")
             return None
 
-        # Build full path through each map
+        # Build full path through each map. Each hop walks across the current
+        # map to its connection tile, then transitions onto the next map; a
+        # final segment then walks across the destination map to toTile.
         fullPath = []
+        currentMap = fromMap
         currentPos = fromTile
 
-        for i, (mapName, nextMap, connection) in enumerate(mapRoute):
-            if i == len(mapRoute) - 1:
-                # Last segment: path to final destination
-                exitTile = toTile
-            else:
-                # Path to the connection point that leads to the next map
-                exitTile = tuple(connection['fromTile'])
-
-            tilePath = self._astarTiles(mapName, currentPos, exitTile)
+        for (cur, nxt, connection) in mapRoute:
+            exitTile = tuple(connection['fromTile'])
+            tilePath = self._astarTiles(currentMap, currentPos, exitTile, capabilities)
             if tilePath is None:
-                print(f"Pathfinder: No tile path on {mapName} from {currentPos} to {exitTile}")
+                print(f"Pathfinder: No tile path on {currentMap} from {currentPos} to {exitTile}")
                 return None
-
             for col, row in tilePath:
-                fullPath.append((mapName, col, row))
+                fullPath.append((currentMap, col, row))
 
-            # Transition to next map
-            if i < len(mapRoute) - 1:
-                currentPos = tuple(connection['toTile'])
+            # Transition onto the next map. '@return' edges carry the landing
+            # tile in the connection's "toTile" (injected by _neighbors from the
+            # warp stack), as the static connection has none.
+            currentMap = nxt
+            currentPos = tuple(connection['toTile'])
+
+        # Final segment across the destination map to the goal tile.
+        tilePath = self._astarTiles(currentMap, currentPos, toTile, capabilities)
+        if tilePath is None:
+            print(f"Pathfinder: No tile path on {currentMap} from {currentPos} to {toTile}")
+            return None
+        for col, row in tilePath:
+            fullPath.append((currentMap, col, row))
 
         return fullPath
 
-    def _findMapRoute(self, fromMap, toMap):
+    def _resolveToMap(self, conn, warpStack):
+        """Resolve a connection's target map, expanding '@return' via the stack."""
+        toMap = conn.get('toMap', '')
+        if toMap != RETURN_TARGET:
+            return toMap, conn
+        if not warpStack:
+            return None, conn
+        top = warpStack[-1]
+        resolved = dict(conn)
+        resolved['toMap'] = top['map']
+        resolved['toTile'] = list(top['tile'])
+        return top['map'], resolved
+
+    def _neighbors(self, mapName, warpStack):
+        """Map-graph neighbors, with '@return' edges resolved against warpStack.
+
+        Limitation: the same warpStack top is used at every node, so multi-level
+        nested returns inside a single static search are approximate. The runtime
+        navigator drives real traversal and keeps the stack accurate.
+        """
+        result = list(self.mapGraph.get(mapName, []))
+        for conn in self.connections.get(mapName, []):
+            if conn.get('toMap') == RETURN_TARGET:
+                resolvedMap, resolvedConn = self._resolveToMap(conn, warpStack)
+                if resolvedMap:
+                    result.append((resolvedMap, resolvedConn))
+        return result
+
+    def _findMapRoute(self, fromMap, toMap, warpStack=None):
         """
         BFS to find the sequence of maps to traverse.
 
@@ -252,7 +351,7 @@ class Pathfinder:
         while queue:
             current, path = queue.pop(0)
 
-            for neighbor, conn in self.mapGraph.get(current, []):
+            for neighbor, conn in self._neighbors(current, warpStack):
                 if neighbor in visited:
                     continue
                 visited.add(neighbor)
@@ -267,7 +366,7 @@ class Pathfinder:
 
     # ── Tile-Level A* ────────────────────────────────────────────────────
 
-    def _astarTiles(self, mapName, start, goal):
+    def _astarTiles(self, mapName, start, goal, capabilities=None):
         """
         A* pathfinding on a single map's tile grid.
 
@@ -275,10 +374,13 @@ class Pathfinder:
             mapName: Name of the map.
             start: (col, row) start tile.
             goal: (col, row) goal tile.
+            capabilities: optional set of field-move capabilities the player has
+                (e.g. {"cut", "surf"}); gates CONDITIONAL_OBSTACLES.
 
         Returns:
             list of (col, row) tiles from start to goal, or None.
         """
+        capabilities = capabilities or set()
         tileInfo = self.tileData.get(mapName)
         if tileInfo is None:
             # No tile data: assume all tiles are walkable (direct path)
@@ -321,9 +423,13 @@ class Pathfinder:
                 if not (0 <= nc < tw and 0 <= nr < th):
                     continue
 
-                # Check if tile is walkable
+                # Check if tile is walkable (goal may be reached even if it is an
+                # interactable; callers normally pass a walkable adjacent goal).
                 tileType = tiles[nr][nc]
-                if not self._isWalkable(tileType):
+                if (nc, nr) != goal and not self._isWalkable(tileType, capabilities):
+                    continue
+                if (nc, nr) == goal and not self._isWalkable(tileType, capabilities) \
+                        and tileType not in INTERACTABLE_TYPES:
                     continue
 
                 # Check ledge restrictions
@@ -345,9 +451,13 @@ class Pathfinder:
         print(f"Pathfinder: No path found on {mapName} from {start} to {goal}")
         return None
 
-    def _isWalkable(self, tileType):
-        """Check if a tile type can be walked on."""
-        return tileType in WALKABLE_TYPES
+    def _isWalkable(self, tileType, capabilities=None):
+        """Check if a tile type can be walked on, given the player's capabilities."""
+        if tileType in WALKABLE_TYPES:
+            return True
+        capabilities = capabilities or set()
+        needed = CONDITIONAL_OBSTACLES.get(tileType)
+        return needed is not None and needed in capabilities
 
     def _canMoveDirection(self, currentTileType, direction):
         """Check if movement in a direction is allowed from the current tile type."""
@@ -429,6 +539,128 @@ class Pathfinder:
                 directions.append('Up')
 
         return directions
+
+    # ── High-Level Semantic Planning ─────────────────────────────────────
+
+    def planToTile(self, fromMap, fromTile, toMap, toTile, capabilities=None,
+                   warpStack=None, interact=False):
+        """
+        Build a navigation plan to a tile, optionally approaching it to interact.
+
+        When ``interact`` is True the goal is an *adjacent* walkable tile and the
+        plan includes a final facing direction + an 'A' press (used for items,
+        NPCs, PCs, shop clerks — anything you stand next to rather than on).
+
+        Returns a plan dict:
+            {found, target, path, directions, interact, reason}
+        """
+        toTile = tuple(toTile)
+        goalTile = toTile
+        facing = None
+
+        if interact:
+            approach = self._approach(toMap, toTile, capabilities)
+            if approach is None:
+                return self._failPlan(toMap, toTile,
+                                      "no walkable tile adjacent to target")
+            goalTile, facing = approach
+
+        path = self.findPath(fromMap, fromTile, toMap, goalTile,
+                             capabilities=capabilities, warpStack=warpStack)
+        if path is None:
+            return self._failPlan(toMap, toTile, "no route found")
+
+        plan = {
+            "found": True,
+            "target": {"map": toMap, "tile": list(toTile)},
+            "path": path,
+            "directions": self._pathToDirections(path),
+            "interact": {"face": facing, "press": "A"} if interact else None,
+            "reason": "ok",
+        }
+        return plan
+
+    def planToLandmark(self, landmarkId, fromMap, fromTile, **kwargs):
+        """Plan a route to a named landmark."""
+        if landmarkId not in self.landmarks:
+            return self._failPlan(None, None, f"unknown landmark '{landmarkId}'")
+        lm = self.landmarks[landmarkId]
+        return self.planToTile(fromMap, fromTile, lm['map'], tuple(lm['tile']),
+                               **kwargs)
+
+    def planToObjectCategory(self, category, fromMap, fromTile, **kwargs):
+        """Plan a route to the nearest persistent object of a category.
+
+        Powers e.g. ``planToObjectCategory('pokemon_center', ...)``.
+        """
+        candidates = [(m, c, r) for (m, c, r, _name) in self.objectIndex.get(category, [])]
+        return self._nearest(candidates, fromMap, fromTile, interact=True,
+                             notFound=f"no '{category}' object found", **kwargs)
+
+    def planToItem(self, itemName, fromMap, fromTile, collected=None, **kwargs):
+        """Plan a route to the nearest matching uncollected item.
+
+        ``collected`` is an optional set of (map, col, row) tuples to skip.
+        """
+        collected = collected or set()
+        candidates = [(m, c, r) for (m, c, r) in self.itemIndex.get(itemName.lower(), [])
+                      if (m, c, r) not in collected]
+        return self._nearest(candidates, fromMap, fromTile, interact=True,
+                             notFound=f"no item '{itemName}' available", **kwargs)
+
+    def planToCatch(self, species, fromMap, fromTile, **kwargs):
+        """Plan a route to the nearest grass patch containing a species.
+
+        Grass tiles are walkable, so this steps *onto* the patch (no interact).
+        """
+        candidates = [(m, c, r) for (m, c, r, _pid)
+                      in self.speciesIndex.get(species.lower(), [])]
+        return self._nearest(candidates, fromMap, fromTile, interact=False,
+                             notFound=f"'{species}' not found in any tagged grass", **kwargs)
+
+    def _nearest(self, candidates, fromMap, fromTile, interact, notFound,
+                 **kwargs):
+        """Pick the candidate (map, col, row) with the shortest plan."""
+        best = None
+        for (m, c, r) in candidates:
+            plan = self.planToTile(fromMap, fromTile, m, (c, r), interact=interact,
+                                   **kwargs)
+            if plan["found"]:
+                steps = len(plan["directions"])
+                if best is None or steps < best[0]:
+                    best = (steps, plan)
+        if best is None:
+            return self._failPlan(None, None, notFound)
+        return best[1]
+
+    def _approach(self, mapName, objTile, capabilities=None):
+        """Return (approachTile, facingDirection) for interacting with objTile.
+
+        Picks a walkable 4-neighbor of the object and the direction to face it.
+        """
+        oc, oroww = objTile
+        tileInfo = self.tileData.get(mapName)
+        for (dc, dr, face) in [(0, -1, 'Up'), (0, 1, 'Down'),
+                               (-1, 0, 'Left'), (1, 0, 'Right')]:
+            ac, ar = oc + dc, oroww + dr
+            if tileInfo is None:
+                # No tile data: assume the north neighbor is walkable.
+                return (ac, ar), {'Up': 'Down', 'Down': 'Up',
+                                  'Left': 'Right', 'Right': 'Left'}[face]
+            tiles = tileInfo['tiles']
+            if not (0 <= ar < tileInfo['heightTiles'] and 0 <= ac < tileInfo['widthTiles']):
+                continue
+            if self._isWalkable(tiles[ar][ac], capabilities):
+                # Face from approach tile back toward the object.
+                faceToObj = {'Up': 'Down', 'Down': 'Up',
+                             'Left': 'Right', 'Right': 'Left'}[face]
+                return (ac, ar), faceToObj
+        return None
+
+    def _failPlan(self, toMap, toTile, reason):
+        return {"found": False,
+                "target": {"map": toMap, "tile": list(toTile) if toTile else None},
+                "path": None, "directions": [], "interact": None, "reason": reason}
 
     # ── Query Helpers ────────────────────────────────────────────────────
 
