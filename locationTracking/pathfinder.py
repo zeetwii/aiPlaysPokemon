@@ -77,6 +77,11 @@ RETURN_TARGET = "@return"
 # Tiles you interact with from an adjacent square rather than stepping onto.
 INTERACTABLE_TYPES = {ITEM, PERSISTENT_OBJECT, BLOCKED}
 
+# Persistent-object categories that act like the old "landmarks": a named place
+# you walk *onto* (not a blocking thing you face + A). Their tiles are treated as
+# walkable, and routing to them lands on the tile instead of approaching it.
+WALK_THROUGH_OBJECT_CATEGORIES = {"landmark"}
+
 # Movement cost modifiers (higher = less preferred)
 TILE_COSTS = {
     WALKABLE: 1.0,
@@ -126,6 +131,7 @@ class Pathfinder:
         self.itemIndex = defaultdict(list)      # itemName(lower) -> [(map, col, row)]
         self.objectIndex = defaultdict(list)    # category -> [(map, col, row, name)]
         self.speciesIndex = defaultdict(list)   # species(lower) -> [(map, col, row, patchId)]
+        self.walkableObjectTiles = {}           # mapName -> set((col, row)) walk-through objects
 
         self._loadTileData(tileDataDir)
         self._loadConnections(connectionDataDir)
@@ -192,10 +198,15 @@ class Pathfinder:
                 self.itemIndex[name.lower()].append((mapName, col, row))
 
             cats = data.get('objectCategories', {})
+            walkThrough = set()
             for key, name in data.get('objects', {}).items():
                 row, col = (int(x) for x in key.split(','))
                 category = cats.get(key, 'other')
                 self.objectIndex[category].append((mapName, col, row, name))
+                if category in WALK_THROUGH_OBJECT_CATEGORIES:
+                    walkThrough.add((col, row))
+            if walkThrough:
+                self.walkableObjectTiles[mapName] = walkThrough
 
             for patch in data.get('grassPatches', []):
                 species_seen = {e['species'].lower() for e in patch.get('encounters', [])}
@@ -390,6 +401,7 @@ class Pathfinder:
         tiles = tileInfo['tiles']
         tw = tileInfo['widthTiles']
         th = tileInfo['heightTiles']
+        passable = self.walkableObjectTiles.get(mapName, set())  # landmark objects
 
         startCol, startRow = start
         goalCol, goalRow = goal
@@ -426,10 +438,11 @@ class Pathfinder:
                 # Check if tile is walkable (goal may be reached even if it is an
                 # interactable; callers normally pass a walkable adjacent goal).
                 tileType = tiles[nr][nc]
-                if (nc, nr) != goal and not self._isWalkable(tileType, capabilities):
+                walkable = (self._isWalkable(tileType, capabilities)
+                            or (nc, nr) in passable)
+                if (nc, nr) != goal and not walkable:
                     continue
-                if (nc, nr) == goal and not self._isWalkable(tileType, capabilities) \
-                        and tileType not in INTERACTABLE_TYPES:
+                if (nc, nr) == goal and not walkable and tileType not in INTERACTABLE_TYPES:
                     continue
 
                 # Check ledge restrictions
@@ -581,20 +594,49 @@ class Pathfinder:
         return plan
 
     def planToLandmark(self, landmarkId, fromMap, fromTile, **kwargs):
-        """Plan a route to a named landmark."""
-        if landmarkId not in self.landmarks:
-            return self._failPlan(None, None, f"unknown landmark '{landmarkId}'")
-        lm = self.landmarks[landmarkId]
-        return self.planToTile(fromMap, fromTile, lm['map'], tuple(lm['tile']),
-                               **kwargs)
+        """Plan a route to a named place.
+
+        Landmarks have been folded into persistent objects (use the 'landmark'
+        category in the editor). This checks any legacy landmark data first, then
+        falls back to a same-named persistent object, so 'goto X' keeps working.
+        """
+        if landmarkId in self.landmarks:
+            lm = self.landmarks[landmarkId]
+            return self.planToTile(fromMap, fromTile, lm['map'], tuple(lm['tile']),
+                                   **kwargs)
+        return self.planToObjectName(landmarkId, fromMap, fromTile, **kwargs)
+
+    def planToObjectName(self, name, fromMap, fromTile, **kwargs):
+        """Plan a route to the nearest persistent object matching a name.
+
+        Powers e.g. ``planToObjectName('Mom', ...)`` and the old landmark role
+        (``planToObjectName('PewterGym', ...)``). Matches the object's label
+        case-insensitively across every category; 'landmark'-category objects are
+        walked onto, others are approached + interacted with.
+        """
+        target = name.lower()
+        best = None
+        for category, entries in self.objectIndex.items():
+            interact = category not in WALK_THROUGH_OBJECT_CATEGORIES
+            for (m, c, r, oname) in entries:
+                if oname.lower() != target:
+                    continue
+                plan = self.planToTile(fromMap, fromTile, m, (c, r),
+                                       interact=interact, **kwargs)
+                if plan['found'] and (best is None or
+                                      len(plan['directions']) < len(best['directions'])):
+                    best = plan
+        return best or self._failPlan(None, None, f"no object named '{name}'")
 
     def planToObjectCategory(self, category, fromMap, fromTile, **kwargs):
         """Plan a route to the nearest persistent object of a category.
 
-        Powers e.g. ``planToObjectCategory('pokemon_center', ...)``.
+        Powers e.g. ``planToObjectCategory('pokemon_center', ...)``. A
+        'landmark'-category target is walked onto rather than approached.
         """
+        interact = category not in WALK_THROUGH_OBJECT_CATEGORIES
         candidates = [(m, c, r) for (m, c, r, _name) in self.objectIndex.get(category, [])]
-        return self._nearest(candidates, fromMap, fromTile, interact=True,
+        return self._nearest(candidates, fromMap, fromTile, interact=interact,
                              notFound=f"no '{category}' object found", **kwargs)
 
     def planToItem(self, itemName, fromMap, fromTile, collected=None, **kwargs):

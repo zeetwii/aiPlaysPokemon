@@ -46,10 +46,13 @@ HM_CAPABILITIES = {
 
 class Navigator:
     def __init__(self, host='127.0.0.1', port=54321, connect=True,
-                 pathfinder=None, tracker=None, scratchDir=None):
+                 pathfinder=None, tracker=None, screenshotPath=None):
         self.pf = pathfinder or Pathfinder()
         self.tracker = tracker or LocationTracker()
-        self.scratchDir = scratchDir or os.path.dirname(__file__)
+        # Capture into the shared screenshot.png in the repo root (parent of
+        # locationTracking) so every tool reads/writes the same file.
+        self.screenshotPath = screenshotPath or os.path.normpath(
+            os.path.join(os.path.dirname(__file__), '..', 'screenshot.png'))
         self.sock = None
         if connect:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -76,9 +79,8 @@ class Navigator:
             return None
 
     def _screenshot(self):
-        path = os.path.join(self.scratchDir, "nav_screenshot.png")
-        mgba_client.screenshot(self.sock, path)
-        return path
+        mgba_client.screenshot(self.sock, self.screenshotPath)
+        return self.screenshotPath
 
     def _tap(self, button, frames=16):
         mgba_client.tap(self.sock, button, frames)

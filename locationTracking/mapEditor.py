@@ -73,7 +73,10 @@ ITEM_TYPE = 13
 OBJECT_TYPE = 14
 GRASS_TYPE = 3
 
-OBJECT_CATEGORIES = ["pokemon_center", "pc", "mart", "gym", "npc", "other"]
+# Object categories. "landmark" is a named place you walk *onto* (routing treats
+# it as walkable, the rest are approached + interacted with). This replaces the
+# old separate "landmarks" concept.
+OBJECT_CATEGORIES = ["landmark", "pokemon_center", "pc", "mart", "gym", "npc", "other"]
 
 CONNECTION_TYPES = ["edge", "door", "warp", "stairs"]
 CONNECTION_COLORS = {
@@ -635,14 +638,11 @@ class MapEditor:
                   fg='white', relief=tk.FLAT, font=('monospace', 10, 'bold')
                   ).pack(fill=tk.X, padx=5, pady=2)
 
-        tk.Label(p, text="Landmark at selected source tile:", bg='#333', fg='#ccc',
-                 font=('monospace', 8)).pack(pady=(10, 2))
-        lmf = tk.Frame(p, bg='#333')
-        lmf.pack(fill=tk.X, padx=5)
-        self.lmIdVar = tk.StringVar()
-        tk.Entry(lmf, textvariable=self.lmIdVar, width=14).pack(side=tk.LEFT)
-        tk.Button(lmf, text="Add Landmark", command=self._addLandmark, bg='#404040',
-                  fg='white', relief=tk.FLAT, font=('monospace', 8)).pack(side=tk.LEFT, padx=4)
+        tk.Label(p, text="Tip: for named destinations (gyms, etc.) tag a\n"
+                         "persistent object with the 'landmark' category in\n"
+                         "Tiles mode — that replaces the old landmarks.",
+                 bg='#333', fg='#888', font=('monospace', 7), justify='left'
+                 ).pack(pady=(10, 2), anchor='w', padx=5)
 
     def _buildGrassPanel(self):
         p = tk.Frame(self.sidebar, bg='#333')
@@ -1207,19 +1207,6 @@ class MapEditor:
             ft = conns[sel[0]].get("fromTile", [0, 0])
             self.connFromTile = (ft[0], ft[1])
             self._renderCanvas()
-
-    def _addLandmark(self):
-        if not self.connFromTile:
-            messagebox.showwarning("No tile", "Click a source tile first.")
-            return
-        lmId = self.lmIdVar.get().strip()
-        if not lmId:
-            messagebox.showwarning("No ID", "Enter a landmark id.")
-            return
-        self.connData.setdefault("landmarks", {})[lmId] = {
-            "map": self.mapName, "tile": list(self.connFromTile), "label": lmId}
-        self._renderCanvas()
-        self.statusBar.config(text=f"Added landmark {lmId}")
 
     # ── grass mode ───────────────────────────────────────────────────────────
     def _newPatch(self):

@@ -34,7 +34,13 @@
 local PORT = 54321
 local BIND_ADDRESS = nil          -- nil = all interfaces (0.0.0.0)
 local DEFAULT_HOLD_FRAMES = 4     -- ~67ms at 60fps, mimics a human tap
-local SCREENSHOT_PATH = "mgba_server_screenshot.png"
+-- Use an ABSOLUTE path. emu:screenshot() resolves a relative filename against
+-- the loaded ROM's directory, while io.open() resolves against the process cwd;
+-- when those differ the write succeeds but the read fails. An absolute path in
+-- the OS temp dir keeps both sides pointing at the same file.
+local SCREENSHOT_DIR = os.getenv("TEMP") or os.getenv("TMP")
+    or os.getenv("TMPDIR") or "."
+local SCREENSHOT_PATH = SCREENSHOT_DIR .. "/mgba_server_screenshot.png"
 local MAX_RECV_BYTES = 256        -- max bytes per read (commands are short)
 
 ---------------------------------------------------------------------------
@@ -640,12 +646,13 @@ end
 
 local function handleScreenshot(client)
     -- Save screenshot to temp file
-    emu:screenshot(SCREENSHOT_PATH)
+    local ok = emu:screenshot(SCREENSHOT_PATH)
 
     -- Read the PNG file back
     local f = io.open(SCREENSHOT_PATH, "rb")
     if not f then
-        return "ERR|Failed to capture screenshot\n"
+        return "ERR|Failed to capture screenshot (emu:screenshot returned "
+            .. tostring(ok) .. ", path " .. SCREENSHOT_PATH .. ")\n"
     end
     local data = f:read("*a")
     f:close()
