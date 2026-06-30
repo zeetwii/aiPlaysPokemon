@@ -375,8 +375,14 @@ class MapEditor:
         self.mapsDir = mapsDir or os.path.join(baseDir, 'maps')
         self.tileDataDir = os.path.join(baseDir, 'tileData')
         self.connDir = os.path.join(baseDir, 'connectionData')
+        self.encounterDir = os.path.join(baseDir, 'encounterData')
         os.makedirs(self.tileDataDir, exist_ok=True)
         os.makedirs(self.connDir, exist_ok=True)
+
+        # ROM-dumped wild encounters, keyed "bank,number" (used to populate the
+        # grass patch-label dropdown).
+        self.romEncounters = {}
+        self._loadRomEncounters()
 
         # All maps in the directory (name -> {file, widthTiles, heightTiles})
         self.mapMeta = {}
@@ -448,6 +454,15 @@ class MapEditor:
                     w, h = img.size
                 self.mapMeta[os.path.splitext(f)[0]] = {
                     'file': f, 'widthTiles': w // TILE_SIZE, 'heightTiles': h // TILE_SIZE}
+
+    def _loadRomEncounters(self):
+        jp = os.path.join(self.encounterDir, 'romEncounters.json')
+        if os.path.exists(jp):
+            try:
+                with open(jp, 'r') as f:
+                    self.romEncounters = json.load(f)
+            except (OSError, json.JSONDecodeError):
+                self.romEncounters = {}
 
     def _loadConnections(self):
         jp = os.path.join(self.connDir, 'connections.json')
@@ -668,9 +683,13 @@ class MapEditor:
         tk.Label(p, text="Patch label:", bg='#333', fg='white',
                  font=('monospace', 9)).pack(anchor='w', padx=5, pady=(8, 0))
         self.patchLabelVar = tk.StringVar()
-        pe = tk.Entry(p, textvariable=self.patchLabelVar, width=24)
+        # Editable combobox: choose a ROM encounter key ("bank,number") or type a
+        # custom label. Values come from encounterData/romEncounters.json.
+        pe = ttk.Combobox(p, textvariable=self.patchLabelVar, width=22,
+                          values=sorted(self.romEncounters.keys()))
         pe.pack(padx=5)
         pe.bind('<FocusOut>', lambda e: self._applyPatchLabel())
+        pe.bind('<<ComboboxSelected>>', lambda e: self._onPatchLabelSelected())
 
         tk.Label(p, text="Encounters", bg='#333', fg='white',
                  font=('monospace', 9, 'bold')).pack(pady=(10, 2))
@@ -1283,6 +1302,29 @@ class MapEditor:
             self.grassPatches[self.activePatchIdx]["label"] = self.patchLabelVar.get().strip()
             self.hasUnsavedTiles = True
             self._refreshPatchList()
+
+    def _onPatchLabelSelected(self):
+        """A value was picked from the patch-label dropdown. Apply it as the label
+        and, if it matches a ROM encounter key, offer to fill in its encounters."""
+        if self.activePatchIdx is None:
+            return
+        self._applyPatchLabel()
+        label = self.patchLabelVar.get().strip()
+        encs = self.romEncounters.get(label)
+        if not encs:
+            return
+        patch = self.grassPatches[self.activePatchIdx]
+        if patch["encounters"] and not messagebox.askyesno(
+                "Replace encounters",
+                f"Replace this patch's {len(patch['encounters'])} encounter(s) "
+                f"with the {len(encs)} from ROM key '{label}'?"):
+            return
+        # Deep-copy so later edits don't mutate the shared ROM table.
+        patch["encounters"] = [dict(e) for e in encs]
+        self.hasUnsavedTiles = True
+        self._refreshEncList()
+        self._refreshPatchList()
+        self.statusBar.config(text=f"Loaded {len(encs)} encounters from ROM key '{label}'")
 
     def _refreshEncList(self):
         self.encListbox.delete(0, tk.END)
