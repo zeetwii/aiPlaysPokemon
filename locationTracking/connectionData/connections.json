@@ -143,6 +143,39 @@
           ]
         }
       ]
+    },
+    "PewterCity-Gym": {
+      "imageFile": "PewterCity-Gym.png",
+      "widthTiles": 12,
+      "heightTiles": 16,
+      "connections": []
+    },
+    "Poke_Mart_interior_FRLG": {
+      "imageFile": "Poke_Mart_interior_FRLG.png",
+      "widthTiles": 11,
+      "heightTiles": 9,
+      "connections": []
+    },
+    "Route22": {
+      "imageFile": "Route22.png",
+      "widthTiles": 51,
+      "heightTiles": 24,
+      "connections": [
+        {
+          "type": "edge",
+          "fromTile": [
+            50,
+            8
+          ],
+          "toMap": "ViridianCity",
+          "toTile": [
+            0,
+            18
+          ],
+          "direction": "east",
+          "width": 1
+        }
+      ]
     }
   },
   "landmarks": {},
