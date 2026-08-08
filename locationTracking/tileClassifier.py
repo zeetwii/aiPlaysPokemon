@@ -1,5 +1,5 @@
 """
-Tile Classifier for Pokemon LeafGreen Maps
+Tile Classifier for Pokemon FireRed / LeafGreen Maps
 
 An interactive GUI tool for classifying map tiles by type (walkable, blocked,
 tall grass, water, cuttable, surfable, etc.). Load a map image, paint tile

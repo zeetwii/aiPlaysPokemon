@@ -6,7 +6,7 @@ import numpy as np  # needed for image processing
 
 class LocationTracker:
     """
-    Tracks the player's location in Pokemon Leaf Green by template matching
+    Tracks the player's location in Pokemon FireRed / LeafGreen by template matching
     game screenshots against known map images using OpenCV.
 
     Template matching is the primary locator: because each map image *is* the

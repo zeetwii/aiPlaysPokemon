@@ -229,3 +229,13 @@ __marimo__/
 
 # The player's latest screenshot, since that will always be changing
 screenshot.png
+
+# Scraped walkthrough guides: third-party content, re-fetchable on demand
+/guides/
+
+# Per-run turn log: a few MB per playthrough, same throwaway category as
+# memories.json. Regenerated from scratch every run.
+/run.jsonl
+
+# macOS folder metadata
+.DS_Store

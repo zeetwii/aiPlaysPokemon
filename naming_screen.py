@@ -70,7 +70,15 @@ from mgba_client import MGBAClient, gen3_decode  # noqa: E402
 # gMain.callback2 while the naming screen is up. Unlike a dialog - which runs as
 # a task under the overworld callback and so leaves it unchanged - this really
 # is its own screen, which makes detection exact.
-NAMING_CALLBACK = "0809FB59"
+#
+# The address moves between ROM revisions: 0809FB59 is what the v1.0 dump was
+# taken from, and a v1.1 cartridge runs the same screen 0x2C higher. Both are
+# accepted rather than picking one, because nothing else here cares which
+# revision is loaded and a miss is expensive in a way that is hard to read from
+# the outside: isOpen() returning False makes `name` raise "nothing is asking
+# for a name right now", so the model is told there is no keyboard while it is
+# looking straight at one, and falls back to pressing A at it.
+NAMING_CALLBACKS = ("0809FB59", "0809FB85")
 
 # Where the text being typed lives. Found by typing a distinctive name and
 # searching EWRAM for it; the screen is built from the same allocation every
@@ -103,7 +111,7 @@ class NamingError(RuntimeError):
 
 def isOpen(screen: dict) -> bool:
     """True if gMain says the naming screen is the screen we're on."""
-    return bool(screen) and screen.get("callback2") == NAMING_CALLBACK
+    return bool(screen) and screen.get("callback2") in NAMING_CALLBACKS
 
 
 def currentName(client) -> str | None:
@@ -295,7 +303,7 @@ def main():
         screen = client.screen()
         if not isOpen(screen):
             print(f"The naming screen is not up (callback2 {screen['callback2']}, "
-                  f"expected {NAMING_CALLBACK}).")
+                  f"expected one of {', '.join(NAMING_CALLBACKS)}).")
             return 1
         print(f"Naming screen is open. Typed so far: {currentName(client)!r}")
         if not wanted:

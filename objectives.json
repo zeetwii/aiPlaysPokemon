@@ -1,5 +1,5 @@
 {
-  "game": "Pokemon Leaf Green",
+  "game": "Pokemon FireRed / LeafGreen",
   "note": "Ordered walkthrough. `done` is checked against the live game state every turn and is what advances the player; `skip_if` is only read when working out where an existing save has got to, for objectives whose `done` is transient. See objectives.py for the condition language.",
   "objectives": [
     {

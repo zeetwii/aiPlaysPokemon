@@ -16,14 +16,20 @@ problems that would make navigation fail or behave oddly for the LLM player:
     * map has a wild-encounter table but no tiles that can trigger it
     * persistent object with no category
 
+Encounter checks are per game, since FireRed and LeafGreen disagree about most
+of their tables. There is no emulator to ask here, so the version comes from
+$POKEMON_VERSION or the argument below, and the report says which it used.
+
 Usage:
     python validate.py            # human-readable report; exits 1 if any ERRORS
+    python validate.py firered    # check against a specific game's encounters
 """
 
 import json
 import os
 import sys
 
+import romVersion
 from pathfinder import ENCOUNTER_TERRAIN, encounterTilesFor
 
 OBJECT_TYPE = 14
@@ -32,10 +38,12 @@ RETURN_TARGET = "@return"
 UNKNOWN_WARN_PCT = 25  # warn if more than this fraction of tiles are unclassified
 
 
-def _load(baseDir):
+def _load(baseDir, version=None):
     tileDir = os.path.join(baseDir, 'tileData')
     connPath = os.path.join(baseDir, 'connectionData', 'connections.json')
-    romPath = os.path.join(baseDir, 'encounterData', 'romEncounters.json')
+    encDir = os.path.join(baseDir, 'encounterData')
+    slug, reason = romVersion.resolve(version, encDir)
+    romPath = romVersion.encounterFile(encDir, slug)
     tiles = {}
     for f in os.listdir(tileDir):
         if f.endswith('.json'):
@@ -50,7 +58,7 @@ def _load(baseDir):
     if os.path.exists(romPath):
         with open(romPath, 'r') as fp:
             rom = json.load(fp)
-    return tiles, conns, rom
+    return tiles, conns, rom, slug, reason
 
 
 def _encounterTable(mapName, data, rom):
@@ -65,10 +73,10 @@ def _encounterTable(mapName, data, rom):
     return [], 'none'
 
 
-def validate(baseDir=None):
+def validate(baseDir=None, version=None):
     """Return {'errors': [...], 'warnings': [...], 'stats': {...}}."""
     baseDir = baseDir or os.path.dirname(__file__)
-    tiles, conns, rom = _load(baseDir)
+    tiles, conns, rom, slug, versionReason = _load(baseDir, version)
     errors, warnings = [], []
     mapsNeedingPaint = []
 
@@ -148,12 +156,20 @@ def validate(baseDir=None):
         "warnings": len(warnings),
     }
     return {"errors": errors, "warnings": warnings, "stats": stats,
-            "needsPaint": sorted(mapsNeedingPaint)}
+            "needsPaint": sorted(mapsNeedingPaint),
+            "version": slug, "versionReason": versionReason}
 
 
 def main():
-    report = validate()
+    version = sys.argv[1] if len(sys.argv) > 1 else None
+    try:
+        report = validate(version=version)
+    except ValueError as exc:
+        print(exc)
+        sys.exit(2)
     s = report["stats"]
+    print(f"Encounters checked against: {report['version']} "
+          f"({report['versionReason']})")
     print(f"Maps (tile data): {s['maps_with_tile_data']}  |  "
           f"with connections: {s['maps_with_connections']}  |  "
           f"landmarks: {s['landmarks']}  |  instances: {s['instances']}")

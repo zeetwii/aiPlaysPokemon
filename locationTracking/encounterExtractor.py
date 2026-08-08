@@ -20,15 +20,23 @@ IMPORTANT — two things must be correct for your specific setup:
      bank/number fields).  Maps without a registry entry can't be resolved yet —
      populate the registry, or use the CLI dump which is keyed by (bank, number).
 
+The dump lands in a per-game folder, because FireRed and LeafGreen disagree
+about 88 of the 124 tables and reading the wrong one misroutes every `catch`
+without ever failing (see romVersion.py). The folder is chosen from the ROM's
+own header, not from an argument, so a dump cannot be filed under the wrong
+game by mistake.
+
 CLI:
-    python encounterExtractor.py <rom.gba>            # dump all -> encounterData/romEncounters.json
-    python encounterExtractor.py <rom.gba> 3 0        # print encounters for bank 3, number 0
+    python encounterExtractor.py <rom.gba>       # dump all -> encounterData/<game>/romEncounters.json
+    python encounterExtractor.py <rom.gba> 3 0   # print encounters for bank 3, number 0
 """
 
 import json
 import os
 import struct
 import sys
+
+import romVersion
 
 # ── Gen 3 character decode (matches mgba_server.lua GEN3_CHARS) ───────────────
 _GEN3 = {0x00: " "}
@@ -72,6 +80,10 @@ class RomReader:
             raise ValueError(f"Unsupported ROM {self.gameCode} v{self.version}")
         self.wildAddr = WILD_HEADERS_ADDR[key]
         self.namesAddr = _NAMES_BASE + _NAME_SHIFT[key]
+        # Which game this is, in the form the rest of the toolset uses. Taken
+        # from the header rather than the filename, so a misnamed ROM still
+        # files its dump correctly.
+        self.versionSlug = romVersion.normalize(self.gameCode)
 
     def u8(self, off):
         return self.data[off]
@@ -205,16 +217,17 @@ def main():
         print(__doc__)
         return
     reader = RomReader(sys.argv[1])
-    print(f"ROM {reader.gameCode} v{reader.version}  "
+    print(f"ROM {reader.gameCode} v{reader.version} ({reader.versionSlug})  "
           f"wildAddr=0x{reader.wildAddr:08X}")
     allEnc = reader.extractAll()
     if len(sys.argv) >= 4:
         key = f"{sys.argv[2]},{sys.argv[3]}"
         print(json.dumps(allEnc.get(key, []), indent=2))
         return
-    outDir = os.path.join(os.path.dirname(__file__), 'encounterData')
-    os.makedirs(outDir, exist_ok=True)
-    outPath = os.path.join(outDir, 'romEncounters.json')
+
+    baseDir = os.path.join(os.path.dirname(__file__), 'encounterData')
+    outPath = romVersion.encounterFile(baseDir, reader.versionSlug)
+    os.makedirs(os.path.dirname(outPath), exist_ok=True)
     with open(outPath, 'w') as f:
         json.dump(allEnc, f, indent=2)
     print(f"Dumped {len(allEnc)} map encounter tables to {outPath}")

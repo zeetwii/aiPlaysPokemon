@@ -36,6 +36,7 @@ import os
 import sys
 import time
 
+import romVersion
 from locationTracker import LocationTracker
 from pathfinder import (BLOCKED, Pathfinder, RETURN_TARGET,
                         WALK_THROUGH_OBJECT_CATEGORIES)
@@ -140,16 +141,27 @@ OFFSET_ATTEMPT_LIMIT = 6
 class Navigator:
     def __init__(self, host='127.0.0.1', port=54321, connect=True,
                  pathfinder=None, tracker=None, screenshotPath=None,
-                 client=None):
-        self.pf = pathfinder or Pathfinder()
+                 client=None, version=None):
+        # Connect before building the pathfinder: GAME_STATE names the ROM that
+        # is actually loaded ("FireRed v1.1"), and that is the only honest way
+        # to pick between the two games' encounter tables. Getting it wrong is
+        # silent - every `catch` routes to the other game's grass - so ask
+        # rather than configure. Falls back to romVersion's resolution order if
+        # there is no emulator to ask (offline use, or an injected client).
+        self.client = client
+        if self.client is None and connect:
+            self.client = MGBAClient(host=host, port=port)
+
+        if pathfinder is None:
+            self.pf = Pathfinder(version=version or self._detectVersion())
+        else:
+            self.pf = pathfinder
+
         self.tracker = tracker or LocationTracker()
         # Capture into the shared screenshot.png in the repo root (parent of
         # locationTracking) so every tool reads/writes the same file.
         self.screenshotPath = screenshotPath or os.path.normpath(
             os.path.join(os.path.dirname(__file__), '..', 'screenshot.png'))
-        self.client = client
-        if self.client is None and connect:
-            self.client = MGBAClient(host=host, port=port)
 
         # Runtime state.
         self.warpStack = []          # [{"map":, "tile":[col,row]}]
@@ -194,6 +206,32 @@ class Navigator:
             return self.client.game_state()
         except (MGBAError, ConnectionError, ValueError):
             return None
+
+    def _detectVersion(self):
+        """Which game is loaded, from the emulator. None if it can't say.
+
+        mgba_server.lua reads the ROM header at startup and reports the result
+        as GAME_STATE's `game` field. Returns that string as-is rather than a
+        slug, so the Pathfinder's own line names the ROM it was told about
+        ("requested (FireRed v1.1)") instead of just the folder it opened.
+
+        None is not an error - no emulator, or an older server - it just means
+        romVersion falls back to $POKEMON_VERSION / disk / the default.
+        """
+        state = self._gameState()
+        if not state:
+            return None
+        game = state.get("game")
+        slug = romVersion.normalize(game)
+        if slug is None:
+            if game:
+                print(f"Navigator: emulator reports game {game!r}, which is "
+                      f"not one we have encounter data for; falling back to "
+                      f"the configured version.")
+            return None
+        print(f"Navigator: emulator is running {game} -> using {slug} "
+              f"wild-encounter tables")
+        return game
 
     def _screenshot(self):
         self.client.screenshot(self.screenshotPath)

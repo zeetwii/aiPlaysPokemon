@@ -94,8 +94,12 @@ def checkEasterEgg(text: str, path: Path = EASTER_EGG_PATH) -> str | None:
     return None
 
 
-REFEREE_SYSTEM_PROMPT = """You are judging one request from someone watching a
-program called player_ai play Pokemon Leaf Green. You do not play the game
+# {game} is the ROM the emulator actually has loaded, passed down from
+# player_ai (see locationTracking/romVersion.py). It matters here more than
+# anywhere: the reject rule below turns on which Pokemon exist in this game,
+# and FireRed and LeafGreen do not have the same ones.
+REFEREE_SYSTEM_PROMPT_TEMPLATE = """You are judging one request from someone
+watching a program called player_ai play {game}. You do not play the game
 yourself - you only decide whether the request is a reasonable, doable ask
 given the situation described, and react to it a little.
 
@@ -118,11 +122,13 @@ class Referee:
     """One ollama call per request, judging it against the current game report."""
 
     def __init__(self, model: str, ollamaHost: str | None = None,
-                temperature: float = 0.7, numPredict: int = 150):
+                temperature: float = 0.7, numPredict: int = 150,
+                game: str = "Pokemon FireRed/LeafGreen"):
         self.model = model
         self.client = ollama.Client(host=ollamaHost) if ollamaHost else ollama
         self.temperature = temperature
         self.numPredict = numPredict
+        self.systemPrompt = REFEREE_SYSTEM_PROMPT_TEMPLATE.format(game=game)
 
     def judge(self, requestText: str, situationReport: str) -> Verdict:
         user = (f"CURRENT SITUATION:\n{situationReport}\n\n"
@@ -131,7 +137,7 @@ class Referee:
         try:
             message = self.client.chat(
                 model=self.model,
-                messages=[{"role": "system", "content": REFEREE_SYSTEM_PROMPT},
+                messages=[{"role": "system", "content": self.systemPrompt},
                          {"role": "user", "content": user}],
                 options={"temperature": self.temperature,
                         "num_predict": self.numPredict},

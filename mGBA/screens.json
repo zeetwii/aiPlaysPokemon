@@ -35,5 +35,16 @@
   "0808843D": "?naming_or_script_1",
   "08088345": "?naming_or_script_2",
   "08088371": "?naming_or_script_3",
-  "0808CDAD": "?UNKNOWN_C"
+  "0808CDAD": "?UNKNOWN_C",
+
+  "0809FB85": "naming_main",
+  "080EC9E9": "?intro_movie_3_v11",
+  "0812EB89": "?main_menu_v11",
+  "08130CDD": "?main_menu_return_v11",
+  "0809D9F5": "?naming_init_v11",
+  "0810D519": "?menu_init_UNKNOWN_A_v11",
+  "0810D4E9": "?menu_main_UNKNOWN_A_v11",
+  "080895CD": "field_menu_init",
+  "08089085": "field_menu_main",
+  "0809ADF9": "mart_buy_list"
 }

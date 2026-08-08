@@ -22,9 +22,12 @@ three modes, all operating on the currently loaded map:
                  tiles the navigator will treat as encounter terrain.  Nothing
                  here is painted: the game keys its encounter tables by
                  map_bank/map_number, so the table belongs to the *map* and is
-                 read from encounterData/romEncounters.json, while the tiles are
-                 derived from what you painted in Tiles mode.  The panel is a
-                 review surface plus an override for maps the ROM dump misses.
+                 read from encounterData/<game>/romEncounters.json, while the
+                 tiles are derived from what you painted in Tiles mode.  The
+                 panel is a review surface plus an override for maps the ROM
+                 dump misses.  Which game's table it shows is set by
+                 $POKEMON_VERSION (see romVersion.py) and named in the title
+                 bar, because FireRed and LeafGreen disagree about most of them.
 
 Usage:
     python mapEditor.py                       # file picker
@@ -54,6 +57,7 @@ import sys
 
 # Encounter terrain is derived from the painted grid, not stored. Share the
 # pathfinder's implementation so the editor shows exactly what it will compute.
+import romVersion
 from pathfinder import ENCOUNTER_TERRAIN, encounterTilesFor
 
 
@@ -398,6 +402,13 @@ class MapEditor:
         # ROM-dumped wild encounters, keyed "bank,number". This is the primary
         # source for a map's encounter table - map images are named
         # "bank-number-Name", so the lookup needs no per-map bookkeeping.
+        # Per game: FireRed and LeafGreen differ on most tables, and there is
+        # no emulator here to ask, so it comes from $POKEMON_VERSION and goes
+        # in the title bar rather than being silently assumed.
+        self.encounterVersion, versionReason = romVersion.resolve(
+            None, self.encounterDir)
+        self.root.title(f"Pokemon Map Editor - {self.encounterVersion} "
+                        f"encounters ({versionReason})")
         self.romEncounters = {}
         self._loadRomEncounters()
 
@@ -474,7 +485,7 @@ class MapEditor:
                     'file': f, 'widthTiles': w // TILE_SIZE, 'heightTiles': h // TILE_SIZE}
 
     def _loadRomEncounters(self):
-        jp = os.path.join(self.encounterDir, 'romEncounters.json')
+        jp = romVersion.encounterFile(self.encounterDir, self.encounterVersion)
         if os.path.exists(jp):
             try:
                 with open(jp, 'r') as f:

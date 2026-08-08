@@ -1,5 +1,6 @@
 """
-player_ai.py - the harness that lets a local LLM actually play Pokemon Leaf Green.
+player_ai.py - the harness that lets a local LLM actually play Pokemon FireRed
+or LeafGreen. Which one is read off the ROM at startup, not configured.
 
 This is the top of the stack. Everything below it already works and is left
 alone; this file's whole job is to turn the three tool modules into something a
@@ -96,6 +97,8 @@ from objectives import (  # noqa: E402
     ObjectiveBook,
     renderObjective,
 )
+import romVersion  # noqa: E402
+from guideLibrary import GuideLibrary  # noqa: E402
 from screen_state import measure as measureScreen  # noqa: E402
 from naming_screen import Keyboard, NamingError, currentName  # noqa: E402
 from naming_screen import isOpen as namingScreenOpen  # noqa: E402
@@ -128,6 +131,49 @@ DIR_ALIASES = {"u": "Up", "up": "Up", "n": "Up", "north": "Up",
 # usually confused, and 50 blind A presses in the overworld can sell your
 # Pokemon to a trade NPC.
 MAX_PRESSES = 8
+
+# The move-learn prompt, which the game asks in two steps: "X wants to learn the
+# move Y." and then "Delete an older move to make room for Y?". Either one on
+# screen means the same thing here - a permanent choice is pending - and it is
+# worth catching both, because the second is what is up while the move list is
+# waiting for an answer.
+#
+# This is detected from text rather than from callback2 because the prompt runs
+# as a task under whatever screen is already up (the battle, or the overworld
+# right after it), so the callback does not change and there is nothing else to
+# key on. Getting it wrong is expensive: pressing A blindly here is how a
+# Pokemon loses its only attacking move, permanently.
+# The mart. The BUY/SELL/SEE YA prompt is a task drawn over the overworld, so
+# it has no callback of its own and is recognised by its greeting; the item list
+# underneath it is a real screen and does. Observed on FireRed v1.1 - see the
+# note on NAMING_CALLBACKS in naming_screen.py about revisions moving these.
+SHOP_CALLBACK = "0809ADF9"
+SHOP_OPENING = "may i help you"
+SHOP_MAX_QUANTITY = 99
+SHOP_SETTLE = 0.6                 # let a counter box finish animating in
+
+# Saving. The field menu writes a one-line description of whatever row is
+# highlighted, which is a steadier handle than the row number: the menu gains a
+# POKEDEX row and then a POKEMON row as the game opens up, and SAVE slides down
+# each time.
+SAVE_QUESTION = "would you like to save"
+SAVE_MENU_ROWS = 8
+SAVE_FINISH_TAPS = 6              # how long to wait out "SAVING..."
+
+LEARN_PATTERNS = (
+    re.compile(r"wants to learn the\s+move\s+([A-Z0-9'\- ]+?)\s*[.!?]", re.I),
+    re.compile(r"make room for\s+([A-Z0-9'\- ]+?)\s*[.!?]", re.I),
+)
+
+
+def parseLearnPrompt(text: str) -> str | None:
+    """The move being offered, or None if this isn't a move-learn prompt."""
+    flat = " ".join((text or "").split())
+    for pattern in LEARN_PATTERNS:
+        hit = pattern.search(flat)
+        if hit:
+            return hit.group(1).strip()
+    return None
 
 # Map exits offered as destinations, so "leave town and go north" is something
 # the player can ask for by name. Only the current map's exits and those one
@@ -171,6 +217,15 @@ class Config:
     objectivesPath: Path = HERE / "objectives.json"
     memoriesPath: Path = HERE / "memories.json"
     useObjectives: bool = True
+
+    # The scraped IGN mirror (guideScraper.py). The steps for wherever the
+    # player is standing go into every overworld turn; the budget is in
+    # characters, and is deliberately small - a paragraph of guide is help, a
+    # page of it crowds out the party and the destinations.
+    guidesPath: Path = HERE / "guides"
+    useGuides: bool = True
+    guideBudget: int = 900
+    lookupBudget: int = 700
     # Doing the same thing this many times with the same result is the loop the
     # objectives are meant to break; say so in the prompt when it happens.
     repeatAlert: int = 3
@@ -185,6 +240,13 @@ class Config:
     # strong evidence there is no box, not a conversation being slow.
     detectDialog: bool = True
     dialogTrustTurns: int = 3
+    # Save on a timer rather than leaving it to the model, which in 561 turns
+    # never once chose to. A run's whole progress lives in the emulator's RAM
+    # until someone saves, so an unattended run is otherwise one crash away from
+    # having never happened. The turn is a target, not a deadline: saving is
+    # impossible mid-battle and unwise mid-conversation, so it waits for a quiet
+    # turn and goes then.
+    autoSaveTurns: int = 50
     moveBudget: int = 300               # navigator step budget per goal
     parseRetries: int = 2               # re-asks before falling back
     turnDelay: float = 0.4              # pause between turns, seconds
@@ -331,10 +393,22 @@ COMMANDS = (
             "Ask the damage calculator whether your party could beat a trainer "
             "you have already met, and what to train.",
             aliases=("assess", "readiness", "scout")),
+    Command("lookup", "lookup <pokemon, move, TM or place>",
+            "Ask the guide. Tells you where a Pokemon is found, what a move or "
+            "TM does, or what a place is for, e.g. `lookup abra`.",
+            aliases=("guide", "consult", "where")),
     Command("name", "name <a short name>",
             "Type a name on the keyboard screen and confirm it. Give a name of "
             "1-10 letters; the harness presses the keys.",
             aliases=("nickname", "call", "type"), context="naming"),
+    Command("learn", "learn <move to forget> | learn skip",
+            "Answer the move-replacement prompt. Name the move to give up, or "
+            "`learn skip` to keep all four. What you forget is gone for good.",
+            aliases=("forget", "replace", "teach"), context="learn"),
+    Command("buy", "buy <item> [how many]",
+            "Buy from a mart counter you are standing at, e.g. `buy poke ball "
+            "10`. Talk to a `Clerk` first. Poke Balls are what catching costs.",
+            aliases=("purchase", "shop"), context="any"),
     Command("wait", "wait [seconds]",
             "Do nothing and let an animation or cutscene finish.",
             aliases=("idle", "nothing", "pass")),
@@ -356,13 +430,14 @@ class Actions:
     """
 
     def __init__(self, nav: Navigator, cfg: Config, memory=None, roster=None,
-                 data=None):
+                 data=None, guides=None):
         self.nav = nav
         self.cfg = cfg
         self.client = nav.client
         self.memory = memory        # objectives.Memory, for `note`
         self.roster = roster        # matchup.Roster, for `check`
         self.data = data            # damage_calc.GameData, for `check`
+        self.guides = guides        # guideLibrary.GuideLibrary, for `lookup`
         # Set by PlayerAI each turn so battle commands can name real moves.
         self.observation: "Observation | None" = None
         self.turn = 0               # for stamping notes
@@ -408,6 +483,10 @@ class Actions:
         if obs is not None and obs.namingOpen:
             raise ActionError("a naming keyboard is on screen - answer with "
                               "`name <what to call it>` first")
+        if obs is not None and obs.learnOpen:
+            raise ActionError(f"the game is waiting to know whether to replace "
+                              f"a move with {obs.learnNew} - answer with "
+                              f"`learn <move to forget>` or `learn skip` first")
         if obs is not None and obs.dialogOpen and not obs.dialogDoubted:
             raise ActionError("there is a text box on screen - the game ignores "
                               "movement until it is cleared. Press A to advance "
@@ -447,16 +526,49 @@ class Actions:
         except (MGBAError, ValueError):
             return None
         player = state.get("player", {}) or {}
+        battle = bool(state.get("in_battle"))
         dialog = False
-        if self.cfg.detectDialog and not state.get("in_battle"):
+        if self.cfg.detectDialog and not battle:
             try:
                 dialog = bool(measureScreen(self.client.screenshot())["open"])
             except (MGBAError, ValueError):
                 dialog = False
-        return {"battle": bool(state.get("in_battle")),
+        mark = {"battle": battle,
                 "dialog": dialog,
                 "ram": (player.get("map_bank"), player.get("map_number"),
                         player.get("x"), player.get("y"))}
+        # In a battle the pixel test is meaningless - the message shares its row
+        # with the menu and never looks like a plain box - so the only honest
+        # answer to "did that press do anything" comes from the battle itself:
+        # the message line, and the HP on both sides. Without these, every press
+        # in a battle looks like a press at thin air, and _pressEffect ends up
+        # telling the model to walk somewhere else in the middle of a fight.
+        if battle:
+            mark["battleText"] = self._battleText()
+            mark["hp"] = self._battleHp(state)
+        return mark
+
+    def _battleText(self) -> str:
+        """The battle's message line, or "" when no message is up.
+
+        gStringVar4 keeps its last value after a box closes, so dialog_active
+        decides whether the text counts; dialog_text only says what it said.
+        """
+        try:
+            screen = self.client.screen()
+        except (MGBAError, ValueError):
+            return ""
+        if not screen.get("dialog_active"):
+            return ""
+        return " ".join((screen.get("dialog_text") or "").split())
+
+    @staticmethod
+    def _battleHp(state: dict) -> tuple:
+        """Both active Pokemon's HP, as the cheapest proof a turn resolved."""
+        battle = state.get("battle") or {}
+        return tuple((mon or {}).get("hp")
+                     for mon in (battle.get("player_active"),
+                                 battle.get("enemy_active")))
 
     def _pressEffect(self, before: dict | None) -> str:
         """Say what the press actually did.
@@ -477,6 +589,10 @@ class Actions:
             return ""
         if after["battle"] and not before["battle"]:
             return " - a battle started"
+        if before["battle"] and not after["battle"]:
+            return " - the battle is over"
+        if after["battle"]:
+            return self._battleEffect(before, after)
         if after["dialog"]:
             return " - there is a text box on screen now; keep pressing A"
         if before["dialog"]:
@@ -486,6 +602,24 @@ class Actions:
         return (" - nothing responded. There is no text box on screen and "
                 "nothing in front of you to talk to. Pressing A again will do "
                 "the same nothing; walk somewhere else instead")
+
+    def _battleEffect(self, before: dict, after: dict) -> str:
+        """What a raw press did inside a battle.
+
+        Deliberately never says "walk somewhere else": that is overworld advice,
+        and it is not possible to follow while a battle is running. The report
+        the model gets back has to leave it somewhere it can actually act.
+        """
+        if after.get("hp") != before.get("hp"):
+            return " - the battle moved on"
+        text = after.get("battleText") or ""
+        if text and text != (before.get("battleText") or ""):
+            return f" - the battle text advanced: \"{text[:90]}\""
+        if text:
+            return (f" - text is still on screen: \"{text[:90]}\" - keep "
+                    f"pressing A until the move menu is back")
+        return (" - nothing responded. You are in a battle, so there is nothing "
+                "to walk to: pick a move with `use <move>`, or `run` to flee")
 
     def move(self, args: list) -> str:
         self._requireNoDialog()
@@ -593,6 +727,179 @@ class Actions:
         return self._describeRun(self.nav.collect(hit[1],
                                                   maxSteps=self.cfg.moveBudget))
 
+    # ---- saving ------------------------------------------------------------
+
+    def saveGame(self) -> str:
+        """Drive START -> SAVE -> yes through the field menu.
+
+        Finding SAVE is the whole difficulty. Its row moves as the game opens up
+        (the menu grows a POKEDEX row, then a POKEMON row), the cursor remembers
+        where it was left last time, and the menu neither wraps nor reliably
+        accepts a fast run of taps - so counting rows is wrong three different
+        ways. The description the menu prints for the highlighted row would
+        settle it, but that text is not in gStringVar4.
+
+        What is in gStringVar4 is the question SAVE asks once it is chosen. So
+        each row is opened and read: the one that answers "would you like to
+        save the game?" is the right one, and everything else is backed out of.
+        Opening the wrong row costs two taps and changes nothing.
+        """
+        self._menuTap("START")
+        time.sleep(SHOP_SETTLE)
+        found = False
+        for _ in range(SAVE_MENU_ROWS):
+            self._menuTap("A")
+            time.sleep(SHOP_SETTLE)
+            if SAVE_QUESTION in _norm(self._shopText()):
+                found = True
+                break
+            self._menuTap("B")           # a submenu, not the save prompt
+            time.sleep(SHOP_SETTLE)
+            self._menuTap("DOWN")
+            time.sleep(SHOP_SETTLE)
+        if not found:
+            self._menuTap("B")
+            raise ActionError("couldn't find SAVE in the menu")
+
+        self._menuTap("A")               # yes
+        time.sleep(SHOP_SETTLE)
+        # Only after a first save does the overwrite question exist, so this is
+        # answered when it is asked and skipped when it is not.
+        if "overwrite" in _norm(self._shopText()):
+            self._menuTap("A")
+            time.sleep(SHOP_SETTLE)
+        for _ in range(SAVE_FINISH_TAPS):
+            if "saved the game" in _norm(self._shopText()):
+                break
+            time.sleep(SHOP_SETTLE)
+        self._menuTap("A")               # dismiss "<player> saved the game."
+        time.sleep(MENU_TAP_DELAY * 2)
+        self._menuTap("B")               # and close the menu behind it
+        return "saved the game"
+
+    # ---- shops -------------------------------------------------------------
+
+    def buy(self, args: list) -> str:
+        """Buy from a Poke Mart counter, by name and quantity.
+
+        A mart's stock is not in RAM anywhere this harness can read, and a
+        hardcoded stock list per town is one more table to keep in sync with the
+        game. So the row is found by opening each one and reading the name the
+        game itself puts in "<ITEM>? Certainly. How many would you like?", then
+        backing out of the wrong ones. That costs a few taps and works in every
+        mart, including the ones whose stock changes after a badge.
+        """
+        wanted = [a for a in args if not a.isdigit()]
+        counts = [int(a) for a in args if a.isdigit()]
+        item = " ".join(wanted).strip()
+        if not item:
+            raise ActionError("buy needs an item, e.g. `buy poke ball 10`")
+        quantity = max(1, min(SHOP_MAX_QUANTITY, counts[0] if counts else 1))
+
+        if SHOP_OPENING in _norm(self._shopText()):
+            self._menuTap("A")           # "May I help you?" opens on BUY
+            time.sleep(SHOP_SETTLE * 2)
+        # Checked rather than assumed: the list animates in, and searching it
+        # before it is up sends the A presses to whatever is still on screen -
+        # which walks back out of the shop and reports the stock as missing.
+        if not self._shopListOpen():
+            raise ActionError("the shop list isn't open - walk to a `Clerk`, "
+                              "talk to them with `press a`, and buy again")
+
+        row = self._findShopRow(item)
+        if row is None:
+            raise ActionError(f"this mart doesn't stock anything called "
+                              f"{item!r}")
+
+        moneyBefore = self._money()
+        # The quantity box animates in after the row is opened, and taps sent
+        # into that window are dropped - which is how you end up buying one of
+        # something you asked for ten of.
+        time.sleep(SHOP_SETTLE)
+        self._menuTap("UP", quantity - 1)
+        self._menuTap("A")
+        time.sleep(SHOP_SETTLE)
+
+        # The counter repeats the number back before it takes any money, so
+        # check it rather than trusting the taps. Buying the wrong amount is
+        # not something the model can undo, and money is the one resource in
+        # this game that cannot be ground back up in a patch of grass.
+        asked = self._shopConfirmCount(self._shopText())
+        if asked is not None and asked != quantity:
+            self._menuTap("B")
+            raise ActionError(f"the counter registered {asked}, not {quantity} "
+                              f"- nothing was bought, ask again")
+        self._menuTap("A")               # "That will be $N. Okay?" -> YES
+        time.sleep(SHOP_SETTLE)
+        self._menuTap("A")               # dismiss "Here you are!"
+
+        spent = moneyBefore - self._money()
+        if spent <= 0:
+            return (f"the purchase did not go through - {self._shopText()[:80]!r}. "
+                    f"You have ${moneyBefore}")
+        return (f"bought {quantity}x {row} for ${spent}; "
+                f"${self._money()} left")
+
+    def _findShopRow(self, item: str, limit: int = 12) -> str | None:
+        """Open rows one at a time until the game names the one we asked for.
+
+        Leaves the quantity prompt open on a hit, and the list back at the row
+        it started on when nothing matches.
+        """
+        want = _norm(item)
+        seen = []
+        for step in range(limit):
+            self._menuTap("A")
+            time.sleep(SHOP_SETTLE)
+            named = self._shopItemName(self._shopText())
+            if named and (want in _norm(named) or _norm(named) in want):
+                return named
+            if named:
+                seen.append(named)
+            # Backing out and stepping down both animate, and a tap sent into
+            # that window is dropped - which leaves the cursor where it was and
+            # reads the same row forever. Wait each one out.
+            self._menuTap("B")
+            time.sleep(SHOP_SETTLE)
+            if step < limit - 1:
+                self._menuTap("DOWN")
+                time.sleep(SHOP_SETTLE)
+            if len(seen) >= 2 and seen[-1] == seen[-2]:
+                break                    # the cursor is not moving; stop early
+        return None
+
+    @staticmethod
+    def _shopConfirmCount(text: str) -> int | None:
+        """The number in "<ITEM>, and you want 10." - the game's own readback."""
+        hit = re.search(r"you want\s+(\d+)", text or "", re.I)
+        return int(hit.group(1)) if hit else None
+
+    @staticmethod
+    def _shopItemName(text: str) -> str:
+        """The item named by "<ITEM>? Certainly. How many would you like?"."""
+        hit = re.match(r"\s*(.+?)\?\s*certainly", " ".join((text or "").split()),
+                       re.I)
+        return hit.group(1).strip() if hit else ""
+
+    def _shopListOpen(self) -> bool:
+        try:
+            return self.client.screen().get("callback2") == SHOP_CALLBACK
+        except (MGBAError, ValueError):
+            return False
+
+    def _shopText(self) -> str:
+        try:
+            screen = self.client.screen()
+        except (MGBAError, ValueError):
+            return ""
+        return " ".join((screen.get("dialog_text") or "").split())
+
+    def _money(self) -> int:
+        try:
+            return int(self.client.player().get("money") or 0)
+        except (MGBAError, ValueError, TypeError):
+            return 0
+
     def _describeRun(self, result: dict) -> str:
         """Turn a navigator result dict into one line the model can act on."""
         return (f"{result['goal']}: {result['status']} after "
@@ -699,6 +1006,21 @@ class Actions:
                   if report["verdict"] != "ready" else None)
         return describeReadiness(report, entry.get("name") or trainerId, levels)
 
+    def lookup(self, args: list) -> str:
+        if self.guides is None or not self.guides.available:
+            raise ActionError("the guide isn't loaded - run guideScraper.py")
+        if not args:
+            raise ActionError("lookup needs something to look up, e.g. "
+                              "`lookup abra` or `lookup rock tunnel`")
+        term = " ".join(args)
+        found = self.guides.lookup(term, budget=self.cfg.lookupBudget)
+        if not found:
+            # A miss is worth saying plainly: the model should stop asking and
+            # go and look, not rephrase the same question for three turns.
+            return (f"The guide says nothing about {term!r}. Don't look it up "
+                    f"again - decide from what you can see.")
+        return f"THE GUIDE ON {term.upper()}\n{found}"
+
     # ---- the naming keyboard ----------------------------------------------
 
     def name(self, args: list) -> str:
@@ -718,6 +1040,45 @@ class Actions:
             return (f"typed {result['name']!r}{note}, but the keyboard is still "
                     f"open - check the screen and press A to accept it")
         return f"named it {result['name']!r}{note} and confirmed"
+
+    # ---- the move-replacement prompt --------------------------------------
+
+    def learn(self, args: list) -> str:
+        """Answer the "delete an older move?" prompt deliberately.
+
+        The whole point is that the slot is chosen here rather than by whatever
+        the cursor happened to be sitting on, so this never falls back to a bare
+        A press: an unmatched move name is an error, not a guess.
+        """
+        obs = self.observation
+        if obs is None or not obs.learnOpen:
+            raise ActionError("nothing is offering a new move right now")
+        want = " ".join(args).strip()
+        if not want:
+            raise ActionError(f"learn needs the move to forget - one of "
+                              f"{', '.join(obs.learnSlots)} - or `learn skip` "
+                              f"to turn down {obs.learnNew}")
+
+        if want.lower() in ("skip", "none", "no", "nothing", "keep", "cancel"):
+            self._menuTap("B")
+            self._menuTap("A")       # "Give up learning <move>?" -> yes
+            return (f"turned down {obs.learnNew}; the four moves it already "
+                    f"knows are unchanged")
+
+        hit = _bestMatch(want, [(name, slot)
+                                for slot, name in enumerate(obs.learnSlots)])
+        if hit is None:
+            raise ActionError(f"{want!r} isn't one of its moves "
+                              f"({', '.join(obs.learnSlots)}). Say which of "
+                              f"those to forget, or `learn skip`")
+        name, slot = hit
+
+        self._menuTap("A")           # yes, delete an older move
+        time.sleep(MENU_TAP_DELAY * 2)
+        self._menuTap("DOWN", slot)  # the list opens on the first move
+        self._menuTap("A")
+        return (f"forgetting {name} to learn {obs.learnNew} - press A to read "
+                f"the rest of the message")
 
     # ---- misc -------------------------------------------------------------
 
@@ -758,11 +1119,16 @@ class Observation:
     screenshotPath: Path | None = None
     note: str = ""                      # harness-level warnings for the model
     objectiveText: str = ""             # from objectives.renderObjective
+    guideText: str = ""                 # what the walkthrough says about this map
     hiddenPlaces: list = field(default_factory=list)   # patterns this objective hides
     hiddenReason: str = ""              # why, told to the model if it asks anyway
     hidden: int = 0                     # how many destinations were filtered out
     namingOpen: bool = False            # the keyboard screen is asking for a name
     namingSoFar: str = ""               # what is already typed into it
+    learnOpen: bool = False             # a move is being offered in place of another
+    learnNew: str = ""                  # the move on offer
+    learnSlots: list = field(default_factory=list)   # current moves, in slot order
+    learnLines: list = field(default_factory=list)   # those moves, rendered for the model
     liveRequest: str = ""               # a short-term ask from the operator GUI
     dialogOpen: bool = False            # a message box is covering the screen
     dialogText: str = ""                # what it says, if gStringVar4 is known
@@ -784,11 +1150,19 @@ class Observation:
         # none of the world matters this turn.
         if self.namingOpen:
             blocks.append(self._namingBlock())
+        elif self.learnOpen:
+            blocks.append(self._learnBlock())
         elif self.dialogOpen:
             blocks.append(self._dialogBlock())
         elif self.noDialogNotice:
             blocks.append(self._noDialogBlock())
         blocks.append(self._situation())
+        # The guide describes a place, so it belongs with where you are. It
+        # says nothing useful once a battle has replaced the map, and with a
+        # box or a keyboard up the only move is to deal with that - the same
+        # reason the destination list goes quiet there.
+        if self.guideText and not self.inBattle and not self._walkingBlocked():
+            blocks.append(self._guideBlock())
         if self.inBattle:
             blocks.append(self.battleReport)
             if self.recommendation:
@@ -809,6 +1183,17 @@ class Observation:
             blocks.append(self._history(history, cfg.historyLength))
         blocks.append(self._commandHelp())
         return "\n\n".join(b for b in blocks if b)
+
+    def _guideBlock(self) -> str:
+        # Named as someone else's advice, not as fact. It is a walkthrough
+        # written for a human on a different playthrough: it can be out of step
+        # with this save, and where it disagrees with the screen, the screen is
+        # right. Saying so here is cheaper than the model trusting it blindly.
+        lines = ["WHAT A WALKTHROUGH SAYS ABOUT THIS PLACE",
+                 "  (written for someone else's playthrough - if it conflicts "
+                 "with what you can see, believe the game)"]
+        lines += [f"  {line}" if line else "" for line in self.guideText.split("\n")]
+        return "\n".join(lines)
 
     def _liveRequestBlock(self) -> str:
         return "\n".join([
@@ -832,6 +1217,23 @@ class Observation:
         lines.append("  Answer with `name <what to call it>`, using 1-10 "
                      "letters, and the keyboard will be typed and confirmed for "
                      "you. A short, memorable name is best.")
+        return "\n".join(lines)
+
+    def _learnBlock(self) -> str:
+        lines = [f"A MOVE IS BEING OFFERED: {self.learnNew}.",
+                 "  Your Pokemon already knows four moves, so learning this one "
+                 "means giving one up. What you give up here is gone for the "
+                 "rest of the run - there is no way to get it back until very "
+                 "late in the game.",
+                 "  It already knows:"]
+        lines.extend(self.learnLines or [f"  - {m}" for m in self.learnSlots])
+        lines.append("  Answer with `learn <the move to forget>` to make the "
+                     "swap, or `learn skip` to keep all four and turn the new "
+                     "move down. Do NOT press A here - that answers the prompt "
+                     "blind, and which move it takes is not your choice.")
+        lines.append("  Before you choose: count how many of the four can "
+                     "actually deal damage. A Pokemon with no damaging move "
+                     "cannot win a battle, however good its other moves are.")
         return "\n".join(lines)
 
     def _dialogBlock(self) -> str:
@@ -970,6 +1372,8 @@ class Observation:
         # offering it - the same reason objectives hide misleading places.
         if self.namingOpen:
             context = "naming"
+        elif self.learnOpen:
+            context = "learn"
         elif self.dialogOpen and not self.dialogDoubted:
             context = "dialog"
         elif self.inBattle:
@@ -987,12 +1391,21 @@ class Observation:
 # Brain: the ollama side, and the parser that makes text into a command
 # --------------------------------------------------------------------------
 
-SYSTEM_PROMPT = """You are playing Pokemon Leaf Green on a Game Boy Advance.
+# The game's name is filled in from the ROM the emulator actually has loaded
+# (see locationTracking/romVersion.py), not hardcoded. FireRed and LeafGreen
+# have different wild Pokemon, so telling the model the wrong one invites it to
+# go looking for a species that does not exist in this game.
+SYSTEM_PROMPT_TEMPLATE = """You are playing {game} on a Game Boy Advance.
 
 Each turn you get a screenshot and a written report of the game state, and you
 choose exactly ONE action. Tools handle the hard parts for you: `goto` walks
 whole routes, and the battle table already tells you what each move will do.
 Prefer those over pressing buttons one at a time.
+
+A walkthrough is quoted in the report when one covers where you are standing,
+and `lookup` asks it anything else - where a Pokemon lives, what a TM does.
+It was written for a different playthrough, so treat it as advice: where it
+disagrees with the screenshot or the report, they are right and it is wrong.
 
 You are always working towards the objective at the top of the report. It is
 marked done automatically when the game says so, so you never need to claim it
@@ -1098,9 +1511,11 @@ def _parseLine(line: str):
 class Brain:
     """One model call per turn, plus the retries that get a parseable answer."""
 
-    def __init__(self, cfg: Config):
+    def __init__(self, cfg: Config, game: str | None = None):
         self.cfg = cfg
         self.client = ollama.Client(host=cfg.ollamaHost) if cfg.ollamaHost else ollama
+        self.systemPrompt = SYSTEM_PROMPT_TEMPLATE.format(
+            game=game or romVersion.displayName(romVersion.DEFAULT_VERSION))
         self.lastReply = ""
         # Cleared the first time the server rejects `think` - not every model
         # accepts the parameter, and the harness is meant to be model-agnostic.
@@ -1121,7 +1536,7 @@ class Brain:
         if imagePath is not None and self.cfg.sendImage and imagePath.exists():
             user["images"] = [str(imagePath)]
 
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}, user]
+        messages = [{"role": "system", "content": self.systemPrompt}, user]
         for attempt in range(self.cfg.parseRetries + 1):
             reply = self._chat(messages)
             self.lastReply = reply
@@ -1184,15 +1599,25 @@ class PlayerAI:
         # socket, so nothing can observe a different frame than anything else.
         self.nav = Navigator(client=self.client,
                              screenshotPath=str(cfg.screenshotPath))
+        # The navigator asked the emulator which ROM is loaded to pick its
+        # encounter tables; reuse that answer everywhere the game is named to a
+        # model, so the prompts can never disagree with the data.
+        self.gameName = romVersion.displayName(self.nav.pf.encounterVersion)
         self.battle = Session(data=GameData.load())
         self.roster = Roster.load()
-        self.brain = Brain(cfg)
+        self.brain = Brain(cfg, game=self.gameName)
 
         self.book = (ObjectiveBook.load(cfg.objectivesPath)
                      if cfg.useObjectives else ObjectiveBook())
         self.memory = Memory.load(cfg.memoriesPath)
+        # An absent guides/ is not an error - the mirror is rebuildable and the
+        # player predates it - so this stays quiet and `lookup` says so if asked.
+        self.guides = GuideLibrary(cfg.guidesPath) if cfg.useGuides else None
+        if self.guides is not None and not self.guides.available:
+            print("No guide mirror in guides/ - run guideScraper.py to build one.")
         self.actions = Actions(self.nav, cfg, memory=self.memory,
-                               roster=self.roster, data=self.battle.data)
+                               roster=self.roster, data=self.battle.data,
+                               guides=self.guides)
 
         # Turns continue across runs, so "you have been on this objective for
         # 40 turns" survives a restart - which is exactly when it matters.
@@ -1205,6 +1630,9 @@ class PlayerAI:
         # trick is the one assumption in here the game could still surprise us
         # on, so it gets verified against the PP that actually moved.
         self._pendingMove = None
+        # Counted from the resumed turn number, so a run that picks up at turn
+        # 300 doesn't think it is overdue and save on its very first turn.
+        self._lastSaveTurn = self.turn
         self._loadAddresses()
 
         # Set by main() when running in `gui` mode: an operator_inbox.OperatorInbox
@@ -1265,6 +1693,7 @@ class PlayerAI:
         obs.namingOpen = namingScreenOpen(screen)
         if obs.namingOpen:
             obs.namingSoFar = currentName(self.client) or ""
+        self._checkLearn(obs, state, screen)
         self._checkDialog(obs, state, screen, inBattle)
 
         if self.inbox is not None:
@@ -1298,6 +1727,14 @@ class PlayerAI:
                     found = kept
                 obs.destinations = found
 
+            # The objective picks which part of the page to show: a location
+            # runs to a dozen sections and we are only ever in one of them.
+            if self.guides is not None and obs.fix is not None:
+                focus = (f"{objective.title} {objective.detail}"
+                         if objective is not None else "")
+                obs.guideText = self.guides.stepsFor(
+                    obs.fix["mapName"], focus=focus, budget=self.cfg.guideBudget)
+
         if objective is not None:
             obs.hiddenPlaces = objective.hidden
             obs.hiddenReason = objective.hiddenReason
@@ -1307,6 +1744,58 @@ class PlayerAI:
         return obs
 
     # ---- what is on screen ------------------------------------------------
+
+    def _checkLearn(self, obs: Observation, state: dict, screen: dict):
+        """Spot the move-replacement prompt and lay the choice out in full.
+
+        Checked before the dialog block and rendered instead of it: this *is* a
+        text box, but answering it with "press A to advance" is exactly the
+        mistake that costs a move, so it must not be described as one.
+        """
+        screen = screen or {}
+        if not screen.get("dialog_active"):
+            return
+        offered = parseLearnPrompt(screen.get("dialog_text", ""))
+        if not offered:
+            return
+
+        obs.learnOpen = True
+        obs.learnNew = offered
+        mon = self._learnTarget(state, screen.get("dialog_text", ""))
+        moves = [str(m.get("name") or "") for m in (mon.get("moves") or [])]
+        obs.learnSlots = [m for m in moves if m]
+        obs.learnLines = [f"  - {self._describeMove(m)}" for m in obs.learnSlots]
+
+    @staticmethod
+    def _learnTarget(state: dict, text: str) -> dict:
+        """Which party member is being asked. The prompt opens with its name."""
+        party = state.get("party") or []
+        flat = " ".join((text or "").split()).upper()
+        for mon in party:
+            nick = str(mon.get("nickname") or "").upper()
+            if nick and flat.startswith(nick):
+                return mon
+        for mon in party:
+            nick = str(mon.get("nickname") or "").upper()
+            if nick and nick in flat:
+                return mon
+        return party[0] if party else {}
+
+    def _describeMove(self, name: str) -> str:
+        """"VINE WHIP (Grass, power 35)" - or just the name if it isn't known.
+
+        The point of the annotation is the word "status": the model has to be
+        able to see, without recalling a movelist, which of the four can
+        actually deal damage.
+        """
+        move = None
+        if self.data is not None:
+            move = self.data.moves.get(re.sub(r"[^a-z0-9]", "", name.lower()))
+        if move is None:
+            return name
+        if move.is_status:
+            return f"{name} ({move.type}, status - deals no damage)"
+        return f"{name} ({move.type}, power {move.power})"
 
     def _checkDialog(self, obs: Observation, state: dict, screen: dict,
                      inBattle: bool):
@@ -1594,6 +2083,10 @@ class PlayerAI:
         result = self._perform(verb, args, obs)
         print(f"RESULT: {result}")
 
+        saved = self._maybeAutoSave()
+        if saved:
+            print(f"HARNESS: {saved}")
+
         entry = {"turn": self.turn, "action": command, "result": result,
                  "think": think}
         self.history.append(entry)
@@ -1602,6 +2095,43 @@ class PlayerAI:
         self.memory.save()
         self._log(obs, report, reply, entry)
         return entry
+
+    def _maybeAutoSave(self) -> str:
+        """Save every `autoSaveTurns` turns, on the first quiet turn after.
+
+        Deliberately not a command the model can spend a turn on: it has no way
+        to know how long it has been, and the one thing worse than not saving is
+        a model that decides to save every third turn instead of playing.
+        """
+        every = self.cfg.autoSaveTurns
+        if not every or self.turn < every:
+            return ""
+        due = self.turn - (self._lastSaveTurn or 0) >= every
+        if not due:
+            return ""
+
+        # Saving reads the field menu, which does not exist during a battle and
+        # cannot be opened under a message box. Both pass on their own, so this
+        # waits rather than forcing anything.
+        try:
+            state = self.client.game_state()
+            screen = self.client.screen()
+        except (MGBAError, ValueError):
+            return ""
+        if state.get("in_battle"):
+            return ""
+        if screen.get("dialog_active") or namingScreenOpen(screen):
+            return ""
+
+        try:
+            self.actions.saveGame()
+        except (ActionError, MGBAError, ValueError) as exc:
+            # A failed save is worth saying out loud - quietly not saving for an
+            # hour is exactly the situation this exists to prevent - but it is
+            # not worth ending the run over.
+            return f"auto-save failed at turn {self.turn}: {exc}"
+        self._lastSaveTurn = self.turn
+        return f"auto-saved at turn {self.turn}"
 
     def _perform(self, verb: str, args: list, obs: Observation) -> str:
         try:
@@ -1814,7 +2344,8 @@ def runGui(player: PlayerAI, maxTurns: int | None):
                                   daemon=True)
     playThread.start()
 
-    referee = Referee(player.cfg.model, ollamaHost=player.cfg.ollamaHost)
+    referee = Referee(player.cfg.model, ollamaHost=player.cfg.ollamaHost,
+                      game=player.gameName)
     worker = FeasibilityWorker(inbox, referee,
                                getSituationReport=lambda: player.lastReport)
     worker.start()
@@ -1841,6 +2372,7 @@ def buildConfig(args) -> Config:
     cfg.objectivesPath = Path(args.objectives).resolve()
     cfg.memoriesPath = Path(args.memories).resolve()
     cfg.useObjectives = not args.no_objectives
+    cfg.useGuides = not args.no_guides
     cfg.think = args.think
     if args.think:
         cfg.numPredict = max(cfg.numPredict, 1024)   # room to think AND answer
@@ -1880,6 +2412,8 @@ def main():
                         help="where progress and notes are stored")
     parser.add_argument("--no-objectives", action="store_true",
                         help="play with no walkthrough (notes still work)")
+    parser.add_argument("--no-guides", action="store_true",
+                        help="do not quote the scraped guide mirror (guides/)")
     parser.add_argument("--log", type=Path, default=None,
                         help="append every turn to this JSONL file")
     args = parser.parse_args()

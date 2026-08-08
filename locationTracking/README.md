@@ -33,7 +33,8 @@ If it seems confusing, it's because it is.  As the goal of the project grew from
 | `locationTracker.py` | Template-matches a screenshot to a map + tile. Searches the current map and its connection neighbors first (fast), full-scans only on low confidence. Uses `GAME_STATE`'s `map_bank`/`map_number` to disambiguate shared interiors. |
 | `pathfinder.py` | Multi-map A* plus semantic routing: `planToLandmark`, `planToObjectCategory` (nearest Pokemon Center, ...), `planToItem`, `planToCatch` (nearest tile where a species can be met). Handles object *approach* (stand adjacent + face), HM/badge-gated obstacles, and `@return` exits via a warp stack. |
 | `navigator.py` | The LLM-facing closed loop: `goTo` / `goHeal` / `goCatch` / `collect`. Takes one step, re-observes, and replans on drift; reports battles/dialog as interruptions. `goCatch` also paces the encounter terrain once it arrives. |
-| `encounterExtractor.py` | Reads wild-encounter tables straight from the ROM into `encounterData/romEncounters.json`, keyed by `(bank,number)`. This is the primary source of encounter data — the pathfinder reads it directly. |
+| `encounterExtractor.py` | Reads wild-encounter tables straight from the ROM into `encounterData/<game>/romEncounters.json`, keyed by `(bank,number)`. This is the primary source of encounter data — the pathfinder reads it directly. |
+| `romVersion.py` | Decides whether we are playing FireRed or LeafGreen, and where that answer came from. The only thing that differs between the two games here is the encounter tables — see [Which game](#which-game-firered-vs-leafgreen). |
 | `validate.py` | Reports dataset problems: dangling connections, missing instances, unclassified tiles, maps whose encounters have no tile to trigger them, objects without a category. |
 | `autoClassifier.py` | First-pass automatic tile classification by color/heuristics; refine in `mapEditor.py`. |
 
@@ -48,12 +49,54 @@ python mapEditor.py --batch maps          # iterate the whole folder (n / p to p
 Modes (toolbar): **Tiles**, **Connections**, **Encounters**. `Ctrl+S` saves both
 the per-map tile JSON and `connectionData/connections.json`.
 
+## Which game: FireRed vs LeafGreen
+
+The two games share their maps, tiles, connections and landmarks exactly. They
+differ in one dataset here — the wild-encounter tables — and they differ a lot:
+**88 of the 124 tables**, including the version exclusives (FireRed has Ekans,
+Oddish, Psyduck, Growlithe, Scyther; LeafGreen has Sandshrew, Vulpix,
+Bellsprout, Slowpoke, Staryu, Pinsir).
+
+Reading the wrong game's tables never throws. `catch pikachu` still plans a
+route — it just walks to grass the species does not live in, and calls the
+species that *do* live there uncatchable. So the dump is stored per game:
+
+```
+encounterData/firered/romEncounters.json
+encounterData/leafgreen/romEncounters.json
+```
+
+`romVersion.py` picks between them. First hit wins:
+
+1. an explicit argument — `Pathfinder(version="firered")`
+2. **the running emulator** — `GAME_STATE` reports `game` as `"FireRed v1.1"`,
+   which `navigator.py` reads and passes down. This is the normal path, and it
+   needs no configuration: point mGBA at a ROM and the right tables load.
+3. `$POKEMON_VERSION`, for the offline tools that have no emulator to ask
+   (`validate.py`, `mapEditor.py`)
+4. the only version folder present, if there is just one
+5. `romVersion.DEFAULT_VERSION`
+
+Every one of those is *announced*, never assumed — the Pathfinder's startup
+line ends with `[firered: requested (FireRed v1.1)]`, `validate.py` prints
+which game it checked against, and `mapEditor.py` puts it in the title bar.
+That is deliberate: a silent wrong choice here costs an evening.
+
+To add or refresh a game's tables, point the extractor at that ROM. It files
+the dump by the ROM's own header, so it cannot land in the wrong folder:
+
+```
+python encounterExtractor.py ~/ROMS/PokemonFireRed.gba
+# ROM BPRE v1 (firered)  wildAddr=0x083C9D28
+# Dumped 124 map encounter tables to encounterData/firered/romEncounters.json
+```
+
 ## Wild encounters
 
 The game keys its encounter tables by `map_bank`/`map_number`, so a table belongs
 to a **map**, not to a patch of grass. Map files are named `bank-number-Name`, so
-a map's table is looked up in `encounterData/romEncounters.json` with no per-map
-tagging at all — there is nothing to mark in the editor.
+a map's table is looked up in `encounterData/<game>/romEncounters.json` with no
+per-map tagging at all — there is nothing to mark in the editor.
 
 Where on the map an encounter can fire is derived from the painted grid:
 

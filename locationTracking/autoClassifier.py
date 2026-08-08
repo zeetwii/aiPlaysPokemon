@@ -1,5 +1,5 @@
 """
-Auto Tile Classifier for Pokemon LeafGreen Maps
+Auto Tile Classifier for Pokemon FireRed / LeafGreen Maps
 
 Does a first-pass automatic classification of tiles based on color analysis
 and spatial heuristics. Results can then be refined using the interactive

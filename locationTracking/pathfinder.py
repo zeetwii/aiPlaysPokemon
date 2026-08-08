@@ -1,5 +1,5 @@
 """
-Pokemon LeafGreen Pathfinder
+Pokemon FireRed / LeafGreen Pathfinder
 
 Provides multi-map A* pathfinding using tile classification data and
 map connection data. The LLM can simply say "go to Pewter Gym" and this
@@ -39,6 +39,8 @@ import json
 import os
 import heapq
 from collections import defaultdict, deque
+
+import romVersion
 
 
 # Tile type constants
@@ -205,17 +207,28 @@ def encounterTilesFor(tiles, widthTiles, heightTiles, method):
 
 
 class Pathfinder:
-    """Multi-map A* pathfinder for Pokemon LeafGreen."""
+    """Multi-map A* pathfinder for Pokemon FireRed / LeafGreen.
+
+    The two games share every map, tile and connection; only the wild-encounter
+    tables differ, which is what ``version`` selects.
+    """
 
     def __init__(self, tileDataDir=None, connectionDataDir=None,
-                 encounterDataDir=None):
+                 encounterDataDir=None, version=None):
         """
         Initialize the pathfinder with tile, connection, and encounter data.
 
         Args:
             tileDataDir: Path to the tileData directory with per-map JSONs.
             connectionDataDir: Path to the connectionData directory.
-            encounterDataDir: Path to the encounterData directory (ROM dump).
+            encounterDataDir: Path to the encounterData directory (ROM dumps,
+                one subfolder per game).
+            version: Which game's encounter tables to load - 'firered',
+                'leafgreen', or anything romVersion.normalize understands,
+                including GAME_STATE's `game` string verbatim. None resolves
+                it from $POKEMON_VERSION / what is on disk / the default.
+                Only the encounter tables vary; maps, tiles and connections
+                are identical across the two games.
         """
         baseDir = os.path.dirname(__file__)
 
@@ -250,6 +263,12 @@ class Pathfinder:
         # tiles per map, not every tile.
         self._reachCache = {}
 
+        # Which game's encounter tables these are, and where that came from.
+        # Reported below rather than assumed, because the wrong choice is
+        # silent at the routing layer - see romVersion.
+        self.encounterVersion, self.encounterVersionReason = romVersion.resolve(
+            version, encounterDataDir)
+
         self._loadTileData(tileDataDir)
         self._loadConnections(connectionDataDir)
         self._loadEncounters(connectionDataDir, encounterDataDir)
@@ -260,7 +279,8 @@ class Pathfinder:
               f"{sum(len(c) for c in self.connections.values())} connections, "
               f"{len(self.landmarks)} landmarks, "
               f"{sum(len(v) for v in self.objectIndex.values())} objects, "
-              f"{len(self.speciesIndex)} catchable species")
+              f"{len(self.speciesIndex)} catchable species "
+              f"[{self.encounterVersion}: {self.encounterVersionReason}]")
         self._reportUnpaintedEncounterMaps()
 
     def _loadTileData(self, tileDataDir):
@@ -300,20 +320,24 @@ class Pathfinder:
 
           1. An ``encounters`` list in the map's own tileData JSON.  This is the
              manual override, for maps the ROM dump misses or gets wrong.
-          2. encounterData/romEncounters.json, keyed "bank,number".
+          2. encounterData/<game>/romEncounters.json, keyed "bank,number", for
+             whichever game self.encounterVersion resolved to.
 
         The (bank, number) for a map comes from mapIds.json; map images are
         named ``bank-number-Name`` so the name itself is a usable fallback when
         a map hasn't been registered yet.
         """
-        romPath = os.path.join(encounterDataDir, 'romEncounters.json')
+        romPath = romVersion.encounterFile(encounterDataDir,
+                                           self.encounterVersion)
         romEncounters = {}
         if os.path.exists(romPath):
             with open(romPath, 'r') as f:
                 romEncounters = json.load(f)
         else:
-            print(f"Pathfinder: no ROM encounter dump at {romPath} - only maps "
-                  f"with a manual 'encounters' list will be catchable.")
+            print(f"Pathfinder: no {self.encounterVersion} encounter dump at "
+                  f"{romPath} - only maps with a manual 'encounters' list will "
+                  f"be catchable. Build one with:\n"
+                  f"    python encounterExtractor.py <your {self.encounterVersion}.gba>")
 
         idsPath = os.path.join(connectionDataDir, 'mapIds.json')
         mapIds = {}
