@@ -165,6 +165,7 @@ class Navigator:
         self._offsetTriedAt = {}     # mapName -> {(ramX, ramY)} already attempted
         self._offsetGaveUpOn = set()  # maps we've already printed the advice for
         self._warpEntry = {}         # (map, tile) -> direction that crosses it
+        self._lastBlocked = None     # (ramPos, direction) of the last refused step
         # Cleared if the server predates POSITION, or the injected client
         # doesn't implement it; either way we fall back to GAME_STATE.
         self._hasPosition = hasattr(self.client, 'position')
@@ -294,7 +295,7 @@ class Navigator:
         # A few steps north is all it takes to get a clean match, so the map
         # earns another round of attempts whenever the player has moved.
         if mapName in self._offsetChecked:
-            if not self._positionImpossible(mapName, state):
+            if not self._offsetLooksWrong(mapName, state):
                 return False
             here = self._ramPos(state)
             if here is None or here[2:] in self._offsetTriedAt.get(mapName, ()):
@@ -313,7 +314,7 @@ class Navigator:
         # screenshot, no match - and it knows it exactly where template matching
         # is blind. Only when the offset in force is provably wrong, so a map
         # that is working can never be disturbed by a one-sample guess.
-        if self._positionImpossible(mapName, state):
+        if self._offsetLooksWrong(mapName, state):
             seam = self._offsetFromSeam(mapName, state)
             if seam is not None and self.tracker.recordOffset(mapName, seam,
                                                              persist=False):
@@ -373,14 +374,30 @@ class Navigator:
         # the wall at (0,0) and invites a correction to a game that has not
         # started. Written out, that guess would follow the save forever, one
         # square off, walking into the furniture.
+        #
+        # ...or it explains a step the game refused on ground our grid calls
+        # open. Same strength of evidence and the same session-only treatment,
+        # but it reaches the case the wall check cannot see: an offset that is
+        # wrong by several tiles and lands on walkable ground anyway, which is
+        # every mis-framed town rip, and which otherwise stays wrong all run
+        # because a wedged player never reaches the second position.
+        rescue = None
         if self._offsetFreesAWall(mapName, ram[2:], offset):
+            rescue = 'the default had us standing inside a wall'
+        else:
+            evidence = self._blockedStepEvidence(mapName, state)
+            if evidence is not None and self._offsetExplainsABlock(
+                    mapName, ram[2:], offset, evidence):
+                rescue = (f'the game refused a {evidence[1]} step our grid '
+                          f'called open, and this offset explains it')
+        if rescue is not None:
             self._offsetProvisional.add(mapName)
             changed = self.tracker.recordOffset(mapName, offset, persist=False)
             if changed:
                 print(f'navigator: {mapName} provisionally recalibrated for this '
-                      f'session - the default had us standing inside a wall. It '
-                      f'will not be saved unless a second position agrees.')
-            # A map that keeps freeing a wall and never agrees with itself is
+                      f'session - {rescue}. It will not be saved unless a second '
+                      f'position agrees.')
+            # A map that keeps rescuing itself and never agrees with itself is
             # one whose matches aren't trustworthy. Stop paying for captures.
             self._giveUpOnOffset(mapName, attempts)
             return changed
@@ -428,6 +445,65 @@ class Navigator:
             return False
         dx, dy = self.tracker.offsetFor(mapName)
         return not self._tilePossible(mapName, (ram[2] + dx, ram[3] + dy))
+
+    def _blockedStepEvidence(self, mapName, state):
+        """A step the game refused that the grid in force says should have worked.
+
+        The player is standing wherever they are standing, and a tap that moves
+        nobody means the tile ahead is solid. When our grid calls that tile open,
+        the two cannot both be right - and it is never the game that is wrong, so
+        it is our idea of where the player is. Same contradiction
+        _offsetFreesAWall reads off the tile underfoot, except this one is
+        visible from a *walkable-looking* tile, which is the case that check
+        misses entirely.
+
+        That gap is what wedged Pewter City. The rip is framed at the origin like
+        every other town, the default (7, 5) put the player seven columns and
+        five rows from the truth, and both the believed tile and the real one
+        were plain walkable ground - so nothing looked wrong, no correction fired,
+        and the walk loop spent the run replanning a route that kept pressing
+        Left into a sign it could not see.
+
+        Returns (ramTile, direction), or None when there is no contradiction.
+        """
+        if self._lastBlocked is None or mapName not in self.pf.tileData:
+            return None
+        before, direction = self._lastBlocked
+        ram = self._ramPos(state)
+        # Only a refusal we are still standing at the start of says anything
+        # about where we are now.
+        if ram is None or ram != before:
+            return None
+        dx, dy = self.tracker.offsetFor(mapName)
+        ahead = self._expectedTile((ram[2] + dx, ram[3] + dy), direction)
+        if not self._tilePossible(mapName, ahead):
+            return None                  # the grid agrees the step was blocked
+        return (ram[2:], direction)
+
+    def _offsetExplainsABlock(self, mapName, ram, offset, evidence):
+        """True if `offset` accounts for a refused step that ours cannot.
+
+        Weak on its own - plenty of wrong offsets happen to point at a wall - so
+        this only ever earns a session-only correction, and only when the offset
+        in force has already been caught contradicting the game.
+        """
+        blockedFrom, direction = evidence
+        if blockedFrom != ram:
+            return False
+        ahead = self._expectedTile((ram[0] + offset[0], ram[1] + offset[1]),
+                                   direction)
+        return not self._tilePossible(mapName, ahead)
+
+    def _offsetLooksWrong(self, mapName, state):
+        """Is the offset in force provably wrong, rather than merely unproven?
+
+        Two independent things can prove it: it puts the player somewhere they
+        cannot be standing, or it says a step the game just refused should have
+        worked. Either one licenses evidence we would otherwise hold back, since
+        the alternative is not "a safe default" but a known-wrong grid.
+        """
+        return (self._positionImpossible(mapName, state)
+                or self._blockedStepEvidence(mapName, state) is not None)
 
     def _offsetFromSeam(self, mapName, state):
         """The offset implied by the map edge we just walked across, or None.
@@ -628,6 +704,9 @@ class Navigator:
         # Drop the cached facing: if it was stale (a cutscene or NPC spun us)
         # the next attempt re-probes instead of re-deciding "blocked" forever.
         self.facing = None
+        # Keep it: a refused step is a fact about the world that the grid can be
+        # checked against, and _blockedStepEvidence does exactly that.
+        self._lastBlocked = (before, direction)
         return 'blocked'
 
     def _awaitChange(self, before, polls):
@@ -658,6 +737,7 @@ class Navigator:
         # STEP_SETTLE_POLLS - a full second - proving a wall that was never
         # there, which is four times longer than the wait it replaces.
         time.sleep(STEP_ANIMATION)
+        self._lastBlocked = None
         if after[:2] != before[:2]:
             # Crossed onto another map. The id flips at the start of the
             # transition, and the game picks our facing on arrival.

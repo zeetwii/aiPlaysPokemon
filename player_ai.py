@@ -302,7 +302,8 @@ COMMANDS = (
             "routes and pathfinding for you.",
             aliases=("travel", "goto_place", "navigate"), context="overworld"),
     Command("heal", "heal",
-            "Walk to the nearest Pokemon Center and step up to the nurse.",
+            "Walk to the nearest Pokemon Center and step up to the nurse. "
+            "Only worth it when the HEALING block above lists a reason.",
             aliases=("pc", "center"), context="overworld"),
     Command("catch", "catch <species>",
             "Walk to grass where that species lives and pace until one appears.",
@@ -332,8 +333,9 @@ COMMANDS = (
             "you have already met, and what to train.",
             aliases=("assess", "readiness", "scout")),
     Command("name", "name <a short name>",
-            "Type a name on the keyboard screen and confirm it. Give a name of "
-            "1-10 letters; the harness presses the keys.",
+            "Type a name on the keyboard screen and confirm it. Give a cute or "
+            "silly name of 1-10 letters, e.g. `name noodle`; the harness "
+            "presses the keys.",
             aliases=("nickname", "call", "type"), context="naming"),
     Command("wait", "wait [seconds]",
             "Do nothing and let an animation or cutscene finish.",
@@ -692,7 +694,11 @@ class Actions:
         trainerId = hit[1]
         obs = self.observation
         party = (obs.state.get("party") if obs else None) or []
-        team = self.roster.team(trainerId)
+        starter = self.memory.starter if self.memory else ""
+        team = self.roster.team(trainerId, variant=starter)
+        if not team and self.roster.varies(trainerId):
+            raise ActionError(f"{trainerId}'s team depends on which starter you "
+                              f"took, and I haven't recorded the one for yours")
         report = assess(self.data, party, team)
         entry = self.roster.get(trainerId) or {}
         levels = (levelsNeeded(self.data, party, team)
@@ -740,6 +746,92 @@ class Actions:
 
 
 # --------------------------------------------------------------------------
+# Heal advice: is a trip to the nurse actually worth the walk?
+# --------------------------------------------------------------------------
+
+# A Pokemon Center trip costs nothing but turns, and turns are the only thing
+# this harness is short of. So the advice is tied to the party as it actually
+# is, and there are exactly three things a nurse fixes that the player cannot:
+# a status condition, missing HP, and spent PP. Half is the threshold for the
+# latter two because below half you are one bad fight from a whiteout, and
+# above it a detour costs more than it buys.
+HEAL_HP_FRACTION = 0.5
+HEAL_PP_FRACTION = 0.5
+
+
+class PPWatcher:
+    """The highest PP ever seen for each move, which is the only maximum we get.
+
+    GAME_STATE reports a move's current PP and its PP Up bonus, but never its
+    maximum - that lives in a ROM table the emulator script doesn't read. The
+    high-water mark is a lower bound on the real maximum, and an exact one from
+    the first Pokemon Center visit onward, since a nurse fills every move.
+
+    A lower bound is the right way to be wrong here. It can only make the
+    harness quieter about PP than it should be; it can never invent a shortage
+    and send the player across a route for a move that was already full.
+    """
+
+    def __init__(self):
+        self._seen: dict[tuple, int] = {}
+
+    @staticmethod
+    def _key(mon: dict, move: dict) -> tuple:
+        # PP Ups are part of the identity, not a correction to it: using one
+        # raises the maximum, so the old mark is stale and deserves to be
+        # rebuilt rather than trusted.
+        return (mon.get("species_id"), mon.get("nickname"),
+                move.get("name"), move.get("pp_up", 0))
+
+    def observe(self, party: list):
+        """Fold one turn's party into the marks. Safe to call every turn."""
+        for mon in party or []:
+            for move in mon.get("moves") or []:
+                key = self._key(mon, move)
+                pp = int(move.get("pp") or 0)
+                if pp > self._seen.get(key, -1):
+                    self._seen[key] = pp
+
+    def maxFor(self, mon: dict, move: dict):
+        """Best known maximum for this move, or None if it has never been seen
+        at anything we can call full."""
+        return self._seen.get(self._key(mon, move)) or None
+
+
+def healReasons(party: list, watcher: "PPWatcher | None" = None) -> list:
+    """Everything a nurse would fix right now, one short phrase each.
+
+    An empty list is a real answer - the party is fine - and is reported as
+    plainly as a full one, because "no reason to heal" is what stops the model
+    walking back to the Center between every patch of grass.
+    """
+    reasons = []
+    for mon in party or []:
+        if mon.get("is_egg"):
+            continue           # an egg has no HP, no status and no moves
+        label = mon.get("nickname") or mon.get("species") or "?"
+
+        status = (mon.get("status") or "OK").upper()
+        if status not in ("OK", ""):
+            reasons.append(f"{label} is {status}")
+
+        maxHp = int(mon.get("max_hp") or 0)
+        hp = int(mon.get("hp") or 0)
+        if maxHp > 0 and hp < maxHp * HEAL_HP_FRACTION:
+            where = "has fainted" if hp <= 0 else (
+                f"is on {hp}/{maxHp} HP ({100 * hp / maxHp:.0f}%)")
+            reasons.append(f"{label} {where}")
+
+        for move in mon.get("moves") or []:
+            full = watcher.maxFor(mon, move) if watcher else None
+            pp = int(move.get("pp") or 0)
+            if full and pp < full * HEAL_PP_FRACTION:
+                reasons.append(f"{label}'s {move.get('name')} is on "
+                               f"{pp}/{full} PP")
+    return reasons
+
+
+# --------------------------------------------------------------------------
 # Observation: everything the model gets to see this turn
 # --------------------------------------------------------------------------
 
@@ -753,6 +845,7 @@ class Observation:
     inBattle: bool = False
     battleReport: str = ""
     recommendation: str = ""
+    healReasons: list = field(default_factory=list)  # why a nurse would help
     moveSlots: list = field(default_factory=list)   # [(moveName, slotIndex)]
     destinations: list = field(default_factory=list)
     screenshotPath: Path | None = None
@@ -798,6 +891,11 @@ class Observation:
             blocks.append(self._party())
         else:
             blocks.append(self._party())
+            # `heal` is a walking command, so it belongs with the places for
+            # exactly the same reason: offering it while a box is up would
+            # contradict the block that just said you cannot walk.
+            if not self._walkingBlocked():
+                blocks.append(self._healing())
             # No point listing places to walk to in the same breath as
             # refusing to walk - that is the contradiction the model would
             # resolve by walking.
@@ -831,7 +929,17 @@ class Observation:
                          f'"{self.namingSoFar}"')
         lines.append("  Answer with `name <what to call it>`, using 1-10 "
                      "letters, and the keyboard will be typed and confirmed for "
-                     "you. A short, memorable name is best.")
+                     "you.")
+        # A nickname is the one thing in this whole run that is purely the
+        # model's own, and it is stuck on that Pokemon for the rest of the
+        # playthrough - so ask for something with a bit of character. It also
+        # makes every later report easier to read: SPARKY and PEBBLES are
+        # easier to tell apart at a glance than PIKACHU and GEODUDE.
+        lines.append("  Make it cute or silly - a pun on the species, a food, "
+                     "a tiny joke. SPARKY, NOODLE, SIR LEAF and BONK are all "
+                     "better than naming it after its own species. Letters and "
+                     "spaces only, and pick something you have not used on "
+                     "another Pokemon already.")
         return "\n".join(lines)
 
     def _dialogBlock(self) -> str:
@@ -920,6 +1028,32 @@ class Observation:
                          f"({pct:.0f}%)  {types}{status}")
             if moves:
                 lines.append(f"     moves: {moves}")
+        return "\n".join(lines)
+
+    def _healing(self) -> str:
+        """Say whether the nurse has anything to do, and name it if she does.
+
+        The reasons are listed rather than summarised because a model told
+        "your party is hurt" heals and moves on, while a model told "BULBY is
+        on 6/23 HP" can also decide that a Potion, or one more fight, is the
+        better answer.
+        """
+        if not (self.state.get("party") or []):
+            return ""
+        if not self.healReasons:
+            return ("HEALING\n"
+                    "  Nothing here needs a Pokemon Center: nobody is statused, "
+                    "everyone is above half HP, and every move has more than "
+                    "half its PP. Walking back to a nurse now would only cost "
+                    "you turns.")
+        lines = ["HEALING  (command: heal)",
+                 "  A Pokemon Center would fix:"]
+        for reason in self.healReasons:
+            lines.append(f"    - {reason}")
+        lines.append("  Heal before anything risky - a trainer, a cave, or a "
+                     "long route. If you are already somewhere safe and only "
+                     "one thing above is wrong, a Potion or one more fight may "
+                     "be cheaper than the walk.")
         return "\n".join(lines)
 
     def _places(self, limit: int) -> str:
@@ -1015,6 +1149,9 @@ ACTION: use ember
 
 THINK: There is a text box on screen, so I need to advance it.
 ACTION: press a
+
+THINK: The keyboard is up for my new Charmander, and TOASTY suits it.
+ACTION: name toasty
 """
 
 # Anchored on the ACTION: line, but tolerant of the wrappers small models add
@@ -1199,6 +1336,9 @@ class PlayerAI:
         self.turn = int(self.memory.data.get("turns_played") or 0)
         self.history = []
         self._readinessCache = {}
+        # PP maxima are learned by watching, not read - see PPWatcher. It only
+        # ever grows, so folding every turn's party into it is the whole job.
+        self._pp = PPWatcher()
         self._dialogStreak = 0
         self._dialogMarker = None
         # Set after a `use`, checked on the next observation: the battle cursor
@@ -1301,6 +1441,12 @@ class PlayerAI:
         if objective is not None:
             obs.hiddenPlaces = objective.hidden
             obs.hiddenReason = objective.hiddenReason
+
+        # Healing advice is about the party, not the screen, so it is computed
+        # whatever else is going on - but it is only rendered out of battle,
+        # where walking to a nurse is a thing the player can actually do.
+        self._pp.observe(state.get("party") or [])
+        obs.healReasons = healReasons(state.get("party") or [], self._pp)
 
         obs.note = " ".join(n for n in (self._checkPendingMove(state, inBattle),
                                         self._repeatAlert()) if n)
@@ -1470,11 +1616,15 @@ class PlayerAI:
         Cheap enough to run every turn, but it is a few hundred damage rolls
         and the answer cannot change while you stand still.
         """
-        team = self.roster.team(trainerId)
+        starter = self.memory.starter
+        team = self.roster.team(trainerId, variant=starter)
         if not team:
             return None
         party = state.get("party") or []
-        signature = (trainerId, tuple(
+        # The starter is in the key even though it cannot change within a run:
+        # it can go from unknown to known on the turn you pick one, and that
+        # swaps the rival's whole team under an otherwise identical signature.
+        signature = (trainerId, starter, tuple(
             (p.get("species"), p.get("level"), p.get("max_hp"),
              tuple(m.get("name") for m in p.get("moves", [])))
             for p in party))
@@ -1488,8 +1638,12 @@ class PlayerAI:
     def _readinessLine(self, state: dict, trainerId: str) -> str:
         cached = self._readiness(state, trainerId)
         if cached is None:
+            starter = self.memory.starter
+            extra = (f" --starter {starter}"
+                     if starter and self.roster.varies(trainerId) else "")
             return (f"(no team recorded for {trainerId} yet - fight them once, "
-                    f"then run `python battle/matchup.py capture {trainerId}`)")
+                    f"then run `python battle/matchup.py capture {trainerId}"
+                    f"{extra}`)")
         report, levels = cached
         entry = self.roster.get(trainerId) or {}
         return summarizeReadiness(report, entry.get("name") or trainerId, levels)

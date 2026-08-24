@@ -24,15 +24,23 @@ Pokemon - so recording a new one is a copy, not a transcription:
 
     python battle/matchup.py capture brock --name "Leader BROCK"
 
+Most teams are a fixed fact about the game. Your rival's are not: every fight
+with him is built around the starter that counters yours, so his entries store
+`parties` keyed by your starter rather than one `party`, and both the CLI and
+Roster.team need to be told which one you took. The CLI works it out from your
+party if you don't say (see Roster.team and objectives.starterOf).
+
 Usage:
     python battle/matchup.py list                # known trainers
     python battle/matchup.py brock               # assess the live party
     python battle/matchup.py brock --level 18    # what-if at a higher level
     python battle/matchup.py capture <id>        # record the foe you're fighting
+    python battle/matchup.py capture rival-route22 --starter bulbasaur
 
     from matchup import Roster, assess
     report = assess(gameData, party, roster.team("brock"))
     report["verdict"]        # 'ready' | 'risky' | 'not_ready'
+    roster.team("rival-route22", variant="bulbasaur")
 """
 
 from __future__ import annotations
@@ -383,16 +391,53 @@ class Roster:
                 return self.data[known]
         return None
 
-    def team(self, trainerId: str) -> list:
+    def varies(self, trainerId: str) -> bool:
+        """Does this trainer's team depend on a choice made earlier in the run?"""
+        return bool((self.get(trainerId) or {}).get("parties"))
+
+    def variants(self, trainerId: str) -> list:
+        return sorted((self.get(trainerId) or {}).get("parties") or {})
+
+    def team(self, trainerId: str, variant: str = "") -> list:
+        """The stored party, resolving a per-variant entry if there is one.
+
+        Your rival is the one trainer whose team is not a fixed fact about the
+        game: every fight with him is built around the starter that counters
+        yours. Those entries store `parties` keyed by your starter instead of a
+        single `party`, and `varies_by` names what the key means.
+
+        Handed no variant, or one that isn't recorded, this returns nothing
+        rather than picking a party. An empty team already reads as "not
+        recorded yet" everywhere upstream, and telling the player they are
+        ready for a fight after weighing them against the wrong team is a much
+        worse way to be wrong than admitting the gap.
+        """
         entry = self.get(trainerId)
-        return list(entry.get("party", [])) if entry else []
+        if not entry:
+            return []
+        parties = entry.get("parties")
+        if parties is not None:
+            return list(parties.get(str(variant).strip().lower()) or [])
+        return list(entry.get("party", []))
 
     def record(self, trainerId: str, party: list, name: str = "",
-               where: str = "", note: str = ""):
+               where: str = "", note: str = "", variant: str = "",
+               variesBy: str = "starter"):
         entry = self.data.setdefault(trainerId.strip().lower(), {})
         entry.update({k: v for k, v in
                       (("name", name), ("where", where), ("note", note)) if v})
-        entry["party"] = party
+        if variant:
+            entry.setdefault("varies_by", variesBy)
+            entry.setdefault("parties", {})[str(variant).strip().lower()] = party
+            entry.pop("party", None)   # one shape or the other, never both
+        elif entry.get("parties"):
+            raise ValueError(
+                f"{trainerId!r} stores one party per "
+                f"{entry.get('varies_by', 'variant')} "
+                f"({', '.join(sorted(entry['parties'])) or 'none yet'}); say "
+                f"which one this capture is.")
+        else:
+            entry["party"] = party
         self.save()
         return entry
 
@@ -470,6 +515,23 @@ def _liveState(host: str, port: int):
         return client.game_state()
 
 
+def _starterOf(party: list) -> str:
+    """Work out the starter for --starter's default, from the CLI only.
+
+    Imported here rather than at the top so the library half of this module
+    stays a resolver that is handed a variant and knows nothing about where it
+    came from. objectives.py owns per-run facts about the player; it imports
+    matchup lazily too, so neither module load can trip over the other.
+    """
+    if str(HERE.parent) not in sys.path:
+        sys.path.insert(0, str(HERE.parent))
+    try:
+        from objectives import starterOf
+    except ImportError:
+        return ""
+    return starterOf(party)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("trainer", nargs="?", default="list",
@@ -479,6 +541,9 @@ def main():
     parser.add_argument("--name", default="", help="display name when capturing")
     parser.add_argument("--where", default="", help="location when capturing")
     parser.add_argument("--note", default="", help="free note when capturing")
+    parser.add_argument("--starter", default="",
+                        help="which starter this run took, for trainers whose "
+                             "team depends on it (default: read your party)")
     parser.add_argument("--level", type=int, default=None,
                         help="what-if: project your strongest Pokemon to this level")
     parser.add_argument("--hurt", action="store_true",
@@ -497,10 +562,13 @@ def main():
         print(f"Known trainers in {TRAINER_FILE.name}:")
         for tid in roster.ids():
             entry = roster.data[tid]
-            party = entry.get("party", [])
-            team = ", ".join(f"Lv{p['level']} {p['species']}" for p in party)
-            print(f"  {tid:<12} {entry.get('name', ''):<16} "
-                  f"{entry.get('where', ''):<22} {team}")
+            variants = roster.variants(tid)
+            for variant in variants or [""]:
+                party = roster.team(tid, variant=variant)
+                team = ", ".join(f"Lv{p['level']} {p['species']}" for p in party)
+                label = f"{tid} ({variant})" if variant else tid
+                print(f"  {label:<26} {entry.get('name', ''):<16} "
+                      f"{entry.get('where', ''):<32} {team}")
         return 0
 
     if args.trainer == "capture":
@@ -512,17 +580,33 @@ def main():
         if not enemy:
             print("No enemy party in the game state - are you in a battle?")
             return 1
-        entry = roster.record(args.capture_id, enemy, name=args.name,
-                              where=args.where, note=args.note)
-        print(f"Recorded {len(entry['party'])} Pokemon under "
-              f"'{args.capture_id.lower()}':")
-        for p in entry["party"]:
+        # Only a trainer already known to vary gets stored per-variant, so a
+        # first capture of an ordinary trainer isn't split by a starter that
+        # has nothing to do with their team.
+        variant = ""
+        if args.starter or roster.varies(args.capture_id):
+            variant = (args.starter
+                       or _starterOf(state.get("party") or [])).strip().lower()
+            if not variant:
+                print(f"'{args.capture_id.lower()}' stores one team per "
+                      f"starter and your party doesn't say which you took. "
+                      f"Pass --starter.")
+                return 1
+        try:
+            roster.record(args.capture_id, enemy, name=args.name,
+                          where=args.where, note=args.note, variant=variant)
+        except ValueError as exc:
+            print(f"matchup: {exc}")
+            return 1
+        stored = roster.team(args.capture_id, variant=variant)
+        under = args.capture_id.lower() + (f" ({variant})" if variant else "")
+        print(f"Recorded {len(stored)} Pokemon under '{under}':")
+        for p in stored:
             print(f"  Lv{p['level']} {p['species']}  HP {p['max_hp']}  "
                   f"{', '.join(m['name'] for m in p.get('moves', []))}")
         return 0
 
-    team = roster.team(args.trainer)
-    if not team:
+    if roster.get(args.trainer) is None:
         print(f"No team recorded for {args.trainer!r}. "
               f"Known: {', '.join(roster.ids()) or '(none)'}")
         return 1
@@ -532,6 +616,16 @@ def main():
     if not party:
         print("Your party is empty.")
         return 1
+
+    variant = (args.starter or _starterOf(party)).strip().lower()
+    team = roster.team(args.trainer, variant=variant)
+    if not team:
+        choices = roster.variants(args.trainer)
+        print(f"No team recorded for {args.trainer!r}"
+              + (f" with a {variant} start. Recorded: {', '.join(choices)}"
+                 if choices else "."))
+        return 1
+
     if args.level is not None:
         lead = max(party, key=lambda p: p.get("level", 0))
         party = [projectToLevel(lead, args.level)] + [p for p in party if p is not lead]

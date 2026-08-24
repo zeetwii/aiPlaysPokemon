@@ -8,8 +8,15 @@ Two files, both plain JSON so you can read and edit them without the harness:
                     ("go to the Viridian Mart and pick up Oak's Parcel") plus a
                     machine-checkable completion condition. Hand-authored.
   memories.json     what the player has worked out for itself: which objective
-                    it is on, when it finished the earlier ones, and any notes
-                    it chose to write down. Written by the harness every turn.
+                    it is on, when it finished the earlier ones, which starter
+                    this run took, and any notes it chose to write down.
+                    Written by the harness every turn.
+
+Everything that changes from one playthrough to the next lives in memories.json
+and nowhere else, so a test run resets by deleting it - or, better, by loading a
+clean save, which resets it for you (Memory.matchPlayer). Anything derivable
+from the save is derived rather than recorded, for exactly that reason: see
+starterOf.
 
 Why conditions instead of asking the model "are you done yet?": a model that
 grades its own homework declares victory and moves on, and a model with no
@@ -78,9 +85,42 @@ ITEM_MATCH_RATIO = 0.82
 # fill the prompt with a year of trivia.
 MAX_NOTES = 40
 
+# The three starter lines, whole. Your rival builds every one of his teams
+# around the starter that beats yours, so which one you took is a fact the
+# roster has to branch on - see Roster.team's `variant` in battle/matchup.py.
+# Full evolution lines because "which did I pick" still has to be answerable
+# at Lv36, when the answer in the party is called VENUSAUR.
+STARTER_LINES = {
+    "BULBASAUR": "bulbasaur", "IVYSAUR": "bulbasaur", "VENUSAUR": "bulbasaur",
+    "CHARMANDER": "charmander", "CHARMELEON": "charmander",
+    "CHARIZARD": "charmander",
+    "SQUIRTLE": "squirtle", "WARTORTLE": "squirtle", "BLASTOISE": "squirtle",
+}
+
 
 def _squash(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", str(text).lower())
+
+
+def starterOf(party: list) -> str:
+    """Which starter this party says you chose, or "" if it can't tell.
+
+    Derived from the party rather than written down when you pick it, because
+    the moment of choosing is exactly the thing the harness may not have been
+    watching. memories.json gets rebuilt from a mid-playthrough save
+    (ObjectiveBook.sync's fast-forward) and wiped whenever the trainer id
+    changes (Memory.matchPlayer), and a recorded-at-the-time answer would be
+    permanently blank down both of those paths - including the one you walk
+    every time you delete memories.json to restart a test.
+
+    Party order decides ties, which costs nothing in practice: you cannot hold
+    two starter lines until long after the rival's teams stop being a guess.
+    """
+    for pokemon in party or []:
+        line = STARTER_LINES.get(str(pokemon.get("species") or "").strip().upper())
+        if line:
+            return line
+    return ""
 
 
 def _itemsMatch(wanted: str, owned: str) -> bool:
@@ -399,6 +439,7 @@ class ObjectiveBook:
         """
         ctx = Context(state, trainerReady=trainerReady)
         memory.matchPlayer(state, announce=announce)
+        memory.learnStarter(state, announce=announce)
         catchingUp = memory.isFresh
 
         finished = []
@@ -438,7 +479,7 @@ class Memory:
     data: dict = dc_field(default_factory=dict)
 
     DEFAULTS = {
-        "trainer_id": None, "player": None,
+        "trainer_id": None, "player": None, "starter": None,
         "objective_index": 0, "objective_id": None, "objective_title": None,
         "objective_started_turn": 0,
         "completed": [], "notes": [], "updated": None,
@@ -471,6 +512,11 @@ class Memory:
     def isFresh(self) -> bool:
         return bool(self.data.get("fresh"))
 
+    @property
+    def starter(self) -> str:
+        """'bulbasaur' | 'charmander' | 'squirtle', or "" if not seen yet."""
+        return str(self.data.get("starter") or "")
+
     def turnsOnObjective(self, turn: int) -> int:
         return max(0, turn - int(self.data.get("objective_started_turn") or 0))
 
@@ -498,6 +544,24 @@ class Memory:
             self.data["fresh"] = True
         self.data["trainer_id"] = trainerId
         self.data["player"] = player.get("name")
+
+    def learnStarter(self, state: dict, announce: bool = True):
+        """Cache which starter this save took, the first turn it is visible.
+
+        A cache, not a record: it is re-derived whenever it is missing, so a
+        deleted memories.json heals itself on the next turn instead of leaving
+        the rival's team unresolvable for the rest of the run. Caching it at
+        all is what covers the far end of the game, where the starter can be
+        boxed, traded or released and the party stops being evidence.
+        """
+        if self.starter:
+            return
+        starter = starterOf(state.get("party") or [])
+        if not starter:
+            return
+        self.data["starter"] = starter
+        if announce:
+            print(f"objectives: this save started with {starter.upper()}.")
 
     def complete(self, objective: Objective, turn: int):
         self.data.setdefault("completed", []).append({
@@ -617,12 +681,18 @@ def _trainerReadyFn():
     data, roster = GameData.load(), Roster.load()
 
     def ready(state, trainerId):
-        team = roster.team(trainerId)
+        # The variant is derived here rather than read off Memory because this
+        # closure is built before the memory is loaded, and the party it needs
+        # is already in hand either way.
+        party = state.get("party") or []
+        starter = starterOf(party)
+        team = roster.team(trainerId, variant=starter)
         if not team:
+            hint = f" --starter {starter}" if starter and roster.varies(trainerId) else ""
             print(f"objectives: no team recorded for {trainerId!r} - record it "
-                  f"with `python battle/matchup.py capture {trainerId}`.")
+                  f"with `python battle/matchup.py capture {trainerId}{hint}`.")
             return False
-        return assess(data, state.get("party") or [], team)["verdict"] == "ready"
+        return assess(data, party, team)["verdict"] == "ready"
 
     return ready
 

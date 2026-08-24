@@ -48,5 +48,145 @@
         ]
       }
     ]
+  },
+  "rival-route22": {
+    "name": "RIVAL",
+    "where": "Route 22, west of Viridian City",
+    "varies_by": "starter",
+    "note": "Optional fight on the way to Victory Road's gate. His PIDGEY is the same whichever starter you took; his second Pokemon is always the one that beats yours, but at Lv9 it only knows a damaging move and a stat drop, so it is a race rather than a type wall.",
+    "parties": {
+      "bulbasaur": [
+        {
+          "species": "PIDGEY",
+          "nickname": "PIDGEY",
+          "level": 9,
+          "hp": 26,
+          "max_hp": 26,
+          "type1": "Normal",
+          "type2": "Flying",
+          "ability": "Keen Eye",
+          "held_item": "None",
+          "status": "OK",
+          "attack": 13,
+          "defense": 12,
+          "sp_attack": 11,
+          "sp_defense": 11,
+          "speed": 15,
+          "moves": [
+            { "name": "TACKLE", "pp": 35 },
+            { "name": "SAND-ATTACK", "pp": 15 }
+          ]
+        },
+        {
+          "species": "CHARMANDER",
+          "nickname": "CHARMANDER",
+          "level": 9,
+          "hp": 26,
+          "max_hp": 26,
+          "type1": "Fire",
+          "type2": "None",
+          "ability": "Blaze",
+          "held_item": "None",
+          "status": "OK",
+          "attack": 12,
+          "defense": 13,
+          "sp_attack": 17,
+          "sp_defense": 14,
+          "speed": 17,
+          "moves": [
+            { "name": "SCRATCH", "pp": 35 },
+            { "name": "GROWL", "pp": 40 }
+          ]
+        }
+      ],
+      "charmander": [
+        {
+          "species": "PIDGEY",
+          "nickname": "PIDGEY",
+          "level": 9,
+          "hp": 26,
+          "max_hp": 26,
+          "type1": "Normal",
+          "type2": "Flying",
+          "ability": "Keen Eye",
+          "held_item": "None",
+          "status": "OK",
+          "attack": 13,
+          "defense": 12,
+          "sp_attack": 11,
+          "sp_defense": 11,
+          "speed": 15,
+          "moves": [
+            { "name": "TACKLE", "pp": 35 },
+            { "name": "SAND-ATTACK", "pp": 15 }
+          ]
+        },
+        {
+          "species": "SQUIRTLE",
+          "nickname": "SQUIRTLE",
+          "level": 9,
+          "hp": 27,
+          "max_hp": 27,
+          "type1": "Water",
+          "type2": "None",
+          "ability": "Torrent",
+          "held_item": "None",
+          "status": "OK",
+          "attack": 14,
+          "defense": 17,
+          "sp_attack": 14,
+          "sp_defense": 17,
+          "speed": 13,
+          "moves": [
+            { "name": "TACKLE", "pp": 35 },
+            { "name": "TAIL WHIP", "pp": 30 }
+          ]
+        }
+      ],
+      "squirtle": [
+        {
+          "species": "PIDGEY",
+          "nickname": "PIDGEY",
+          "level": 9,
+          "hp": 26,
+          "max_hp": 26,
+          "type1": "Normal",
+          "type2": "Flying",
+          "ability": "Keen Eye",
+          "held_item": "None",
+          "status": "OK",
+          "attack": 13,
+          "defense": 12,
+          "sp_attack": 11,
+          "sp_defense": 11,
+          "speed": 15,
+          "moves": [
+            { "name": "TACKLE", "pp": 35 },
+            { "name": "SAND-ATTACK", "pp": 15 }
+          ]
+        },
+        {
+          "species": "BULBASAUR",
+          "nickname": "BULBASAUR",
+          "level": 9,
+          "hp": 27,
+          "max_hp": 27,
+          "type1": "Grass",
+          "type2": "Poison",
+          "ability": "Overgrow",
+          "held_item": "None",
+          "status": "OK",
+          "attack": 14,
+          "defense": 12,
+          "sp_attack": 17,
+          "sp_defense": 18,
+          "speed": 13,
+          "moves": [
+            { "name": "TACKLE", "pp": 35 },
+            { "name": "GROWL", "pp": 40 }
+          ]
+        }
+      ]
+    }
   }
 }
