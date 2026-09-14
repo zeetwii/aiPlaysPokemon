@@ -73,12 +73,27 @@ from mgba_client import MGBAClient, gen3_decode  # noqa: E402
 NAMING_CALLBACK = "0809FB59"
 
 # Where the text being typed lives. Found by typing a distinctive name and
-# searching EWRAM for it; the screen is built from the same allocation every
-# time, so the address holds. Everything that reads it checks the contents look
-# like a name first, so a bad address degrades to "no verification" rather than
-# to nonsense.
-NAME_BUFFER = 0x02004560
+# searching EWRAM for it - but there is more than one such place, because the
+# naming screen writes into a buffer its *caller* supplies, and the callers
+# don't share one. Naming the player early in the game lands at the first
+# address below; nicknaming a Pokemon you just caught lands at the second, and a
+# harness that knows only the first reads a region of zeroes, concludes it
+# cannot see the name, and refuses to clear a keyboard that has real text on it.
+#
+# So they are candidates, tried in order and each checked before it is believed
+# (see currentName). Add a new one with `python naming_screen.py --where` while
+# that screen is up; it prints the address it found.
+NAME_BUFFERS = (0x02004560,     # naming the player / the rival
+                0x0200FF34)     # nicknaming a caught Pokemon
 MAX_NAME_LENGTH = 10
+
+# Gen 3 text ends with 0xFF, and - the part that matters here - 0x00 is not a
+# terminator, it is a space. So a zero-filled stretch of memory decodes to a
+# neat run of spaces that passes for text, which is exactly how a wrong address
+# gets believed. Requiring the terminator is what separates "a name lives here"
+# from "nothing lives here": every real buffer has one, and blank memory does
+# not.
+GEN3_TERMINATOR = 0xFF
 
 # The keyboard's upper-case page, row 0 first. The lower-case and symbol pages
 # are reached with SELECT and are not used: nicknames read as upper case in
@@ -106,21 +121,43 @@ def isOpen(screen: dict) -> bool:
     return bool(screen) and screen.get("callback2") == NAMING_CALLBACK
 
 
-def currentName(client) -> str | None:
-    """What has been typed so far, or None if the buffer doesn't look like text.
+def nameBuffer(client) -> int | None:
+    """Which candidate address is holding this screen's name, if any."""
+    for addr in NAME_BUFFERS:
+        if _readName(client, addr) is not None:
+            return addr
+    return None
+
+
+def _readName(client, addr: int) -> str | None:
+    """The name at one address, or None if that isn't a name buffer.
 
     The check matters: read at the wrong moment - or at the wrong address - this
     region is arbitrary bytes, and a caller that trusted it would delete
     characters that were never there.
     """
     try:
-        raw = client.peek(NAME_BUFFER, MAX_NAME_LENGTH + 2)
+        raw = client.peek(addr, MAX_NAME_LENGTH + 2)
     except Exception:
+        return None
+    # No terminator in range means this isn't a name - most likely it is blank
+    # memory, whose zero bytes would otherwise decode into a run of spaces and
+    # read as a perfectly plausible ten-character name.
+    if GEN3_TERMINATOR not in raw:
         return None
     text = gen3_decode(raw)
     if len(text) > MAX_NAME_LENGTH or any(ch not in TYPEABLE for ch in text):
         return None
     return text
+
+
+def currentName(client) -> str | None:
+    """What has been typed so far, or None if no buffer could be read."""
+    for addr in NAME_BUFFERS:
+        text = _readName(client, addr)
+        if text is not None:
+            return text
+    return None
 
 
 def sanitize(text: str) -> tuple:
@@ -152,6 +189,37 @@ class Keyboard:
         self.client = client
         self.delay = delay
         self.cursor = HOME
+        self.addr = self._resolve()
+
+    # ---- which buffer is this screen writing into -------------------------
+
+    def _resolve(self):
+        """Pick the address this screen is actually writing into, or None.
+
+        A candidate holding text is the live one: the others are stale heap that
+        this screen is not touching. When none of them holds anything there is
+        nothing to tell them apart by, so the choice is deferred rather than
+        guessed - the first character typed lands in exactly one of them, and
+        _reresolve() reads the answer off that.
+        """
+        readable = [(addr, _readName(self.client, addr)) for addr in NAME_BUFFERS]
+        readable = [(addr, text) for addr, text in readable if text is not None]
+        for addr, text in readable:
+            if text:
+                return addr
+        return readable[0][0] if readable else None
+
+    def _snapshot(self) -> dict:
+        return {addr: _readName(self.client, addr) for addr in NAME_BUFFERS}
+
+    def _reresolve(self, before: dict) -> bool:
+        """After a press that should have changed the name, find what did change."""
+        for addr in NAME_BUFFERS:
+            text = _readName(self.client, addr)
+            if text is not None and text != before.get(addr):
+                self.addr = addr
+                return True
+        return False
 
     # ---- primitives -------------------------------------------------------
 
@@ -160,7 +228,7 @@ class Keyboard:
         time.sleep(self.delay)
 
     def _name(self):
-        return currentName(self.client)
+        return _readName(self.client, self.addr) if self.addr else None
 
     def _moveTo(self, col: int, row: int):
         """Walk the cursor inside the grid. Never steps over an edge."""
@@ -189,8 +257,11 @@ class Keyboard:
         """
         text = self._name()
         if text is None:
-            raise NamingError("can't read the name buffer, so deleting would be "
-                              "guesswork - press B by hand to clear it")
+            raise NamingError("none of the known name buffers holds this "
+                              "screen's text, so deleting would be guesswork. "
+                              "Run `python naming_screen.py --where` while this "
+                              "screen is up to find the address, then add it to "
+                              "NAME_BUFFERS")
         while text:
             self._tap("B")
             after = self._name()
@@ -213,18 +284,26 @@ class Keyboard:
         target = cellOf(char)
         if target is None:
             raise NamingError(f"{char!r} is not on this keyboard")
-        before = self._name()
-        if before is None:
+        before = self._name() or ""
+        if self.addr is not None and self._name() is None:
             raise NamingError("lost track of the name buffer")
         if len(before) >= MAX_NAME_LENGTH:
             raise NamingError("the name is already full")
 
+        was = self._snapshot()
         self._moveTo(*target)
         self._tap("A")
         after = self._name()
         if after is None or len(after) <= len(before):
-            raise NamingError("that keypress typed nothing - the cursor may "
-                              "have left the letter grid")
+            # Either nothing was typed, or it was typed somewhere we weren't
+            # looking. The press itself is the probe that tells the two apart:
+            # if one of the other candidates just grew a character, that is the
+            # buffer this screen owns, and this press did land.
+            if self._reresolve(was):
+                after = self._name()
+            if after is None or len(after) <= len(before):
+                raise NamingError("that keypress typed nothing - the cursor may "
+                                  "have left the letter grid")
         return after[len(before):]
 
     def confirm(self) -> bool:
@@ -289,15 +368,45 @@ class Keyboard:
 # --------------------------------------------------------------------------
 
 
+def findBuffer(client, hint: str = "") -> list:
+    """Search EWRAM for this screen's name buffer, for adding to NAME_BUFFERS.
+
+    Needs something already typed to search for, because an empty buffer looks
+    like every other empty stretch of memory. Type a few distinctive letters on
+    the keyboard by hand first, then pass them as `hint` - or leave it out and
+    the text of whichever known buffer is live is used.
+    """
+    text = hint or (currentName(client) or "")
+    if not text:
+        return []
+    # Gen 3 FINDTEXT gets unreliable on long needles; the first few characters
+    # are distinctive enough and anchor the same place.
+    return client.find_text(text[:6].upper())
+
+
 def main():
-    wanted = " ".join(sys.argv[1:])
+    args = [a for a in sys.argv[1:]]
+    where = "--where" in args
+    wanted = " ".join(a for a in args if a != "--where")
     with MGBAClient() as client:
         screen = client.screen()
         if not isOpen(screen):
             print(f"The naming screen is not up (callback2 {screen['callback2']}, "
                   f"expected {NAMING_CALLBACK}).")
             return 1
-        print(f"Naming screen is open. Typed so far: {currentName(client)!r}")
+        addr = nameBuffer(client)
+        print(f"Naming screen is open. Typed so far: {currentName(client)!r}"
+              + (f" (buffer 0x{addr:08X})" if addr else " (no known buffer)"))
+        if where:
+            found = findBuffer(client, wanted)
+            if not found:
+                print("Nothing to search for - type a few letters on the "
+                      "keyboard by hand, then run this again.")
+                return 1
+            for hit in found:
+                known = " (already in NAME_BUFFERS)" if hit in NAME_BUFFERS else ""
+                print(f"  0x{hit:08X}{known}")
+            return 0
         if not wanted:
             print("Pass a name to type it, e.g. python naming_screen.py SPROUT")
             return 0

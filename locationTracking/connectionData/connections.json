@@ -992,6 +992,37 @@
           "width": 4
         }
       ]
+    },
+    "1-1-MtMoon_1F": {
+      "imageFile": "1-1-MtMoon_1F.png",
+      "widthTiles": 62,
+      "heightTiles": 50,
+      "connections": [
+        {
+          "type": "door",
+          "fromTile": [
+            25,
+            43
+          ],
+          "toMap": "3-22-Route4",
+          "toTile": [
+            19,
+            6
+          ]
+        }
+      ]
+    },
+    "1-2-MtMoon_B1F": {
+      "imageFile": "1-2-MtMoon_B1F.png",
+      "widthTiles": 63,
+      "heightTiles": 50,
+      "connections": []
+    },
+    "1-3-MtMoon_B2F": {
+      "imageFile": "1-3-MtMoon_B2F.png",
+      "widthTiles": 62,
+      "heightTiles": 50,
+      "connections": []
     }
   },
   "landmarks": {},

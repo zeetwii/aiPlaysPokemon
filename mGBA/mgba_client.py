@@ -323,6 +323,15 @@ class MGBAClient:
         """
         return self._send_json("TASKS")
 
+    def flags(self, first: int = 0x000, last: int = 0x8FF) -> dict:
+        """Story flags: {named: {name: bool}, count, set: ["0x566", ...]}.
+
+        `named` is the same block game_state() carries. `set` is every flag id
+        turned on in the range, which is how the next name is found: read this
+        either side of the event you care about and diff the two lists.
+        """
+        return self._send_json(f"FLAGS|{first:X}|{last:X}")
+
     # ---- memory inspection / address discovery ----------------------------
 
     def peek(self, addr: int, length: int = 16) -> bytes:

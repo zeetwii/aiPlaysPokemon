@@ -35,6 +35,7 @@ game state, numbers mean "at least", and dicts combine with all/any/not:
     {"lacks": "OAK'S PARCEL"}
     {"species": "IVYSAUR"}                 in the party
     {"map": "4-3-PalletTown_ProfessorOaksLab"}    by name, or [bank, num]
+    {"flag": "rival_route22"}              a named story flag out of the save
     {"ready_for": "brock"}                 the damage calculator says you'd win
     {"all": [...]}  {"any": [...]}  {"not": {...}}
 
@@ -144,6 +145,7 @@ class Context:
         self.state = state or {}
         self.player = self.state.get("player", {}) or {}
         self.party = self.state.get("party", []) or []
+        self.flags = self.state.get("flags", {}) or {}
         self._trainerReady = trainerReady
         self._mapIds = self._loadMapIds(mapIdsPath)
 
@@ -211,6 +213,25 @@ class Context:
             return any(self.onMap(t) for t in target)
         return False
 
+    def flagSet(self, name: str) -> bool:
+        """One of the save's own story flags, by name (see NAMED_FLAGS in
+        mGBA/mgba_server.lua).
+
+        This is the only way to ask about an event that leaves no other trace:
+        an optional trainer you have already beaten is not visible in the party,
+        the bag or the map, but the game sets a bit for it and never clears it.
+
+        An unknown name reads false and says so, because the alternative is an
+        objective that quietly can never complete.
+        """
+        if name not in self.flags:
+            known = ", ".join(sorted(self.flags)) or "(none - is the mGBA " \
+                                                    "server up to date?)"
+            print(f"objectives: no flag called {name!r} in the game state - "
+                  f"that condition can never be true. Known flags: {known}")
+            return False
+        return bool(self.flags[name])
+
     def readyFor(self, trainerId: str) -> bool:
         if self._trainerReady is None:
             return False
@@ -263,6 +284,8 @@ def isSatisfied(condition, ctx: Context) -> bool:
             checks.append(any(ctx.hasSpecies(v) for v in _asList(value)))
         elif key == "map":
             checks.append(ctx.onMap(value))
+        elif key == "flag":
+            checks.append(all(ctx.flagSet(v) for v in _asList(value)))
         elif key == "ready_for":
             checks.append(ctx.readyFor(value))
         else:
@@ -301,6 +324,9 @@ def describeCondition(condition) -> str:
         elif key == "map":
             names = [v if isinstance(v, str) else str(v) for v in _asList(value)]
             parts.append("you are on " + " or ".join(names))
+        elif key == "flag":
+            parts.append("the game has recorded " + " and ".join(
+                str(v).replace("_", " ") for v in _asList(value)))
         elif key == "ready_for":
             parts.append(f"the damage calculator says you can beat {value}")
         else:
@@ -482,6 +508,11 @@ class Memory:
         "trainer_id": None, "player": None, "starter": None,
         "objective_index": 0, "objective_id": None, "objective_title": None,
         "objective_started_turn": 0,
+        # player_ai.Pursuit: the walking goal (a hunt, a walk to somewhere) the
+        # player is part-way through, so it survives a restart the way the turn
+        # counter does. Listed here so switching saves drops it with everything
+        # else - somebody else's half-finished Pidgey hunt is worse than none.
+        "pursuit": None,
         "completed": [], "notes": [], "updated": None,
     }
 

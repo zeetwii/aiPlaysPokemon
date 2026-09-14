@@ -24,6 +24,8 @@
 --   ADDRS                            - List registered symbol addresses
 --   TASKS                            - Active gTasks fingerprint (needs gTasks)
 --   DIALOG                           - Current dialog text (needs gStringVar4)
+--   FLAGS[|<hex_first>|<hex_last>]   - Named story flags, plus every flag id
+--                                      set in the range (default 0x000-0x8FF)
 --
 -- POSITION exists because GAME_STATE is far too heavy to poll: it walks the
 -- whole party, five bag pockets and (in battle) both active battlers, while a
@@ -36,6 +38,9 @@
 --   party: [ { species, nickname, level, hp, max_hp, stats, moves, nature,
 --              ability, type1, type2, held_item, status, evs, ivs, ... } ]
 --   bag: { items, key_items, poke_balls, tms_hms, berries }
+--   flags: named story flags as booleans (see NAMED_FLAGS) -- the durable
+--          record of events nothing else in the state proves, such as an
+--          optional trainer you have already beaten
 --   in_battle: true while a battle is running
 --   enemy_party: (in battle only) opposing team, same fields as party --
 --                full stats, EVs/IVs, nature, ability, item, moves
@@ -316,6 +321,33 @@ local SB2_SECURITY_KEY   = 0x0F20  -- 4 bytes (XOR key for money/item qty)
 
 -- Badge flags are 0x820 through 0x827
 local BADGE_FLAG_START   = 0x0820
+
+-- Story flags share that bitfield, one bit per flag id. Beating a trainer sets
+-- TRAINER_FLAGS_START + that trainer's id, and for an optional fight that bit
+-- is the only durable record there is: nothing about the party, the bag or the
+-- map says whether you already fought someone you did not have to.
+--
+-- The ids below were read out of this ROM rather than remembered. gTrainers is
+-- one 40-byte struct per trainer (name at +4, party size at +0x20, party
+-- pointer at +0x24, party entries 8 or 16 bytes each depending on bit 1 of
+-- +0x00); the Route 22 rival is the entry whose party is a Lv9 PIDGEY plus the
+-- Lv9 starter that beats yours, which is ids 329, 330 and 331 - one per starter
+-- the rival could have taken, in the same order as the three Oak's lab rivals
+-- at 326-328.
+--
+-- Checked twice against a live save rather than trusted: its set flags in the
+-- trainer range were 0x566-0x568, which under this arithmetic are Bug Catchers
+-- RICK, DOUG and SAMMY (ids 102-104, the Viridian Forest trainers it had
+-- beaten), plus 0x648 and 0x64B - the lab rival and the Route 22 rival holding
+-- CHARMANDER, which is exactly the pair you would expect of a save that took
+-- BULBASAUR, as that one did.
+local TRAINER_FLAGS_START = 0x0500
+
+-- name -> flag ids, true if ANY of them is set. The any-of is what lets one
+-- name cover a fight whose trainer id depends on which starter you took.
+local NAMED_FLAGS = {
+    rival_route22 = { 0x649, 0x64A, 0x64B },  -- trainers 329/330/331
+}
 
 -- ROM data table addresses (auto-detected per version)
 -- These are set by detectRomVersion() at startup, using FR v1.0 as the
@@ -775,6 +807,35 @@ local function readBadgeCount(sb1)
     return count
 end
 
+--- Read one flag out of the same bitfield the badges live in.
+local function readFlag(sb1, flagId)
+    local byte = emu:read8(sb1 + SB1_FLAGS_BASE + (flagId >> 3))
+    return ((byte >> (flagId & 7)) & 1) == 1
+end
+
+--- Every named flag as name -> boolean, for GAME_STATE.
+local function readNamedFlags(sb1)
+    local flags = {}
+    for name, ids in pairs(NAMED_FLAGS) do
+        local on = false
+        for _, id in ipairs(ids) do
+            if readFlag(sb1, id) then on = true end
+        end
+        flags[name] = on
+    end
+    return flags
+end
+
+--- Flag ids set in [first, last], for finding the next flag worth naming:
+--- read it either side of the event you care about and diff the two lists.
+local function readSetFlags(sb1, first, last)
+    local set = {}
+    for id = first, last do
+        if readFlag(sb1, id) then set[#set + 1] = id end
+    end
+    return set
+end
+
 ---------------------------------------------------------------------------
 -- Minimal JSON Serializer
 ---------------------------------------------------------------------------
@@ -1031,6 +1092,7 @@ local function handleGameState()
         party_count = #party,
         party       = party,
         bag         = bag,
+        flags       = readNamedFlags(sb1),
         in_battle   = inBattle,
         enemy_party_count = enemyParty and #enemyParty or 0,
         enemy_party = enemyParty,   -- nil (omitted) outside battle
@@ -1378,6 +1440,33 @@ local function handleAddrs()
     }) .. "\n"
 end
 
+--- FLAGS[|<hex_first>|<hex_last>] -> OK|{"named":{...},"set":["0x566",...]}
+--- The named block is what GAME_STATE carries; the set list is how the next
+--- name gets added - read FLAGS before and after the event, and diff.
+local function handleFlags(args)
+    if emu:platform() ~= C.PLATFORM.GBA then
+        return "ERR|FLAGS requires a GBA game\n"
+    end
+    local sb1 = emu:read32(PTR_SAVEBLOCK1)
+    if sb1 == 0 then
+        return "ERR|Save blocks not loaded (game may still be starting)\n"
+    end
+
+    local first = parseAddr(args[2]) or 0x000
+    local last  = parseAddr(args[3]) or 0x8FF
+    if last < first then return "ERR|Empty flag range\n" end
+    if last - first > 0xFFF then return "ERR|Flag range too wide (max 0x1000)\n" end
+
+    local ids = readSetFlags(sb1, first, last)
+    local out = {}
+    for i, id in ipairs(ids) do out[i] = string.format("0x%X", id) end
+    return "OK|" .. toJSON({
+        named = readNamedFlags(sb1),
+        count = #out,
+        set   = out,
+    }) .. "\n"
+end
+
 local function processCommand(client, line)
     local args = splitString(line, "|")
     local cmd = args[1]:upper()
@@ -1396,6 +1485,8 @@ local function processCommand(client, line)
         return handleDialog()
     elseif cmd == "TASKS" then
         return handleTasks()
+    elseif cmd == "FLAGS" then
+        return handleFlags(args)
     elseif cmd == "PEEK" then
         return handlePeek(args)
     elseif cmd == "FIND" then

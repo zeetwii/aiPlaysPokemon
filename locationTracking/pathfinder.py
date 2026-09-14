@@ -1036,11 +1036,31 @@ class Pathfinder:
             return self._failPlan(None, None,
                                   f"'{species}' does not appear in any known "
                                   f"encounter table")
+        return self._planToEncounter(
+            found, fromMap, fromTile, capabilities, warpStack,
+            f"'{species}' is known but unreachable")
 
+    def planToTrain(self, fromMap, fromTile, capabilities=None, warpStack=None):
+        """Plan a route to the nearest encounter spot, whatever lives there.
+
+        The same search as planToCatch with the species filter taken off. Going
+        to fight wild Pokemon is a different intention from going to catch one
+        particular Pokemon, and it is the more common of the two - most of the
+        early game is levelling - but it had no way to be expressed, so it was
+        being said as "catch <some species that lives near here>" and meaning
+        something else entirely.
+        """
+        return self._planToEncounter(
+            set(self.encounterTiles), fromMap, fromTile, capabilities,
+            warpStack, "no encounter tiles are reachable from here")
+
+    def _planToEncounter(self, candidates, fromMap, fromTile, capabilities,
+                         warpStack, notFound):
+        """Nearest reachable (map, method) out of `candidates`, as a plan."""
         capabilities = capabilities or set()
         best = None
         reasons = []
-        for (mapName, method) in sorted(found):
+        for (mapName, method) in sorted(candidates):
             terrain = ENCOUNTER_TERRAIN.get(method)
             if terrain is None:
                 reasons.append(f"{mapName}: only by {method}, not supported yet")
@@ -1078,8 +1098,7 @@ class Pathfinder:
 
         if best is None:
             return self._failPlan(None, None,
-                                  f"'{species}' is known but unreachable - "
-                                  + "; ".join(reasons))
+                                  f"{notFound} - " + "; ".join(reasons))
         return best[1]
 
     def _nearest(self, candidates, fromMap, fromTile, interact, notFound,

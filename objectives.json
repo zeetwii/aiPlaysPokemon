@@ -50,10 +50,41 @@
       "done": { "has": "TOWN MAP" }
     },
     {
+      "id": "train-for-rival-route22",
+      "title": "Train until you can beat your rival on Route 22",
+      "detail": "Your rival is waiting on Route 22, west of Viridian City, and he is the best fight available before Pewter City. His PIDGEY is Lv9 whichever starter you took, and his second Pokemon is Lv9 and is the one your starter is weak to - so it is a race, not a type wall. Battle wild Pokemon in the Route 1 and Route 2 grass until the readiness line below says you can take him.",
+      "hint": "`train` walks to the nearest grass and paces until something attacks - that is how you level up, and you do not have to name a species. `heal` tops you up at the nearest Pokemon Center. The readiness line below updates as you train.",
+      "trainer": "rival-route22",
+      "completion": "the damage calculator says your party can beat your rival on Route 22",
+      "done": { "ready_for": "rival-route22" },
+      "skip_if": {
+        "any": [
+          { "flag": "rival_route22" },
+          { "map": ["3-2-PewterCity", "6-2-PewterCity_Gym", "6-5-PewterCity_PokemonCenter_1F", "6-6-PewterCity_PokemonCenter_2F", "6-3-PewterCity_Mart", "6-4-PewterCity_House1", "6-7-PewterCity_House2", "6-0-PewterCity_Museum_1F", "6-1-PewterCity_Museum_2F"] },
+          { "badges": 1 }
+        ]
+      }
+    },
+    {
+      "id": "beat-rival-route22",
+      "title": "Fight your rival on Route 22",
+      "detail": "Go to Viridian City and leave it to the west onto Route 22. Your rival runs up to you a few steps in and battles you on the spot, so simply walking onto the route and heading west starts the fight. Beat him: the experience is what carries your team into the Pewter gym. Heal in Viridian City first - there is no Pokemon Center out here.",
+      "hint": "`heal` first, then `goto Route 22` and keep moving west until he stops you. In the fight, the calculator's pick is usually right.",
+      "trainer": "rival-route22",
+      "completion": "the game records that you have beaten your rival on Route 22",
+      "done": { "flag": "rival_route22" },
+      "skip_if": {
+        "any": [
+          { "map": ["3-2-PewterCity", "6-2-PewterCity_Gym", "6-5-PewterCity_PokemonCenter_1F", "6-6-PewterCity_PokemonCenter_2F", "6-3-PewterCity_Mart", "6-4-PewterCity_House1", "6-7-PewterCity_House2", "6-0-PewterCity_Museum_1F", "6-1-PewterCity_Museum_2F"] },
+          { "badges": 1 }
+        ]
+      }
+    },
+    {
       "id": "train-for-brock",
       "title": "Train until you can beat Brock",
-      "detail": "Head north through Viridian City and Route 2 into Viridian Forest, and battle wild Pokemon until your team can handle the Pewter City gym. Brock uses Rock/Ground Pokemon: Grass and Water moves hit them four times as hard, and Normal moves barely scratch them. Catching a second Pokemon is worth the Poke Balls.",
-      "hint": "`catch <species>` walks to grass holding that species and paces until something appears. The readiness line below updates as you train.",
+      "detail": "Head north through Viridian City and Route 2 into Viridian Forest, and battle wild Pokemon until your team can handle the Pewter City gym. Brock uses Rock/Ground Pokemon: Grass, Water, and Fighting moves hit them four times as hard, and Normal moves barely scratch them. Catching a second Pokemon is worth the Poke Balls.",
+      "hint": "`train` walks to the nearest grass and paces until something attacks - that is how you level up. Use `catch <species>` only when you actually want to own one, as this objective's detail suggests. The readiness line below updates as you train.",
       "trainer": "brock",
       "completion": "the damage calculator says your party can beat Brock",
       "done": { "ready_for": "brock" },

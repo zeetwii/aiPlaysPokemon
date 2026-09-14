@@ -915,6 +915,24 @@ class Navigator:
             species, m, t, capabilities=caps, warpStack=self.warpStack),
             f"catch {species}", maxSteps, onArrive=onArrive)
 
+    def goTrain(self, maxSteps=400, rerollLimit=REROLL_LIMIT):
+        """Walk to the nearest encounter terrain and pace until something appears.
+
+        goCatch without the species: same walk, same pacing, same "encountered"
+        result - the difference is only in what the caller meant by it, and that
+        difference matters enough upstream to be worth its own verb.
+        """
+        def onArrive(plan, mapName, tile, steps):
+            encounter = plan.get('encounter')
+            if not encounter:
+                return None
+            status, reason, paced = self._wander(encounter, rerollLimit)
+            return self._result(status, "train", steps + paced, reason)
+
+        return self._run(lambda m, t, caps: self.pf.planToTrain(
+            m, t, capabilities=caps, warpStack=self.warpStack),
+            "train", maxSteps, onArrive=onArrive)
+
     def _wander(self, encounter, limit):
         """Pace back and forth over encounter terrain until a wild appears.
 

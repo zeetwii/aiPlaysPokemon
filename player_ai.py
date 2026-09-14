@@ -32,6 +32,13 @@ Three design notes worth reading before changing anything:
   only appear in battle). Documentation that can't drift, and a smaller menu to
   choose from, which is most of the battle with a small model.
 
+* A goal set on the map survives the battle that interrupts it. The report is
+  written from the present tense of the screen, and a battle replaces the whole
+  screen - so the walk that led into it is remembered separately (Pursuit) and
+  shown again in the battle, loudest when the Pokemon on screen is the one the
+  player went out to catch. Without that, "catch a pidgey" reliably dies at the
+  first wild encounter, which is the one it asked for.
+
 * Progress is measured, never asserted. objectives.json says what "done" means
   for the current objective as a condition over the game state, and the harness
   advances the moment RAM agrees - the model is never asked whether it has
@@ -96,7 +103,7 @@ from objectives import (  # noqa: E402
     ObjectiveBook,
     renderObjective,
 )
-from screen_state import measure as measureScreen  # noqa: E402
+from screen_state import measure as measureScreen, yesNoMenu  # noqa: E402
 from naming_screen import Keyboard, NamingError, currentName  # noqa: E402
 from naming_screen import isOpen as namingScreenOpen  # noqa: E402
 
@@ -117,6 +124,27 @@ MENU_TAP_DELAY = 0.15
 #   action menu:  FIGHT 0  BAG 1        move menu:  slot0  slot1
 #                 POKEMON 2 RUN 3                   slot2  slot3
 ACTION_FIGHT, ACTION_BAG, ACTION_POKEMON, ACTION_RUN = 0, 1, 2, 3
+
+# The bag is a row of pockets with the item list underneath, and it always opens
+# on the first pocket. RIGHT steps one pocket along the row, LEFT steps one back:
+#
+#   ITEMS 0        KEY ITEMS 1        POKE BALLS 2
+#
+# Leaf Green has exactly these three. TMs and berries look like pockets in other
+# games but here they live in the TM Case and the Berry Pouch, which are
+# themselves key items - GAME_STATE reports them separately for that reason, and
+# neither is reachable from this row.
+#
+# That row is the menu the model cannot play. A cursor on a 240x160 screenshot
+# is a few pixels of highlight, so LEFT and RIGHT look identical in the
+# aftermath, and a model that cannot see which pocket it is in oscillates
+# between two of them indefinitely - the exact failure the move cursor above
+# would have had if `use` made it press the directions itself. The fix is the
+# same one: the harness knows the pocket and the row from GAME_STATE, so it
+# counts the taps and the model names the item (`bag poke ball`).
+BAG_POCKETS = (("items", "ITEMS"),
+               ("key_items", "KEY ITEMS"),
+               ("poke_balls", "POKE BALLS"))
 
 DIRECTIONS = ("Up", "Down", "Left", "Right")
 DIR_ALIASES = {"u": "Up", "up": "Up", "n": "Up", "north": "Up",
@@ -164,9 +192,21 @@ class Config:
     think: bool = False
 
     historyLength: int = 6              # recent action/result pairs in the prompt
+    # A battle and the walk that led into it are two different stories, and the
+    # history is split between them (see Observation._history). This is how much
+    # of the *other* one is still shown: enough to remember why you are here,
+    # not enough to drown the six lines that are about right now.
+    recallLength: int = 3
     destinationLimit: int = 10          # walkable places listed per turn
     showDestinations: bool = True
     noteLimit: int = 6                  # remembered notes shown per turn
+    bagLimit: int = 8                   # items listed per pocket, in battle
+
+    # A walking goal outlives the turn that set it (see Pursuit). This is how
+    # long before one is assumed abandoned rather than forgotten - long enough
+    # to survive a gym, short enough that a hunt given up on twenty minutes ago
+    # is not still being nagged about.
+    pursuitTimeout: int = 60
 
     objectivesPath: Path = HERE / "objectives.json"
     memoriesPath: Path = HERE / "memories.json"
@@ -200,35 +240,83 @@ class Config:
 
 def _norm(text: str) -> str:
     """Lowercase, strip punctuation and collapse whitespace, for matching."""
-    return re.sub(r"[^a-z0-9 ]+", " ", str(text).lower()).strip()
+    return " ".join(re.sub(r"[^a-z0-9 ]+", " ", str(text).lower()).split())
+
+
+def _tokens(text: str) -> tuple:
+    """The words of `text`, with letter runs and digit runs split apart.
+
+    'Route22' and 'Route 22' both come out as ('route', '22'), which matters in
+    both directions. The map files write one and a model writes the other, so
+    splitting the boundary is what lets them meet; and once they are separate
+    tokens, 'Route 2' and 'Route 22' are compared as '2' against '22' instead
+    of as one string sitting inside the other.
+
+    That second half is not hypothetical. `goto Rival - Route 22` used to walk
+    to Route 2 - forty-three steps the wrong way, every time - because the
+    characters "route 2" really are inside "rival route 22", and a substring
+    test cannot see that it has stopped in the middle of a number.
+    """
+    return tuple(re.findall(r"[a-z]+|[0-9]+", str(text).lower()))
+
+
+def _spans(haystack: tuple, needle: tuple) -> bool:
+    """Does `needle` appear in `haystack` as a run of whole tokens?"""
+    if not needle or len(needle) > len(haystack):
+        return False
+    return any(haystack[i:i + len(needle)] == needle
+               for i in range(len(haystack) - len(needle) + 1))
+
+
+def _numbersClash(want: tuple, key: tuple) -> bool:
+    """True if both names carry numbers and the numbers disagree.
+
+    Kanto is full of names that differ only by a digit - Route 2 and Route 22,
+    Route 1 and Route 11 - and they are nowhere near each other. Everything
+    else in here is tuned to forgive a typo because guessing wrong costs a
+    turn, but guessing wrong between two of these costs a long walk to the
+    wrong end of the map and no clue that anything went astray. So a number
+    has to be right: it is the part of a name a model gets right or not at all.
+    """
+    a = [t for t in want if t.isdigit()]
+    b = [t for t in key if t.isdigit()]
+    return bool(a) and bool(b) and a != b
 
 
 def _bestMatch(needle: str, candidates: list, cutoff: float = 0.55):
     """Fuzzy-pick one of `candidates` (list of (label, payload)).
 
-    Tried in order of how much we trust it: exact, prefix/substring, then
+    Tried in order of how much we trust it: exact, whole-word containment, then
     difflib. The model rarely reproduces a name exactly ("pokemon center" for
     "Pokemon Center 1F", "ember!" for "Ember"), and refusing those would waste a
-    whole turn on a typo.
+    whole turn on a typo. All three work on tokens rather than characters - see
+    _tokens for what that is worth.
     """
-    want = _norm(needle)
+    want = _tokens(needle)
     if not want or not candidates:
         return None
-    table = [(_norm(label), label, payload) for label, payload in candidates]
+    table = [(_tokens(label), label, payload) for label, payload in candidates]
 
     for key, label, payload in table:
         if key == want:
             return label, payload
+
+    # Either direction: the model naming part of a place ("pokemon center" for
+    # "Pokemon Center 1F"), or naming more than the place ("super potion" when
+    # all you have is a POTION).
     hits = [(key, label, payload) for key, label, payload in table
-            if key.startswith(want) or want in key or key in want]
+            if not _numbersClash(want, key)
+            and (_spans(key, want) or _spans(want, key))]
     if hits:
         hits.sort(key=lambda h: abs(len(h[0]) - len(want)))
         return hits[0][1], hits[0][2]
 
-    close = difflib.get_close_matches(want, [k for k, _l, _p in table], n=1,
-                                      cutoff=cutoff)
+    pool = [(" ".join(k), label, payload) for k, label, payload in table
+            if not _numbersClash(want, k)]
+    close = difflib.get_close_matches(" ".join(want), [k for k, _l, _p in pool],
+                                      n=1, cutoff=cutoff)
     if close:
-        for key, label, payload in table:
+        for key, label, payload in pool:
             if key == close[0]:
                 return label, payload
     return None
@@ -305,8 +393,17 @@ COMMANDS = (
             "Walk to the nearest Pokemon Center and step up to the nurse. "
             "Only worth it when the HEALING block above lists a reason.",
             aliases=("pc", "center"), context="overworld"),
+    Command("train", "train",
+            "Walk to the nearest wild grass and pace until something attacks. "
+            "Use this to level up - you do not have to name a species, and "
+            "nothing is expected to be caught.",
+            # Deliberately not "fight": that is `use`'s, and it means the FIGHT
+            # button in a battle, which is the more urgent of the two readings.
+            aliases=("grind", "level", "levelup"), context="overworld"),
     Command("catch", "catch <species>",
-            "Walk to grass where that species lives and pace until one appears.",
+            "Walk to grass where that species lives and pace until one appears, "
+            "so you can throw a ball at it. Only for when you actually want to "
+            "own one - to level up, use `train`.",
             context="overworld"),
     Command("collect", "collect <item>",
             "Walk to the nearest uncollected item ball of that name and pick it up.",
@@ -317,9 +414,11 @@ COMMANDS = (
     Command("switch", "switch <pokemon>",
             "Send out a different Pokemon from your party.",
             aliases=("swap", "sub"), context="battle"),
-    Command("bag", "bag",
-            "Open the bag in battle, then use `press` to pick an item.",
-            aliases=("item", "items"), context="battle"),
+    Command("bag", "bag [item name]",
+            "Use an item from your bag, e.g. `bag poke ball` or `bag potion` - "
+            "it finds the right pocket and the right line for you. Plain `bag` "
+            "just opens it and leaves you to press the directions yourself.",
+            aliases=("item", "items", "use_item", "throw"), context="battle"),
     Command("run", "run",
             "Try to flee the battle. Only works against wild Pokemon.",
             aliases=("flee", "escape"), context="battle"),
@@ -337,16 +436,60 @@ COMMANDS = (
             "silly name of 1-10 letters, e.g. `name noodle`; the harness "
             "presses the keys.",
             aliases=("nickname", "call", "type"), context="naming"),
+    Command("yes", "yes",
+            "Answer YES to the YES/NO question on screen. Moves the cursor to "
+            "YES and confirms it.",
+            aliases=("confirm", "accept", "ok", "yeah", "yep", "sure"),
+            context="choice"),
+    Command("no", "no",
+            "Answer NO to the YES/NO question on screen. Moves the cursor to NO "
+            "and confirms it. Only pick this if you have read the question and "
+            "mean it.",
+            aliases=("decline", "refuse", "cancel", "nope"), context="choice"),
     Command("wait", "wait [seconds]",
             "Do nothing and let an animation or cutscene finish.",
             aliases=("idle", "nothing", "pass")),
 )
 
+# Verbs the parser will not spell-correct *into*. Everything else in here is
+# worth guessing at, because guessing wrong costs a turn: a misread `goto` walks
+# somewhere silly and the next turn walks back. An answer to a yes/no question
+# is the one thing that cannot be taken back - the question is gone either way
+# - so these two have to be spelled. See _parseLine.
+NO_FUZZY = ("yes", "no")
+
+# Why a command was refused, by the context we are actually in. Written as the
+# reason plus what to do instead: "you can't do that" spends a turn, "you can't
+# do that, here is the thing that works" spends a turn and buys a recovery.
+CONTEXT_REFUSALS = {
+    "naming": ("an on-screen keyboard is up, and every button press types a "
+               "letter into the name - which is how a Pokemon ends up called "
+               "FFFF. Answer with `name <what to call it>` and the keyboard is "
+               "typed and confirmed for you. Whatever else was happening is "
+               "waiting behind this screen and will still be there"),
+    "choice": ("the game is asking you a yes/no question and nothing else can "
+               "happen until you answer it. Use `yes` or `no`"),
+    "dialog": ("there is a text box on screen, and the game ignores every "
+               "button except A and B until it is cleared. `press a` to "
+               "advance it"),
+    "battle": "you are in a battle, and that only works out on the map",
+    "overworld": "that only works during a battle, and you are not in one",
+}
+
 VERB_LOOKUP = {}
 for _c in COMMANDS:
     VERB_LOOKUP[_c.name] = _c.name
     for _a in _c.aliases:
+        # Two commands claiming one word is a silent bug: the table is built in
+        # order, so the loser just quietly stops being reachable by that name,
+        # and nothing about the command list shows it. Say so at import instead
+        # of letting `fight` mean whichever command happens to be defined last.
+        if _a in VERB_LOOKUP:
+            raise ValueError(f"alias {_a!r} is claimed by both "
+                             f"{VERB_LOOKUP[_a]!r} and {_c.name!r}")
         VERB_LOOKUP[_a] = _c.name
+
+FUZZY_POOL = [_w for _w, _v in VERB_LOOKUP.items() if _v not in NO_FUZZY]
 
 
 class Actions:
@@ -368,6 +511,16 @@ class Actions:
         # Set by PlayerAI each turn so battle commands can name real moves.
         self.observation: "Observation | None" = None
         self.turn = 0               # for stamping notes
+        # Written by the walking commands, read by PlayerAI._setPursuit: the
+        # name the argument fuzzy-matched to, and the navigator's own verdict on
+        # how the walk ended. Both are already computed in here, and guessing
+        # either of them back out of the result string would be a second, worse
+        # parser for something we already know exactly.
+        self.lastTarget = ""
+        self.lastStatus = ""
+        # Likewise for `bag <item>`: what it took out, and how many there were
+        # before it did, so the next turn can check one actually left the bag.
+        self.lastItem: dict | None = None
 
     # ---- primitives -------------------------------------------------------
 
@@ -538,6 +691,7 @@ class Actions:
             if not entry["found"]:
                 raise ActionError(f"{label} is known but not reachable from here "
                                   f"({entry['reason']})")
+            self.lastTarget = label
             result = self.nav.goToTile(entry["map"], entry["tile"],
                                        interact=entry["interact"],
                                        label=f"go to {label}",
@@ -565,6 +719,7 @@ class Actions:
         if hit is None:
             raise ActionError(f"I don't know a place called {name!r}. Pick one of "
                               f"the places listed in the report.")
+        self.lastTarget = hit[1]
         result = self.nav.goTo(hit[1], maxSteps=self.cfg.moveBudget)
         return self._describeRun(result)
 
@@ -572,17 +727,52 @@ class Actions:
         self._requireNoDialog()
         return self._describeRun(self.nav.goHeal(maxSteps=self.cfg.moveBudget))
 
+    def train(self, args: list) -> str:
+        self._requireNoDialog()
+        return self._describeRun(self.nav.goTrain(maxSteps=self.cfg.moveBudget))
+
     def catch(self, args: list) -> str:
         self._requireNoDialog()
         if not args:
-            raise ActionError("catch needs a species, e.g. `catch pidgey`")
+            # The commonest thing a model means by a bare `catch` is "go find me
+            # something to fight", which is what `train` is for. Sending it
+            # there beats an error: the species it would have had to invent is
+            # the whole problem (`catch pokemon` was a real turn).
+            raise ActionError("catch needs a species to hunt, e.g. `catch "
+                              "pidgey`. If you just want a wild battle to level "
+                              "up, use `train` instead - no species needed")
         known = [(s, s) for s in self.nav.species()]
         hit = _bestMatch(" ".join(args), known)
         if hit is None:
             raise ActionError(f"no grass is tagged with {' '.join(args)!r}. "
                               f"Known species: {', '.join(s for s, _ in known[:20])}")
-        return self._describeRun(self.nav.goCatch(hit[1],
-                                                  maxSteps=self.cfg.moveBudget))
+        # The matched name, not what the model typed: `catch pidgy` has to be
+        # remembered as PIDGEY or the reminder will never recognise the foe.
+        self.lastTarget = hit[1]
+        outcome = self._describeRun(self.nav.goCatch(hit[1],
+                                                     maxSteps=self.cfg.moveBudget))
+
+        # Say it while the model is still thinking about it. The training
+        # objectives recommend `catch` as the way to go find a wild battle, so
+        # asking for one you already own is a reasonable thing to do - but the
+        # model usually does not know it already owns one, and two hundred turns
+        # of hunting something asleep in slot 2 starts right here.
+        owned = self._inParty(hit[1])
+        if owned:
+            outcome += (f" You already have a {hit[1].upper()} ({owned}), so "
+                        f"this was a walk to the grass rather than a hunt - "
+                        f"good for training, and nothing is waiting to be "
+                        f"caught. Just win the battles.")
+        return outcome
+
+    def _inParty(self, species: str) -> str:
+        """The nickname of a party member of that species, or ''."""
+        obs = self.observation
+        want = _norm(species)
+        for mon in ((obs.state.get("party") if obs else None) or []):
+            if _norm(mon.get("species", "")) == want:
+                return mon.get("nickname") or mon.get("species") or species
+        return ""
 
     def collect(self, args: list) -> str:
         self._requireNoDialog()
@@ -592,11 +782,13 @@ class Actions:
         hit = _bestMatch(" ".join(args), known)
         if hit is None:
             raise ActionError(f"no item ball called {' '.join(args)!r} is mapped")
+        self.lastTarget = hit[1]
         return self._describeRun(self.nav.collect(hit[1],
                                                   maxSteps=self.cfg.moveBudget))
 
     def _describeRun(self, result: dict) -> str:
         """Turn a navigator result dict into one line the model can act on."""
+        self.lastStatus = str(result.get("status") or "")
         return (f"{result['goal']}: {result['status']} after "
                 f"{result['steps']} step(s) - {result['reason']}")
 
@@ -656,10 +848,80 @@ class Actions:
                 f"screenshot, the party menu may still be open")
 
     def bag(self, args: list) -> str:
-        self._requireBattle()
+        """Open the bag - and, given an item name, use that item in one go.
+
+        The taps are counted from GAME_STATE rather than described to the model:
+        the bag opens on ITEMS every time, so the pocket is RIGHT x its index in
+        BAG_POCKETS, and the item is DOWN x its index in the pocket's list,
+        which is the same order the game draws it in. Nothing here is guessed.
+
+        It deliberately does not try to work out whether the bag is already
+        open, because it cannot: no address the harness knows reports the bag,
+        and asking the screenshot is the question the model is already getting
+        wrong. Instead it always opens from the action menu, and the quantity
+        check next turn (PlayerAI._checkPendingItem) says plainly if that landed
+        somewhere unexpected.
+        """
+        obs = self._requireBattle()
+        if not args:
+            self._chooseAction(ACTION_BAG)
+            return ("opened the bag, on the ITEMS pocket - it always opens "
+                    "there. The pockets are ITEMS -> KEY ITEMS -> POKE BALLS "
+                    "along the top: `press right` moves one pocket that way, "
+                    "`press left` moves one back, `press down` moves down the "
+                    "item list, `press a` uses what is highlighted and `press "
+                    "b` closes the bag. Key items do nothing in a battle. "
+                    "Easier: `press b` to close it, then `bag <item name>` - "
+                    "that finds the item and uses it without you steering.")
+
+        table = self._bagIndex(obs.state)
+        if not table:
+            raise ActionError("your bag is empty")
+        # Stricter than everywhere else in here on purpose. Fuzzy matching is
+        # forgiveness for a typo, and the usual cutoff is tuned for place names,
+        # where guessing wrong costs a walk. In the bag it costs the item: at
+        # 0.55, `bag master ball` - a ball you do not own - is close enough to
+        # GREAT BALL to throw one of those instead, which is a resource the
+        # player cannot get back. Better to be told what you actually have.
+        hit = _bestMatch(" ".join(args), table, cutoff=0.85)
+        if hit is None:
+            # Key items are left out of the list for the same reason the report
+            # does not name them: offering one is offering a dead end.
+            usable = [name for name, e in table if e["pocket"] != "key_items"]
+            raise ActionError(f"you have no {' '.join(args)!r}. What you can "
+                              f"use in here: {', '.join(usable[:12]) or 'nothing'}")
+        name, entry = hit
+        if entry["pocket"] == "key_items":
+            raise ActionError(f"{name} is a key item - the game will not let you "
+                              f"use one during a battle")
+
         self._chooseAction(ACTION_BAG)
-        return ("opened the bag in battle. Use `press` with up/down/a to pick an "
-                "item, or `press b` to back out.")
+        self._menuTap("RIGHT", entry["pocketIndex"])
+        self._menuTap("DOWN", entry["itemIndex"])
+        self._menuTap("A")
+        # Recorded for the next observation to check against, the same way `use`
+        # is checked against the PP that actually moved.
+        self.lastItem = {"name": name, "pocket": entry["pocket"],
+                         "quantity": entry["quantity"]}
+        return (f"took {name} out of the {entry['label']} pocket and used it "
+                f"(pocket {entry['pocketIndex'] + 1}, item "
+                f"{entry['itemIndex'] + 1} down the list). Check the next "
+                f"screenshot: a ball is thrown straight away, but a healing "
+                f"item asks which Pokemon first, and a text box may need A.")
+
+    @staticmethod
+    def _bagIndex(state: dict) -> list:
+        """[(item name, where it is)] over every pocket, in the game's order."""
+        bag = state.get("bag") or {}
+        table = []
+        for pocketIndex, (key, label) in enumerate(BAG_POCKETS):
+            for itemIndex, item in enumerate(bag.get(key) or []):
+                table.append((str(item.get("name") or ""),
+                              {"pocket": key, "label": label,
+                               "pocketIndex": pocketIndex,
+                               "itemIndex": itemIndex,
+                               "quantity": int(item.get("quantity") or 0)}))
+        return table
 
     def run(self, args: list) -> str:
         self._requireBattle()
@@ -725,6 +987,70 @@ class Actions:
                     f"open - check the screen and press A to accept it")
         return f"named it {result['name']!r}{note} and confirmed"
 
+    # ---- yes/no questions -------------------------------------------------
+
+    # How many nudges to give the cursor before giving up on moving it. Two
+    # options means one press should do it; the budget is for a dropped tap, not
+    # for a menu that turns out to be longer than we thought.
+    CURSOR_TRIES = 3
+
+    def yes(self, args: list) -> str:
+        return self._answer("yes")
+
+    def no(self, args: list) -> str:
+        return self._answer("no")
+
+    def _answer(self, wanted: str) -> str:
+        """Put the cursor on one option and press A.
+
+        Written as move-check-move rather than "press UP, then A" on purpose.
+        Whether this menu's cursor wraps from YES round to NO is a fact about
+        the ROM that we would be taking on trust, and being wrong about it gives
+        exactly the failure this whole change exists to prevent - a confident
+        answer of the opposite thing, with a result string saying it went fine.
+        Reading the cursor back after each nudge costs a screenshot and needs to
+        trust nothing.
+        """
+        obs = self.observation
+        if obs is None or not obs.choiceOpen:
+            raise ActionError("there is no YES/NO question on screen; "
+                              "`yes` and `no` only answer one of those")
+
+        menu = self._readChoice()
+        if menu["choice"] is None:
+            raise ActionError("a YES/NO menu is up but I cannot tell which "
+                              "option the cursor is on - use `press up` or "
+                              "`press down`, then look at the screenshot")
+
+        moved = 0
+        while menu["choice"] != wanted and moved < self.CURSOR_TRIES:
+            self._menuTap("UP" if wanted == "yes" else "DOWN")
+            moved += 1
+            menu = self._readChoice()
+            if not menu["open"]:
+                # The menu closed while we were aiming at it. Something else
+                # answered the question, and saying so is better than pressing A
+                # into whatever replaced it.
+                raise ActionError("the YES/NO menu closed before I could answer "
+                                  "- check the screenshot for what is up now")
+
+        if menu["choice"] != wanted:
+            raise ActionError(f"could not get the cursor onto {wanted.upper()} "
+                              f"- it is still on {str(menu['choice']).upper()}")
+
+        self._menuTap("A")
+        # A menu answer can start a cutscene, open a keyboard or do nothing
+        # visible, so the cache of which way we are facing is no longer sound -
+        # the same reasoning as `press`.
+        self.nav.facing = None
+        return f"answered {wanted.upper()}"
+
+    def _readChoice(self) -> dict:
+        try:
+            return yesNoMenu(self.client.screenshot())
+        except (MGBAError, ValueError):
+            return {"open": False, "choice": None}
+
     # ---- misc -------------------------------------------------------------
 
     def wait(self, args: list) -> str:
@@ -742,7 +1068,36 @@ class Actions:
         method = getattr(self, verb, None)
         if method is None:
             raise ActionError(f"unknown command {verb!r}")
+        self._requireContext(verb)
+        self.lastTarget, self.lastStatus, self.lastItem = "", "", None
         return method(args)
+
+    def _requireContext(self, verb: str):
+        """Refuse a command the report did not offer this turn.
+
+        The command list in the prompt has always been filtered by context, but
+        nothing enforced it, so the filter was advice - and a model that ignores
+        advice got the command run anyway. That is not a harmless disagreement:
+        `bag` on a naming screen is LEFT UP RIGHT A RIGHT RIGHT A sent into a
+        keyboard, which types two letters of a nickname and reports back that it
+        threw a Poke Ball. Six turns of that is a Caterpie called TUNOIJDEXM and
+        a model with no way to work out why the ball count never moved.
+
+        So the menu and the dispatcher now read the same table. What the model
+        is told it can do is exactly what it can do, and being wrong costs it
+        one turn and an explanation instead of a Pokemon's name.
+        """
+        obs = self.observation
+        if obs is None:
+            return          # manual console before the first observation
+        command = next((c for c in COMMANDS if c.name == verb), None)
+        if command is None or command.context == "any":
+            return
+        context = obs.context
+        if command.context == context:
+            return
+        raise ActionError(f"`{verb}` is not something you can do right now: "
+                          f"{CONTEXT_REFUSALS[context]}")
 
 
 # --------------------------------------------------------------------------
@@ -831,6 +1186,81 @@ def healReasons(party: list, watcher: "PPWatcher | None" = None) -> list:
     return reasons
 
 
+def _ballCount(state: dict) -> int:
+    """How many Poke Balls of any kind are in the bag.
+
+    Counted rather than listed because the only decision it feeds is "can you
+    catch anything at all", and a model told it has three balls behaves the
+    same as one told it has three Great Balls and a Poke Ball.
+    """
+    pocket = ((state.get("bag") or {}).get("poke_balls")) or []
+    return sum(int(item.get("quantity") or 0) for item in pocket
+               if "ball" in str(item.get("name", "")).lower())
+
+
+# --------------------------------------------------------------------------
+# Pursuit: the walking goal that outlives the turn that set it
+# --------------------------------------------------------------------------
+
+# The commands that mean "I am going somewhere to do something", as opposed to
+# "I am dealing with what is in front of me right now". Only these are worth
+# remembering past their own turn.
+INTENT_VERBS = ("catch", "train", "goto", "collect", "heal")
+
+# The two that are not finished by arriving anywhere: both walk to grass and
+# then wait to be attacked, so the battle that interrupts them is the point of
+# them. Everything else is done when it gets where it was going.
+PACING_VERBS = ("catch", "train")
+
+# Navigator statuses that mean the goal was reached, so there is nothing left to
+# remember. Everything else - interrupted, stuck, gave_up, no_encounter, and
+# above all `encountered` - means the goal is alive and unfinished.
+DONE_STATUSES = ("arrived", "healed")
+
+
+@dataclass
+class Pursuit:
+    """A walking goal the model set, remembered until it is actually reached.
+
+    The bug this exists for: the report is written from the present tense of the
+    screen, and a battle replaces the whole screen. Six turns of `use ember`
+    push the `catch pidgey` that started it all out of the history, so by the
+    time the battle ends the only record that the player came out here for a
+    reason is gone - and the model, reading a report that says nothing about
+    catching, walks off to the next objective. Catching a Pokemon then only ever
+    happens when a human asks for it in the same breath.
+
+    `catch` is the sharp case, because it is the one command that *succeeds by
+    being interrupted*: it paces the grass until something jumps out, so the
+    battle is not an accident on the way to the goal, it is the goal. But the
+    same forgetting happens to a `goto` cut short by a trainer halfway down a
+    route, so everything in INTENT_VERBS gets remembered the same way. Small
+    models especially do not infer "I was walking somewhere" from a map.
+
+    It is stored in memories.json rather than in the process, because a hunt is
+    exactly the sort of thing an operator restarts the harness in the middle of.
+    """
+
+    verb: str
+    target: str = ""
+    turn: int = 0
+
+    @property
+    def command(self) -> str:
+        """The command that resumes it - which is the command that set it."""
+        return f"{self.verb} {self.target}".strip()
+
+    def asDict(self) -> dict:
+        return {"verb": self.verb, "target": self.target, "turn": self.turn}
+
+    @classmethod
+    def fromDict(cls, raw) -> "Pursuit | None":
+        if not isinstance(raw, dict) or not raw.get("verb"):
+            return None
+        return cls(verb=str(raw["verb"]), target=str(raw.get("target") or ""),
+                   turn=int(raw.get("turn") or 0))
+
+
 # --------------------------------------------------------------------------
 # Observation: everything the model gets to see this turn
 # --------------------------------------------------------------------------
@@ -860,8 +1290,14 @@ class Observation:
     dialogOpen: bool = False            # a message box is covering the screen
     dialogText: str = ""                # what it says, if gStringVar4 is known
     dialogDoubted: bool = False         # asserted too long without anything moving
+    choiceOpen: bool = False            # a YES/NO menu is waiting on an answer
+    choiceCursor: str = ""              # which of the two it is currently on
     noDialogNotice: bool = False        # pressing A at nothing; say so outright
     lostOnMap: bool = False             # our tile is one nobody could stand on
+    pursuit: "Pursuit | None" = None    # the walking goal still outstanding
+    foeSpecies: str = ""                # who is across from us, in battle
+    trainerBattle: bool = False         # more than one enemy Pokemon: not wild
+    balls: int = 0                      # Poke Balls in the bag, all kinds
 
     # ---- rendering --------------------------------------------------------
 
@@ -879,32 +1315,59 @@ class Observation:
             blocks.append(self._namingBlock())
         elif self.dialogOpen:
             blocks.append(self._dialogBlock())
+            # After the box, not instead of it: the model still needs to know
+            # it cannot walk, and this is the part it must not skim.
+            if self.choiceOpen and not self.dialogDoubted:
+                blocks.append(self._choiceBlock())
         elif self.noDialogNotice:
             blocks.append(self._noDialogBlock())
         blocks.append(self._situation())
-        if self.inBattle:
+        if self.inBattle and self._screenCovered():
+            # A battle is still running underneath a nickname keyboard - the
+            # catch succeeded, the screen moved on, and in_battle stays set
+            # until the naming is done. Everything the battle branch prints
+            # below invites a battle command, and every battle command in here
+            # is four or five button presses. Printed under "an on-screen
+            # keyboard is up", that is a straight contradiction, and the model
+            # settles it the way anyone would: by believing the bigger, more
+            # concrete half and answering the battle. The presses then go into
+            # the keyboard, and the Pokemon you just caught ends up called
+            # TUNOIJDEXM. So while the screen is covered, the battle is not
+            # asking you anything, and the report does not pretend otherwise.
+            pass
+        elif self.inBattle:
             blocks.append(self.battleReport)
             if self.recommendation:
                 blocks.append(self.recommendation)
+            # Deliberately after the calculator's pick, because when the foe is
+            # the one we came to catch the two blocks disagree - the calculator
+            # is advice for winning a fight, and winning this one loses the
+            # Pokemon. The one that has to be believed goes last and says so.
+            blocks.append(self._pursuitBlock(cfg))
             # The party matters in battle too - `switch` is only a real option
             # if the model can see what else is alive and how healthy it is.
             blocks.append(self._party())
+            blocks.append(self._bag(cfg.bagLimit))
         else:
             blocks.append(self._party())
             # `heal` is a walking command, so it belongs with the places for
             # exactly the same reason: offering it while a box is up would
             # contradict the block that just said you cannot walk.
-            if not self._walkingBlocked():
+            if not self._screenCovered():
                 blocks.append(self._healing())
             # No point listing places to walk to in the same breath as
             # refusing to walk - that is the contradiction the model would
             # resolve by walking.
-            if cfg.showDestinations and not self._walkingBlocked():
+            if cfg.showDestinations and not self._screenCovered():
                 blocks.append(self._places(cfg.destinationLimit))
+            # Out here it is a reminder rather than a correction, so it sits
+            # with the other things you could walk to and do.
+            blocks.append(self._pursuitBlock(cfg))
         if self.note:
             blocks.append(f"NOTE: {self.note}")
         if history:
             blocks.append(self._history(history, cfg.historyLength))
+            blocks.append(self._recall(history, cfg.recallLength))
         blocks.append(self._commandHelp())
         return "\n\n".join(b for b in blocks if b)
 
@@ -916,8 +1379,42 @@ class Observation:
             "If it isn't possible from where you are, say why with `note` and "
             "go back to the objective."])
 
-    def _walkingBlocked(self) -> bool:
+    def _screenCovered(self) -> bool:
+        """Something has taken the pad: a keyboard, or a text box.
+
+        Not "can I walk" - that was the only thing it used to gate, but it is
+        the same question for a battle. Whatever is underneath, while one of
+        these is up every button press belongs to it.
+        """
         return self.namingOpen or (self.dialogOpen and not self.dialogDoubted)
+
+    def legalVerbs(self) -> set:
+        """The commands this turn's report offers - the menu, as a set."""
+        return {c.name for c in COMMANDS
+                if c.context in ("any", self.context)}
+
+    @property
+    def context(self) -> str:
+        """Which slice of the command table is legal right now.
+
+        One definition, used twice: to decide what the report offers (below)
+        and to decide what Actions.execute will actually run. Those used to be
+        the same list only by coincidence - the report would take `bag` off the
+        menu during a naming screen and the harness would still happily run it,
+        which is how the keyboard got typed into.
+        """
+        if self.namingOpen:
+            return "naming"
+        if self.choiceOpen and not self.dialogDoubted:
+            # A question is its own context, and a narrower one than dialog:
+            # `press` stays available, but `yes` and `no` are the answers, and
+            # listing them is what keeps the model from reaching for B.
+            return "choice"
+        if self.dialogOpen and not self.dialogDoubted:
+            return "dialog"
+        if self.inBattle:
+            return "battle"
+        return "overworld"
 
     def _namingBlock(self) -> str:
         lines = ["THE GAME IS ASKING YOU TO NAME SOMETHING.",
@@ -966,8 +1463,54 @@ class Observation:
         lines.append("  While text is on screen the game ignores every button "
                      "except A and B. You cannot walk anywhere, and no amount "
                      "of moving will change that.")
-        lines.append("  Press A to advance the text. Long conversations take "
-                     "several presses; keep going until the box is gone.")
+        # With a menu up these two buttons stop being "advance" and "also
+        # advance" and become two different answers, so the advice above it has
+        # to be withdrawn rather than added to.
+        if self.choiceOpen:
+            lines.append("  This box is NOT waiting to be advanced - see the "
+                         "question below it.")
+        else:
+            lines.append("  Press A to advance the text. Long conversations take "
+                         "several presses; keep going until the box is gone.")
+        return "\n".join(lines)
+
+    def _choiceBlock(self) -> str:
+        """Say that the box is a question, and that B is one of the answers.
+
+        This is the block that stops a starter going unnamed. Every other piece
+        of the report treats a message box as something to get through: "press A
+        to advance", "keep going until the box is gone", "the game ignores every
+        button except A and B". All of that is true of a wall of text and all of
+        it is wrong here, because B is not a faster A - it is NO. A model that
+        has been told twice that B is safe will use it, the question is answered
+        no, and the one naming screen in the run is gone for good with nothing on
+        screen to suggest anything was missed.
+
+        So the question is quoted on its own, the two buttons are given their
+        real meanings, and `yes`/`no` are offered so the answer never has to be
+        assembled out of cursor moves.
+        """
+        lines = ["THE BOX IS ASKING YOU A QUESTION - YES or NO."]
+        if self.dialogText:
+            flat = " ".join(self.dialogText.split())
+            lines.append(f'  The question: "{flat[:200]}"')
+        if self.choiceCursor:
+            lines.append(f"  The cursor is on {self.choiceCursor.upper()} right "
+                         f"now. A picks whatever it is on.")
+        lines.append("  B does NOT skip this and it does NOT advance the text. "
+                     "B answers NO. So does walking away from it - there is no "
+                     "neutral button here, and no way to come back and answer "
+                     "again later.")
+        lines.append("  Answer with `yes` or `no`, which moves the cursor and "
+                     "confirms for you. Decide which one you actually want "
+                     "before you answer.")
+        # The question that costs the most to get wrong, and the one the model
+        # is most likely to reflex past, because it arrives in the middle of a
+        # long unskippable conversation where B really had been harmless.
+        if "nickname" in self.dialogText.lower():
+            lines.append("  This one is the nickname prompt. YES opens the "
+                         "keyboard and lets you name it; NO leaves it called "
+                         "after its own species forever. You want YES.")
         return "\n".join(lines)
 
     def _noDialogBlock(self) -> str:
@@ -1030,6 +1573,47 @@ class Observation:
                 lines.append(f"     moves: {moves}")
         return "\n".join(lines)
 
+    def _bag(self, limit: int) -> str:
+        """What you are carrying, by name, so an item can be asked for by name.
+
+        The bag is the one part of the save that appeared nowhere in this report
+        before, which left the model choosing items it could not know it had -
+        and the only way to find out was to open the bag and go looking, which
+        is the wandering this block exists to stop. Listing it also makes `bag
+        <item>` usable the first time: a name copied off the report always
+        matches.
+
+        Key items are counted rather than named on purpose. Naming them invites
+        trying one, and nothing in that pocket does anything in a battle.
+        """
+        bag = self.state.get("bag") or {}
+        lines = ["WHAT IS IN YOUR BAG  (command: bag <item name>)"]
+        usable = 0
+        for key, label in BAG_POCKETS:
+            entries = bag.get(key) or []
+            if key == "key_items":
+                if entries:
+                    lines.append(f"  {label}: {len(entries)} of them, and none "
+                                 f"of them does anything in a battle. There is "
+                                 f"no reason to open this pocket.")
+                continue
+            if not entries:
+                lines.append(f"  {label}: empty.")
+                continue
+            usable += len(entries)
+            names = ", ".join(f"{e.get('name')} x{e.get('quantity')}"
+                              for e in entries[:limit])
+            if len(entries) > limit:
+                names += f", and {len(entries) - limit} more"
+            lines.append(f"  {label}: {names}")
+        if not usable:
+            return ("WHAT IS IN YOUR BAG\n  Nothing you could use in a battle. "
+                    "Fight, switch or run.")
+        lines.append("  Name the item and the pocket is handled for you: `bag "
+                     "poke ball`, `bag potion`. You never need to press left or "
+                     "right to change pocket yourself.")
+        return "\n".join(lines)
+
     def _healing(self) -> str:
         """Say whether the nurse has anything to do, and name it if she does.
 
@@ -1086,30 +1670,194 @@ class Observation:
             body += f"\n  Not listed right now: {self.hiddenReason}"
         return body
 
+    @staticmethod
+    def _line(entry: dict) -> str:
+        # `check` answers with a whole report; the history only needs the
+        # gist of it, and the full text was already shown the turn it ran.
+        result = " ".join(str(entry["result"]).split())
+        if len(result) > 180:
+            result = result[:177] + "..."
+        return f"  turn {entry['turn']}: {entry['action']} -> {result}"
+
     def _history(self, history: list, limit: int) -> str:
-        lines = ["WHAT YOU JUST DID"]
-        for entry in history[-limit:]:
-            # `check` answers with a whole report; the history only needs the
-            # gist of it, and the full text was already shown the turn it ran.
-            result = " ".join(str(entry["result"]).split())
-            if len(result) > 180:
-                result = result[:177] + "..."
-            lines.append(f"  turn {entry['turn']}: {entry['action']} -> {result}")
+        """The last few turns *of the situation we are in now*.
+
+        Split by context, because one unbroken list is two conversations
+        interleaved and the model answers the one it can see. Six turns of
+        battle menus shove the walk that led into the battle off the end of the
+        list; six turns of walking do the same to the fight you were in a
+        minute ago. Each half is only noise to the other half's decision - what
+        the other half is *for* is _recall(), which keeps a few lines of it.
+        """
+        mine = [e for e in history if bool(e.get("inBattle")) == self.inBattle]
+        lines = [self._line(e) for e in mine[-limit:]]
+        # The battle turns are hidden out here, but the jump in the turn numbers
+        # is not. Name the gap rather than leave the model to explain it.
+        if not self.inBattle and history and history[-1].get("inBattle"):
+            fought = 0
+            for entry in reversed(history):
+                if not entry.get("inBattle"):
+                    break
+                fought += 1
+            lines.append(f"  (then you fought a battle for {fought} turn(s). "
+                         f"It is over now - you are back on the map.)")
+        if not lines:
+            return ""
+        header = ("WHAT YOU HAVE DONE IN THIS BATTLE" if self.inBattle
+                  else "WHAT YOU JUST DID")
+        return "\n".join([header] + lines)
+
+    def _recall(self, history: list, limit: int) -> str:
+        """In battle, the last few overworld turns: why you are standing here.
+
+        Only in that direction. Walking away from a fight you have already won
+        needs no reminder of how you won it, but fighting is something that
+        *happens to* a plan, and the plan is off-screen for the duration.
+        """
+        if not self.inBattle or limit <= 0:
+            return ""
+        before = [e for e in history if not e.get("inBattle")][-limit:]
+        if not before:
+            return ""
+        lines = ["WHAT YOU WERE DOING BEFORE THE BATTLE STARTED"]
+        lines += [self._line(e) for e in before]
+        # Only spell out the moral when no pursuit block already has. With one
+        # up there this would be a second, vaguer version of the same sentence -
+        # and in the catch case it would contradict it, since then the battle is
+        # not an interruption of the plan, it is the plan.
+        if self.pursuit is None:
+            lines.append("  The battle interrupted that, and finishing the "
+                         "battle does not finish it.")
         return "\n".join(lines)
+
+    # ---- the goal you walked here for -------------------------------------
+
+    def _pursuitBlock(self, cfg: "Config") -> str:
+        """Say out loud what the model came here to do, every turn until it is done."""
+        p = self.pursuit
+        if p is None:
+            return ""
+        age = max(0, self.turn - p.turn)
+        when = "this turn" if age <= 0 else f"{age} turn(s) ago"
+        if p.verb == "catch":
+            return self._catchBlock(p, when, age, cfg)
+        if p.verb == "train":
+            return self._trainBlock()
+        if not self.inBattle:
+            return "\n".join([
+                f"UNFINISHED: `{p.command}`",
+                f"  You started that {when} and were interrupted before you got "
+                f"there. Run `{p.command}` again to carry on - it picks up from "
+                f"wherever you are standing now - or choose a different goal on "
+                f"purpose. Do not just drift off it."])
+        return "\n".join([
+            f"YOU WERE PART-WAY THROUGH `{p.command}` WHEN THIS BATTLE STARTED",
+            f"  You set that {when}. The battle comes first, but winning it does "
+            f"not finish it: run `{p.command}` again once you are back on the map."])
+
+    def _trainBlock(self) -> str:
+        """The training reminder - deliberately the quietest block in here.
+
+        A training battle needs no instructions: the damage table and the
+        calculator's pick already say exactly what to do, and they are right,
+        which is the whole difference between this and a catch. So in a battle
+        this says one thing the other blocks cannot - that winning is the point
+        and no ball is wanted - and out of one it answers the only question
+        training actually raises, which is "what now?" after the battle ends.
+        """
+        if self.inBattle:
+            return ("YOU CAME OUT HERE TO TRAIN, AND THIS IS THE FIGHT.\n"
+                    "  Win it - the experience is the point, and nothing here "
+                    "is worth a Poke Ball.")
+        return ("YOU ARE TRAINING IN THE GRASS\n"
+                "  `train` again to walk back and find the next wild battle. "
+                "Keep going until the readiness line at the top of the report "
+                "says you are ready, and `heal` when the party needs it - "
+                "healing does not lose your place.")
+
+    def _catchBlock(self, p: "Pursuit", when: str, age: int,
+                    cfg: "Config") -> str:
+        """The catch reminder, which is the whole reason any of this is here.
+
+        A wild Pokemon is caught by *not* winning the fight, and every other
+        block in a battle report is pointed at winning it - the damage table is
+        sorted by how much it kills, and the calculator's pick is phrased as
+        advice you need a reason to refuse. Reminding the model of the hunt in
+        general terms loses to that. So this block contradicts it in the
+        specific, in order, in the imperative.
+        """
+        want = (p.target or "it").upper()
+        if not self.inBattle:
+            lines = [
+                f"YOU ARE STILL HUNTING A {want}",
+                f"  You decided to catch one {when} and you have not got it yet. "
+                f"`catch {p.target}` walks to the grass it lives in and paces "
+                f"there until one appears; run it again, and keep running it "
+                f"after each wild battle, until a {want} is in your party.",
+                "  Make sure you have Poke Balls first - the bag is only "
+                "openable in battle, so buy them at a Poke Mart before the hunt "
+                "if you are not sure." if not self.balls else
+                f"  You are carrying {self.balls} Poke Ball(s)."]
+            # Halfway to the timeout, stop asserting the goal and ask about it.
+            # A reminder that only ever insists is one the model cannot answer,
+            # and a hunt it has quietly stopped wanting still costs it a block
+            # of contradiction in every wild battle until it expires.
+            if age >= cfg.pursuitTimeout // 2:
+                lines.append(
+                    f"  That is a long time to be looking. Do you still want a "
+                    f"{want}? If not, just do something else - any `goto`, "
+                    f"`catch` or `collect` takes its place and this stops being "
+                    f"mentioned. It is dropped on its own at "
+                    f"{cfg.pursuitTimeout} turns.")
+            return "\n".join(lines)
+
+        if not self._foeIsHunted():
+            foe = (self.foeSpecies or "this one").upper()
+            return "\n".join([
+                f"THIS IS NOT THE {want} YOU CAME FOR - it is a {foe}.",
+                f"  Beating it and running from it are both fine; save the balls. "
+                f"Either way the hunt is not over, so `catch {p.target}` again "
+                f"once you are back on the map."])
+
+        if self.trainerBattle:
+            return "\n".join([
+                f"THAT {want} BELONGS TO A TRAINER - YOU CANNOT CATCH IT",
+                "  Balls do not work on another trainer's Pokemon; the game will "
+                "refuse and waste your turn. Win this fight normally, then "
+                f"`catch {p.target}` again to find a wild one in the grass."])
+
+        lines = [
+            f"THIS IS THE {want} YOU CAME FOR. CATCH IT - DO NOT KNOCK IT OUT.",
+            "  A fainted Pokemon cannot be caught. The CALCULATOR'S PICK above "
+            "is advice for winning a fight, and winning this one is how you "
+            "lose the Pokemon - this is the reason not to take it.",
+            "  1. Attack with your WEAKEST move until its HP bar is low, and "
+            "stop the moment it is. If it is already low, do not attack at all.",
+            "  2. `bag poke ball` to throw one. That one command opens the bag, "
+            "finds the right pocket and throws it - do not steer the menu "
+            "yourself.",
+            "  3. If the ball breaks, throw another. Putting it to sleep or "
+            "paralysing it first makes them stick far better.",
+        ]
+        lines.append(f"  You are carrying {self.balls} Poke Ball(s)." if self.balls
+                     else "  WARNING: you have no Poke Balls. You cannot catch "
+                          "anything until you buy some, so just win or `run`.")
+        return "\n".join(lines)
+
+    def _foeIsHunted(self) -> bool:
+        p = self.pursuit
+        if p is None or not self.foeSpecies or not p.target:
+            return False
+        return _norm(self.foeSpecies) == _norm(p.target)
 
     def _commandHelp(self) -> str:
         # With a box up, the only legal context is the one every command shares
         # ('any'), which leaves press/wait/note/check and takes walking off the
         # menu entirely. Telling a model not to walk is weaker than not
-        # offering it - the same reason objectives hide misleading places.
-        if self.namingOpen:
-            context = "naming"
-        elif self.dialogOpen and not self.dialogDoubted:
-            context = "dialog"
-        elif self.inBattle:
-            context = "battle"
-        else:
-            context = "overworld"
+        # offering it - the same reason objectives hide misleading places. The
+        # same `context` now also gates execution, so this list is a promise
+        # rather than a suggestion.
+        context = self.context
         lines = ["COMMANDS YOU CAN USE RIGHT NOW"]
         for cmd in COMMANDS:
             if cmd.context in ("any", context):
@@ -1125,14 +1873,23 @@ SYSTEM_PROMPT = """You are playing Pokemon Leaf Green on a Game Boy Advance.
 
 Each turn you get a screenshot and a written report of the game state, and you
 choose exactly ONE action. Tools handle the hard parts for you: `goto` walks
-whole routes, and the battle table already tells you what each move will do.
-Prefer those over pressing buttons one at a time.
+whole routes, `bag <item>` finds an item in the right pocket and uses it, and
+the battle table already tells you what each move will do. Prefer those over
+pressing buttons one at a time - menus in particular are much harder to read
+off a screenshot than they look, so name what you want and let the tool steer.
 
 You are always working towards the objective at the top of the report. It is
 marked done automatically when the game says so, so you never need to claim it
 is finished - just work on it. If you have tried the same thing several times
 and the report has not changed, that approach is not working: try a different
 one, and `note` what you learned so you do not repeat it.
+
+A battle is an interruption, not a new plan. Whatever you were walking towards
+when it started is still waiting for you afterwards, and the report will keep
+telling you what it was - finish the fight, then pick it back up. The one case
+where the battle IS the plan is catching: if the report says the Pokemon in
+front of you is one you came to catch, weaken it and throw a ball, and do not
+knock it out.
 
 Answer in exactly this format and nothing else:
 
@@ -1144,8 +1901,14 @@ Examples of well-formed answers:
 THINK: The nurse can heal my hurt party, so I will walk to the Pokemon Center.
 ACTION: goto pokemon center
 
+THINK: I need four more levels before the rival, so I will go find a wild fight.
+ACTION: train
+
 THINK: Ember is super effective and should knock it out this turn.
 ACTION: use ember
+
+THINK: The wild Pidgey I came for is nearly out of HP, so it is ball time.
+ACTION: bag poke ball
 
 THINK: There is a text box on screen, so I need to advance it.
 ACTION: press a
@@ -1218,7 +1981,10 @@ def _parseLine(line: str):
     if verb is None and head.upper() in BUTTONS:
         return "press", tokens
     if verb is None:
-        close = difflib.get_close_matches(head, list(VERB_LOOKUP), n=1, cutoff=0.8)
+        # Note the pool: difflib scores "now" against "no" at exactly the 0.8
+        # cutoff, so a stray word of prose was being read as an answer to a
+        # yes/no question. Those two are spelled or not meant.
+        close = difflib.get_close_matches(head, FUZZY_POOL, n=1, cutoff=0.8)
         verb = VERB_LOOKUP[close[0]] if close else None
     if verb is None:
         return None
@@ -1251,8 +2017,16 @@ class Brain:
                              "Reply with exactly: ready"}])
         print(f"  model says: {reply.strip()[:60]}  ({time.time() - started:.1f}s)")
 
-    def decide(self, report: str, imagePath: Path | None):
-        """Ask for a command. Returns (verb, args, rawReply) - verb may be None."""
+    def decide(self, report: str, imagePath: Path | None, legal: set = None):
+        """Ask for a command. Returns (verb, args, rawReply) - verb may be None.
+
+        `legal` is the set of verbs the report offered this turn. A command
+        outside it is treated exactly like an unparseable reply - re-asked here
+        and now, with the reason - rather than passed on to be refused by the
+        harness. Both end in a correction; the difference is that this one costs
+        a second or two and that one costs a whole turn of the game, and a model
+        that has settled on the wrong command tends to settle on it repeatedly.
+        """
         user = {"role": "user",
                 "content": report + "\n\nWhat is your next action?"}
         if imagePath is not None and self.cfg.sendImage and imagePath.exists():
@@ -1263,15 +2037,26 @@ class Brain:
             reply = self._chat(messages)
             self.lastReply = reply
             parsed = parseCommand(reply)
-            if parsed is not None:
+            if parsed is not None and (not legal or parsed[0] in legal):
                 return parsed[0], parsed[1], reply
             if attempt < self.cfg.parseRetries:
-                print("  (reply had no usable ACTION line, re-asking)")
+                if parsed is None:
+                    print("  (reply had no usable ACTION line, re-asking)")
+                    correction = ("That reply had no usable ACTION line. Answer "
+                                  "with only one line, in the form:\n"
+                                  "ACTION: <command>")
+                else:
+                    print(f"  (`{parsed[0]}` isn't available this turn, re-asking)")
+                    correction = (
+                        f"`{parsed[0]}` is not one of the commands available "
+                        f"this turn - the game is on a screen that does not "
+                        f"accept it, and pressing its buttons anyway would go "
+                        f"somewhere you don't want them to. Choose one of: "
+                        f"{', '.join(sorted(legal))}. Answer with only one "
+                        f"line:\nACTION: <command>")
                 messages += [
                     {"role": "assistant", "content": reply},
-                    {"role": "user", "content":
-                     "That reply had no usable ACTION line. Answer with only "
-                     "one line, in the form:\nACTION: <command>"},
+                    {"role": "user", "content": correction},
                 ]
         return None, [], self.lastReply
 
@@ -1334,6 +2119,11 @@ class PlayerAI:
         # Turns continue across runs, so "you have been on this objective for
         # 40 turns" survives a restart - which is exactly when it matters.
         self.turn = int(self.memory.data.get("turns_played") or 0)
+        # Same reasoning as the turn counter: a hunt is exactly the sort of
+        # thing an operator restarts the harness in the middle of, and coming
+        # back with no idea why the player is standing in a field of grass is
+        # the bug this whole mechanism exists to fix.
+        self.pursuit = Pursuit.fromDict(self.memory.data.get("pursuit"))
         self.history = []
         self._readinessCache = {}
         # PP maxima are learned by watching, not read - see PPWatcher. It only
@@ -1345,6 +2135,11 @@ class PlayerAI:
         # trick is the one assumption in here the game could still surprise us
         # on, so it gets verified against the PP that actually moved.
         self._pendingMove = None
+        # Same idea for `bag <item>`, checked against the quantity that actually
+        # left the bag. The pocket row is blind in the same way the move cursor
+        # is, and one honest "that did not happen" beats a model rereading a
+        # screenshot for evidence of a ball it never threw.
+        self._pendingItem = None
         self._loadAddresses()
 
         # Set by main() when running in `gui` mode: an operator_inbox.OperatorInbox
@@ -1419,13 +2214,19 @@ class PlayerAI:
 
         if inBattle:
             self._fillBattle(obs, state)
+            enemy = (state.get("battle") or {}).get("enemy_active") or {}
+            obs.foeSpecies = str(enemy.get("species") or "")
+            # Only ever used to *withhold* catching advice, so a one-Pokemon
+            # trainer reading as wild is the harmless direction to be wrong in:
+            # the ball fails once and the model learns what it is fighting.
+            obs.trainerBattle = int(state.get("enemy_party_count") or 0) > 1
         else:
             # observe() is the navigator's own fix: RAM map id first, template
             # match only when that map isn't registered yet.
             obs.fix, _pos = self.nav.observe()
             obs.lostOnMap = self._lostOnMap(obs.fix)
             if (obs.fix is not None and self.cfg.showDestinations
-                    and not obs._walkingBlocked()):
+                    and not obs._screenCovered()):
                 found = self.nav.nearby(fix=obs.fix, gameState=state)
                 found += self._exits(obs.fix, state, found)
                 found.sort(key=lambda e: (not e["found"],
@@ -1448,7 +2249,14 @@ class PlayerAI:
         self._pp.observe(state.get("party") or [])
         obs.healReasons = healReasons(state.get("party") or [], self._pp)
 
+        # The hunt ends when the party says it ended, the same way objectives do
+        # - the model is never asked whether it caught the thing.
+        self._retirePursuit(state)
+        obs.pursuit = self.pursuit
+        obs.balls = _ballCount(state)
+
         obs.note = " ".join(n for n in (self._checkPendingMove(state, inBattle),
+                                        self._checkPendingItem(state, inBattle),
                                         self._repeatAlert()) if n)
         return obs
 
@@ -1472,6 +2280,18 @@ class PlayerAI:
 
         reading = measureScreen(str(self.cfg.screenshotPath))
         obs.dialogOpen = reading["open"]
+        obs.choiceOpen = bool(reading.get("yesNo"))
+        obs.choiceCursor = reading.get("choice") or ""
+        # A yes/no menu is only ever drawn on top of a message box, so it is the
+        # one piece of evidence here that outranks the flat-row heuristic. Worth
+        # saying outright because the two used to disagree: the menu's own white
+        # is what pushed a real box over the "that colour is all over the world,
+        # it is scenery" threshold, and a rejected box takes the question with
+        # it - the model got an ordinary overworld turn and answered a question
+        # it could not see. screen_state masks the menu out now, so this is a
+        # backstop rather than the fix.
+        if obs.choiceOpen:
+            obs.dialogOpen = True
         if not obs.dialogOpen:
             self._dialogStreak = 0
             # No box, and the last thing we did was press A at one anyway. The
@@ -1496,7 +2316,11 @@ class PlayerAI:
             self._dialogMarker = marker
         elif self._lastActionWasAdvance():
             self._dialogStreak += 1
-        obs.dialogDoubted = self._dialogStreak > self.cfg.dialogTrustTurns
+        # The window exists because the flat-row test is a guess. The yes/no
+        # menu is not a guess - it is a rectangle in a fixed place with a cursor
+        # in it - so a frame carrying one is never talked out of.
+        obs.dialogDoubted = (self._dialogStreak > self.cfg.dialogTrustTurns
+                             and not obs.choiceOpen)
 
     def _lastActionWasAdvance(self) -> bool:
         """Did last turn press one of the two buttons a text box listens to?"""
@@ -1664,7 +2488,143 @@ class PlayerAI:
                     f"row and nothing changed. Do something different - a "
                     f"different direction, a different command, or `note` what "
                     f"is blocking you.")
-        return ""
+        return self._oscillationAlert()
+
+    def _oscillationAlert(self) -> str:
+        """Call out two commands undoing each other, turn after turn.
+
+        The plain repeat check cannot see this: every turn has a different
+        action from the one before it, and every turn *succeeds*. A model
+        walking to Route 22 and then walking back to Route 2 is told "arrived"
+        both times, and nothing in the report contradicts it - so it can spend
+        a hundred turns crossing the same town, which is exactly what it did.
+
+        Two distinct actions alternating is the whole signal. It does not say
+        which one is wrong, because the harness does not know - only that the
+        pair is going nowhere and the model should break the tie itself.
+        """
+        recent = self.history[-(2 * self.cfg.repeatAlert):]
+        if len(recent) < 4:
+            return ""
+        steps = [(e["action"], e["result"]) for e in recent]
+        distinct = {a for a, _r in steps}
+        if len(distinct) != 2:
+            return ""
+        # Strictly alternating: every step differs from the one before it, and
+        # matches the one before that.
+        if any(steps[i][0] == steps[i - 1][0] for i in range(1, len(steps))):
+            return ""
+        one, two = steps[-2][0], steps[-1][0]
+        return (f"you have been alternating between `{one}` and `{two}` for "
+                f"{len(steps)} turns, and you are back where you started each "
+                f"time - they are undoing each other. Whatever you are trying "
+                f"to reach, these two commands are not getting you there: pick "
+                f"a different one, `move` the last stretch yourself, or `note` "
+                f"what is going wrong.")
+
+    # ---- the goal you walked here for -------------------------------------
+
+    def _setPursuit(self, verb: str, args: list, result: str, state: dict):
+        """Remember a walking goal, unless the command already finished it.
+
+        Called after the command ran, so the navigator's own verdict is
+        available: a `goto` that arrived is nothing to remember, and a `catch`
+        that ended in a battle is everything to remember.
+        """
+        if verb not in INTENT_VERBS:
+            return
+        if result.startswith(("that didn't work", "the emulator refused")):
+            return          # refused before it walked a step; nothing was set
+        target = self.actions.lastTarget or " ".join(args)
+        status = self.actions.lastStatus
+
+        # Healing is a detour, not a change of mind - and it is something a hunt
+        # makes *more* likely, so letting it overwrite one would lose the goal
+        # exactly when the model was pursuing it properly. Everything else names
+        # a destination out loud, and that is a decision: it replaces whatever
+        # was standing, which is also the only way for the model to put a hunt
+        # down without waiting out the timeout.
+        if verb == "heal" and self.pursuit is not None:
+            return
+
+        # The map could not route there at all, so nothing was started and there
+        # is nothing to come back to. Nagging the model to retry a walk the
+        # pathfinder has already refused is how a reminder becomes a loop.
+        if status == "no_route":
+            self._clearPursuit()
+            return
+
+        # A hunt is for a Pokemon you do not have. Asking to catch one already
+        # in the party is not a second hunt - it is the objective's own advice
+        # being followed ("`catch <species>` walks to grass holding that species
+        # and paces until something appears" is how the training objectives tell
+        # the model to go find a wild battle). Reading that as a commitment is
+        # what left a caught Caterpie being hunted for another two hundred
+        # turns, with every unrelated wild battle interrupted to say so. The
+        # walk still happens - it is a good way to find a fight - but nothing is
+        # remembered, so nothing nags.
+        if verb == "catch" and self._countInParty(state, target):
+            self._clearPursuit()
+            return
+
+        # The pacing verbs are the exception to "done means done": their success
+        # condition is a battle, not an arrival, so reaching the grass is the
+        # start of the job rather than the end of it (see _retirePursuit).
+        if verb not in PACING_VERBS and status in DONE_STATUSES:
+            self._clearPursuit()
+            return
+        self.pursuit = Pursuit(verb=verb, target=target, turn=self.turn)
+        self._savePursuit()
+
+    def _clearPursuit(self):
+        self.pursuit = None
+        self._savePursuit()
+
+    def _savePursuit(self):
+        # Written through immediately rather than left for step()'s save, so a
+        # hunt started from the manual console survives a Ctrl-C too.
+        self.memory.data["pursuit"] = (self.pursuit.asDict()
+                                       if self.pursuit is not None else None)
+        self.memory.save()
+
+    def _retirePursuit(self, state: dict):
+        """Drop a pursuit that has been achieved, or that nobody is pursuing.
+
+        The timeout is the important half. A reminder that cannot expire stops
+        being a reminder and becomes furniture - the model reads past it, and
+        worse, an operator request that moved the player somewhere else entirely
+        would be argued with by a block still insisting on a hunt from an hour
+        ago.
+        """
+        if self.pursuit is None:
+            return
+        # One is enough. A hunt cannot be for a second copy of something,
+        # because nothing tells a second copy apart from a training run through
+        # the same grass - and if the model really does want another, `bag poke
+        # ball` is right there in the battle it is already standing in.
+        #
+        # Only the party is checked, because only the party is in GAME_STATE. A
+        # Pokemon caught with six already in the party goes to the PC and never
+        # shows up here, which leaves the hunt running until it times out.
+        if (self.pursuit.verb == "catch"
+                and self._countInParty(state, self.pursuit.target)):
+            print(f"pursuit: a {self.pursuit.target} is in the party - "
+                  f"hunt complete.")
+            self.memory.note(f"caught a {self.pursuit.target}", self.turn)
+            self._clearPursuit()
+            return
+        if self.turn - self.pursuit.turn > self.cfg.pursuitTimeout:
+            print(f"pursuit: giving up on `{self.pursuit.command}` after "
+                  f"{self.cfg.pursuitTimeout} turns.")
+            self._clearPursuit()
+
+    @staticmethod
+    def _countInParty(state: dict, species: str) -> int:
+        if not species:
+            return 0
+        want = _norm(species)
+        return sum(1 for mon in (state.get("party") or [])
+                   if _norm(mon.get("species", "")) == want)
 
     def _fillBattle(self, obs: Observation, state: dict):
         snap = Snapshot.capture(_CachedState(state))
@@ -1717,6 +2677,29 @@ class PlayerAI:
                 f"menu cursor was not where the harness expected. Re-check the "
                 f"move list before attacking again.")
 
+    def _checkPendingItem(self, state: dict, inBattle: bool) -> str:
+        """Confirm an item we picked out of the bag actually left the bag.
+
+        Every item worth using in a battle is spent by using it - a thrown ball
+        is gone whether or not it caught anything, a drunk Potion is gone - so
+        the quantity is the one witness to whether those taps did what they
+        looked like they did. Only checked while the battle is still running:
+        if it ended, something obviously happened, and the likeliest something
+        is that the ball worked.
+        """
+        pending, self._pendingItem = self._pendingItem, None
+        if not pending or not inBattle:
+            return ""
+        pocket = ((state.get("bag") or {}).get(pending["pocket"])) or []
+        now = next((int(e.get("quantity") or 0) for e in pocket
+                    if e.get("name") == pending["name"]), 0)
+        if now < pending["quantity"]:
+            return ""      # one of them is gone: it was used
+        return (f"you still have {now} {pending['name']} - none was used, so "
+                f"those taps did not land where the harness expected and the "
+                f"bag may still be open on screen. `press b` to close it, then "
+                f"try again.")
+
     # ---- one turn ---------------------------------------------------------
 
     def step(self) -> dict:
@@ -1731,7 +2714,8 @@ class PlayerAI:
         print(report)
         print("-" * 72)
 
-        verb, args, reply = self.brain.decide(report, obs.screenshotPath)
+        verb, args, reply = self.brain.decide(report, obs.screenshotPath,
+                                              obs.legalVerbs())
         think = self._extractThought(reply)
         if think:
             print(f"MODEL: {think}")
@@ -1748,8 +2732,14 @@ class PlayerAI:
         result = self._perform(verb, args, obs)
         print(f"RESULT: {result}")
 
+        self._setPursuit(verb, args, result, obs.state)
+
+        # Tagged with the context it was chosen in, not the one it produced: a
+        # `catch` that ends in a battle is still a thing you did on the map, and
+        # filing it under the battle is how it disappears from the overworld
+        # story it belongs to.
         entry = {"turn": self.turn, "action": command, "result": result,
-                 "think": think}
+                 "think": think, "inBattle": obs.inBattle}
         self.history.append(entry)
         self.memory.data["turns_played"] = self.turn
         self.memory.data["last_action"] = command
@@ -1770,7 +2760,12 @@ class PlayerAI:
                         "species": active.get("species"),
                         "pp": {m["name"]: m["pp"] for m in active.get("moves", [])},
                     }
-            return self.actions.execute(verb, args)
+            outcome = self.actions.execute(verb, args)
+            # `bag` works out the item and its quantity itself while matching
+            # the name, so it hands the baseline back rather than being asked
+            # to compute it twice.
+            self._pendingItem = self.actions.lastItem
+            return outcome
         except ActionError as exc:
             self._pendingMove = None
             return f"that didn't work: {exc}"
@@ -1859,7 +2854,8 @@ class PlayerAI:
         report = obs.render(self.cfg, self.history)
         print(report)
         print("-" * 72)
-        verb, args, reply = self.brain.decide(report, obs.screenshotPath)
+        verb, args, reply = self.brain.decide(report, obs.screenshotPath,
+                                              obs.legalVerbs())
         print(f"RAW REPLY:\n{reply}")
         print(f"\nPARSED: {verb} {args}  (not executed)")
 
@@ -1931,7 +2927,11 @@ def manual(player: PlayerAI):
                 continue
             obs = player.observe()
             player.actions.observation = obs
-            print(player._perform(parsed[0], parsed[1], obs))
+            outcome = player._perform(parsed[0], parsed[1], obs)
+            # An operator typing `catch pidgey` in here means it just as much as
+            # the model does, and the reminder is the same one either way.
+            player._setPursuit(parsed[0], parsed[1], outcome, obs.state)
+            print(outcome)
         except ConnectionError as exc:
             print(f"Lost the emulator: {exc}")
             break

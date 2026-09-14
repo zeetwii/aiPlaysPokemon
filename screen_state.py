@@ -58,10 +58,19 @@ Battle screens are deliberately out of scope: their bottom row is split between
 a message box and the action menu, so no row runs flat across, and the harness
 knows it is in a battle from the game state anyway.
 
+A choice prompt - "Do you want to give a nickname to this BULBASAUR?" - draws a
+small YES/NO menu in the corner of the message box, and `yesNoMenu` reports both
+that it is up and which option the cursor is on. It matters twice over. The menu
+is white and lands in the rows this file samples as "the world", so before it
+was masked out a real box scored itself as scenery and vanished from the report
+entirely; and a caller that cannot see the menu has no way to know that B is not
+a way to skip the text here, it is the answer NO.
+
 Usage:
-    from screen_state import dialogBoxOpen
+    from screen_state import dialogBoxOpen, yesNoMenu
     if dialogBoxOpen('screenshot.png'):
         ...
+    menu = yesNoMenu('screenshot.png')   # {'open': True, 'choice': 'yes'}
 
     python screen_state.py screenshot.png            # one frame, with numbers
     python screen_state.py textAnalysis/testPhotos/  # a whole folder
@@ -115,6 +124,83 @@ MIN_TOP_EDGE = 0.60
 
 # Rows sampled either side of the box's top border for that edge test.
 EDGE_ABOVE, EDGE_BELOW = 106, 118
+
+# --------------------------------------------------------------------------
+# The yes/no menu
+# --------------------------------------------------------------------------
+# A choice prompt draws a second, small white box in the top-right corner of
+# the message box, and it is the reason this module needed a second detector
+# rather than one more threshold. The menu is white, and it sits in the rows
+# this file calls "the world" - so a real message box with a choice on it
+# scores its own overlay as evidence against itself. The nickname prompt in a
+# Pokemon Center measures worldShare 0.169 against a 0.13 cap and is rejected
+# as scenery, which leaves the model with no box in its report at all, free to
+# treat a question as an ordinary turn and press whatever it likes. Masking the
+# menu out of the world sample is what fixes that; reporting *which* option the
+# cursor is on is what lets a caller answer by intent instead of by cursor
+# arithmetic.
+#
+# The rectangle is fixed - FRLG draws this window in the same place every time
+# - so the bounds are literal rather than searched for.
+YESNO_TOP, YESNO_BOTTOM = 70, 106
+YESNO_LEFT, YESNO_RIGHT = 166, 218
+
+# Share of the menu's interior that is its own white. The text glyphs are the
+# only thing breaking it up, which puts a real menu at 0.877.
+MIN_YESNO_FILL = 0.80
+# The menu is an overlay, so its border is surrounded by things that are not
+# its white. This is what separates it from a large white panel that happens to
+# cover the same corner: a level-up stat panel fills 0.772 of the rectangle but
+# scores 0.181 here, because it carries on past the edges instead of stopping.
+MIN_YESNO_EDGE = 0.80
+
+# Where the cursor sits, and the two rows it chooses between.
+CURSOR_LEFT, CURSOR_RIGHT = 169, 177
+YES_TOP, YES_BOTTOM = 75, 87
+NO_TOP, NO_BOTTOM = 90, 102
+# The arrow is a triangle about ten rows tall, so it puts ~40 non-white pixels
+# in the gutter; the row it is not on has none at all.
+MIN_CURSOR_PIXELS = 10
+
+
+def yesNoMenu(image) -> dict:
+    """Is a YES/NO menu up, and which option is the cursor on?
+
+    Returns {"open": bool, "choice": "yes" | "no" | None}. `choice` is what is
+    currently highlighted, not an answer - it is what pressing A would pick.
+    """
+    frame = _load(image)
+    if frame is None:
+        return {"open": False, "choice": None, "fill": 0.0, "edge": 0.0}
+    return _yesNo(_codes(frame))
+
+
+def _yesNo(codes: np.ndarray) -> dict:
+    box = codes[YESNO_TOP:YESNO_BOTTOM, YESNO_LEFT:YESNO_RIGHT]
+    white = int(np.bincount(box.ravel()).argmax()) if box.size else 0
+    fill = float(np.count_nonzero(box == white) / max(1, box.size))
+
+    # Both vertical borders, and a row just outside each horizontal one. A real
+    # menu scores 1.00 on all four; anything that merely covers the corner runs
+    # past at least one of them.
+    rows = slice(YESNO_TOP, YESNO_BOTTOM)
+    cols = slice(YESNO_LEFT, YESNO_RIGHT)
+    sides = np.concatenate([codes[rows, YESNO_LEFT - 2], codes[rows, YESNO_RIGHT + 1]])
+    caps = np.concatenate([codes[YESNO_TOP - 3, cols], codes[YESNO_BOTTOM + 2, cols]])
+    outside = np.concatenate([sides, caps])
+    edge = float(np.count_nonzero(outside != white) / max(1, outside.size))
+
+    result = {"open": False, "choice": None, "fill": fill, "edge": edge}
+    if fill < MIN_YESNO_FILL or edge < MIN_YESNO_EDGE:
+        return result
+
+    result["open"] = True
+    gutter = slice(CURSOR_LEFT, CURSOR_RIGHT)
+    onYes = int(np.count_nonzero(codes[YES_TOP:YES_BOTTOM, gutter] != white))
+    onNo = int(np.count_nonzero(codes[NO_TOP:NO_BOTTOM, gutter] != white))
+    if max(onYes, onNo) >= MIN_CURSOR_PIXELS:
+        result["choice"] = "yes" if onYes >= onNo else "no"
+    return result
 
 
 def _load(image) -> np.ndarray:
@@ -173,9 +259,11 @@ def measure(image) -> dict:
     # message at once, so it looks identical while the player pages through it;
     # the drawn text does not. Callers watching for "is this conversation
     # actually going anywhere" should watch this, not the text.
+    menu = _yesNo(codes)
     result = {"open": False, "flatRows": len(flat), "worldShare": 0.0,
               "marginShare": 0.0, "topEdge": 0.0, "colour": None, "reason": "",
-              "fingerprint": _fingerprint(box)}
+              "fingerprint": _fingerprint(box), "yesNo": menu["open"],
+              "choice": menu["choice"]}
     if len(flat) < MIN_FLAT_ROWS:
         result["reason"] = "no flat rows where the box would be"
         return result
@@ -186,8 +274,22 @@ def measure(image) -> dict:
     result["colour"] = colour
     result["flatRows"] = agree
 
+    # "What the world looks like" has to mean the world. A yes/no menu is drawn
+    # over these rows in the same white the box below is filled with, so left in
+    # the sample it is counted as proof that the box is scenery - which is
+    # exactly backwards, since a menu is only ever drawn on top of a real
+    # message box. Cut it out and the frame is judged on the scene around it.
     world = codes[WORLD_TOP:WORLD_BOTTOM, BOX_LEFT:BOX_RIGHT]
-    result["worldShare"] = float(np.count_nonzero(world == colour) / world.size)
+    keep = np.ones(world.shape, dtype=bool)
+    if menu["open"]:
+        rows = slice(max(0, YESNO_TOP - WORLD_TOP),
+                     max(0, YESNO_BOTTOM - WORLD_TOP))
+        cols = slice(max(0, YESNO_LEFT - BOX_LEFT),
+                     max(0, YESNO_RIGHT - BOX_LEFT))
+        keep[rows, cols] = False
+    scene = world[keep]
+    result["worldShare"] = float(np.count_nonzero(scene == colour)
+                                 / max(1, scene.size))
 
     # The strips of screen either side of where a box would be. A box stops at
     # its own border and the map keeps showing past it; ground that merely looks
@@ -229,9 +331,12 @@ def dialogBoxOpen(image) -> bool:
 
 def _report(label: str, result: dict):
     mark = "BOX " if result["open"] else "    "
+    choice = ""
+    if result.get("yesNo"):
+        choice = f"  [YES/NO, cursor on {str(result.get('choice')).upper()}]"
     print(f"  [{mark}] {label:<28} rows={result['flatRows']:>3} "
           f"world={result['worldShare']:.3f} margin={result['marginShare']:.3f} "
-          f"edge={result['topEdge']:.2f}  {result['reason']}")
+          f"edge={result['topEdge']:.2f}  {result['reason']}{choice}")
 
 
 def main():
