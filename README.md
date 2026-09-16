@@ -1,16 +1,10 @@
 # AI Plays Pokemon
 
+<img src="./header.png" alt="Example of Player AI battling a Pidgy" style="display: block; margin: 0 auto; width:50%; height:auto;">
+
 2026 has become the year of AI agents, with people publishing guides for controlling everything from sprinkler systems to crypto wallets with agentic models.  However, these guides tend to gloss over why and how you should build your tooling and harnesses, and instead recommend making everything an MCP server and to just throw data at increasingly more expensive models until you find one that works.  This solution works, but leads to two bad habits: everyone uses expensive cloud models to solve everything, and everyone removes all their privacy by exposing all of their personal data directly to these remote models.  It’s also not sustainable; no one wants to pay money every time they look at a light switch or read an email.  
 
 We in the AI Village would like to provide a better example in this space, showing off both the logic of why and what to expose to a model, as well as how different harness and tooling designs can allow local edge models to work at the same level as frontier cloud platforms.  To do this, we decided to use the classic video games of Pokemon Fire Red and Leaf Green.  Both because it is a simple game that everyone can understand, and the author of this repo is a massive fan of the series.  
-
-## DEFCON Contest Info
-
-Sorry for doing this so last minuite, but here is the google form submission to fill out if you want to have your experiments and run attempts mentioned in the DEFCON end of show presentation at DEFCON34: [Submission Form]{https://docs.google.com/forms/d/e/1FAIpQLScvdxRqPBplhhSpsxeEiRsX0I_EEXolcxpAfejcTP9hm2PdUw/viewform?usp=header}
-
-Note: doing a submission isn't a requirement, this is just for fun and to give people redit for what silly and intresting things they were able to do with the repo during defcon.  
-
-Also, for anyone who didn't visit the AI Village, the maps and path planning is only finished up to Route 3, so once you beat Brock, the AI player cannot actually navigate to Misty right now.  This is due to how I do path planning.  I have to manually label each tile of each map, which has taken longer than I expected.  
 
 ### Installation
 
