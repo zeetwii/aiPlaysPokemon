@@ -1,0 +1,10484 @@
+{
+ "1": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 4,
+   "move": "GROWL"
+  },
+  {
+   "level": 7,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 10,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 15,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 15,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 20,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 25,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 32,
+   "move": "GROWTH"
+  },
+  {
+   "level": 39,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 46,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "2": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 4,
+   "move": "GROWL"
+  },
+  {
+   "level": 7,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 10,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 15,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 15,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 22,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 29,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 38,
+   "move": "GROWTH"
+  },
+  {
+   "level": 47,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 56,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "3": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 1,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 4,
+   "move": "GROWL"
+  },
+  {
+   "level": 7,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 10,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 15,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 15,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 22,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 29,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 41,
+   "move": "GROWTH"
+  },
+  {
+   "level": 53,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 65,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "4": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 7,
+   "move": "EMBER"
+  },
+  {
+   "level": 13,
+   "move": "METAL CLAW"
+  },
+  {
+   "level": 19,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 25,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 31,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 37,
+   "move": "SLASH"
+  },
+  {
+   "level": 43,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 49,
+   "move": "FIRE SPIN"
+  }
+ ],
+ "5": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 7,
+   "move": "EMBER"
+  },
+  {
+   "level": 13,
+   "move": "METAL CLAW"
+  },
+  {
+   "level": 20,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 27,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 34,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 41,
+   "move": "SLASH"
+  },
+  {
+   "level": 48,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 55,
+   "move": "FIRE SPIN"
+  }
+ ],
+ "6": [
+  {
+   "level": 1,
+   "move": "HEAT WAVE"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 1,
+   "move": "METAL CLAW"
+  },
+  {
+   "level": 7,
+   "move": "EMBER"
+  },
+  {
+   "level": 13,
+   "move": "METAL CLAW"
+  },
+  {
+   "level": 20,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 27,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 34,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 36,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 44,
+   "move": "SLASH"
+  },
+  {
+   "level": 54,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 64,
+   "move": "FIRE SPIN"
+  }
+ ],
+ "7": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 4,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 7,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 10,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 18,
+   "move": "BITE"
+  },
+  {
+   "level": 23,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 28,
+   "move": "PROTECT"
+  },
+  {
+   "level": 33,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 40,
+   "move": "SKULL BASH"
+  },
+  {
+   "level": 47,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "8": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 4,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 7,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 10,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 19,
+   "move": "BITE"
+  },
+  {
+   "level": 25,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 31,
+   "move": "PROTECT"
+  },
+  {
+   "level": 37,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 45,
+   "move": "SKULL BASH"
+  },
+  {
+   "level": 53,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "9": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 4,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 7,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 10,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 19,
+   "move": "BITE"
+  },
+  {
+   "level": 25,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 31,
+   "move": "PROTECT"
+  },
+  {
+   "level": 42,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 55,
+   "move": "SKULL BASH"
+  },
+  {
+   "level": 68,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "10": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "STRING SHOT"
+  }
+ ],
+ "11": [
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 7,
+   "move": "HARDEN"
+  }
+ ],
+ "12": [
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 10,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 13,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 14,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 15,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 18,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 23,
+   "move": "WHIRLWIND"
+  },
+  {
+   "level": 28,
+   "move": "GUST"
+  },
+  {
+   "level": 34,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 40,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 47,
+   "move": "SILVER WIND"
+  }
+ ],
+ "13": [
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 1,
+   "move": "STRING SHOT"
+  }
+ ],
+ "14": [
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 7,
+   "move": "HARDEN"
+  }
+ ],
+ "15": [
+  {
+   "level": 1,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 10,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 15,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 20,
+   "move": "TWINEEDLE"
+  },
+  {
+   "level": 25,
+   "move": "RAGE"
+  },
+  {
+   "level": 30,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 35,
+   "move": "PIN MISSILE"
+  },
+  {
+   "level": 40,
+   "move": "AGILITY"
+  },
+  {
+   "level": 45,
+   "move": "ENDEAVOR"
+  }
+ ],
+ "16": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 5,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 9,
+   "move": "GUST"
+  },
+  {
+   "level": 13,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 19,
+   "move": "WHIRLWIND"
+  },
+  {
+   "level": 25,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "FEATHERDANCE"
+  },
+  {
+   "level": 39,
+   "move": "AGILITY"
+  },
+  {
+   "level": 47,
+   "move": "MIRROR MOVE"
+  }
+ ],
+ "17": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "GUST"
+  },
+  {
+   "level": 5,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 9,
+   "move": "GUST"
+  },
+  {
+   "level": 13,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 20,
+   "move": "WHIRLWIND"
+  },
+  {
+   "level": 27,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 34,
+   "move": "FEATHERDANCE"
+  },
+  {
+   "level": 43,
+   "move": "AGILITY"
+  },
+  {
+   "level": 52,
+   "move": "MIRROR MOVE"
+  }
+ ],
+ "18": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "GUST"
+  },
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 5,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 9,
+   "move": "GUST"
+  },
+  {
+   "level": 13,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 20,
+   "move": "WHIRLWIND"
+  },
+  {
+   "level": 27,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 34,
+   "move": "FEATHERDANCE"
+  },
+  {
+   "level": 48,
+   "move": "AGILITY"
+  },
+  {
+   "level": 62,
+   "move": "MIRROR MOVE"
+  }
+ ],
+ "19": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 7,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 13,
+   "move": "HYPER FANG"
+  },
+  {
+   "level": 20,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 27,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 34,
+   "move": "SUPER FANG"
+  },
+  {
+   "level": 41,
+   "move": "ENDEAVOR"
+  }
+ ],
+ "20": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 7,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 13,
+   "move": "HYPER FANG"
+  },
+  {
+   "level": 20,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 30,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 40,
+   "move": "SUPER FANG"
+  },
+  {
+   "level": 50,
+   "move": "ENDEAVOR"
+  }
+ ],
+ "21": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 7,
+   "move": "LEER"
+  },
+  {
+   "level": 13,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 19,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 25,
+   "move": "AERIAL ACE"
+  },
+  {
+   "level": 31,
+   "move": "MIRROR MOVE"
+  },
+  {
+   "level": 37,
+   "move": "DRILL PECK"
+  },
+  {
+   "level": 43,
+   "move": "AGILITY"
+  }
+ ],
+ "22": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 7,
+   "move": "LEER"
+  },
+  {
+   "level": 13,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 26,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 32,
+   "move": "MIRROR MOVE"
+  },
+  {
+   "level": 40,
+   "move": "DRILL PECK"
+  },
+  {
+   "level": 47,
+   "move": "AGILITY"
+  }
+ ],
+ "23": [
+  {
+   "level": 1,
+   "move": "WRAP"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 8,
+   "move": "POISON STING"
+  },
+  {
+   "level": 13,
+   "move": "BITE"
+  },
+  {
+   "level": 20,
+   "move": "GLARE"
+  },
+  {
+   "level": 25,
+   "move": "SCREECH"
+  },
+  {
+   "level": 32,
+   "move": "ACID"
+  },
+  {
+   "level": 37,
+   "move": "STOCKPILE"
+  },
+  {
+   "level": 37,
+   "move": "SWALLOW"
+  },
+  {
+   "level": 37,
+   "move": "SPIT UP"
+  },
+  {
+   "level": 44,
+   "move": "HAZE"
+  }
+ ],
+ "24": [
+  {
+   "level": 1,
+   "move": "WRAP"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 8,
+   "move": "POISON STING"
+  },
+  {
+   "level": 13,
+   "move": "BITE"
+  },
+  {
+   "level": 20,
+   "move": "GLARE"
+  },
+  {
+   "level": 28,
+   "move": "SCREECH"
+  },
+  {
+   "level": 38,
+   "move": "ACID"
+  },
+  {
+   "level": 46,
+   "move": "STOCKPILE"
+  },
+  {
+   "level": 46,
+   "move": "SWALLOW"
+  },
+  {
+   "level": 46,
+   "move": "SPIT UP"
+  },
+  {
+   "level": 56,
+   "move": "HAZE"
+  }
+ ],
+ "25": [
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 6,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 8,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 11,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 15,
+   "move": "DOUBLE TEAM"
+  },
+  {
+   "level": 20,
+   "move": "SLAM"
+  },
+  {
+   "level": 26,
+   "move": "THUNDERBOLT"
+  },
+  {
+   "level": 33,
+   "move": "AGILITY"
+  },
+  {
+   "level": 41,
+   "move": "THUNDER"
+  },
+  {
+   "level": 50,
+   "move": "LIGHT SCREEN"
+  }
+ ],
+ "26": [
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "THUNDERBOLT"
+  }
+ ],
+ "27": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 6,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 11,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 17,
+   "move": "POISON STING"
+  },
+  {
+   "level": 23,
+   "move": "SLASH"
+  },
+  {
+   "level": 30,
+   "move": "SWIFT"
+  },
+  {
+   "level": 37,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 45,
+   "move": "SAND TOMB"
+  },
+  {
+   "level": 53,
+   "move": "SANDSTORM"
+  }
+ ],
+ "28": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 1,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 6,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 11,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 17,
+   "move": "POISON STING"
+  },
+  {
+   "level": 24,
+   "move": "SLASH"
+  },
+  {
+   "level": 33,
+   "move": "SWIFT"
+  },
+  {
+   "level": 42,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 52,
+   "move": "SAND TOMB"
+  },
+  {
+   "level": 62,
+   "move": "SANDSTORM"
+  }
+ ],
+ "29": [
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 8,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 12,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 17,
+   "move": "POISON STING"
+  },
+  {
+   "level": 20,
+   "move": "BITE"
+  },
+  {
+   "level": 23,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 30,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 38,
+   "move": "FLATTER"
+  },
+  {
+   "level": 47,
+   "move": "CRUNCH"
+  }
+ ],
+ "30": [
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 8,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 12,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 18,
+   "move": "POISON STING"
+  },
+  {
+   "level": 22,
+   "move": "BITE"
+  },
+  {
+   "level": 26,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 34,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 43,
+   "move": "FLATTER"
+  },
+  {
+   "level": 53,
+   "move": "CRUNCH"
+  }
+ ],
+ "31": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 22,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 43,
+   "move": "SUPERPOWER"
+  }
+ ],
+ "32": [
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 8,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 12,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 17,
+   "move": "POISON STING"
+  },
+  {
+   "level": 20,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 23,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 30,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 38,
+   "move": "FLATTER"
+  },
+  {
+   "level": 47,
+   "move": "HORN DRILL"
+  }
+ ],
+ "33": [
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 8,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 12,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 18,
+   "move": "POISON STING"
+  },
+  {
+   "level": 22,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 26,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 34,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 43,
+   "move": "FLATTER"
+  },
+  {
+   "level": 53,
+   "move": "HORN DRILL"
+  }
+ ],
+ "34": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 22,
+   "move": "THRASH"
+  },
+  {
+   "level": 43,
+   "move": "MEGAHORN"
+  }
+ ],
+ "35": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 5,
+   "move": "ENCORE"
+  },
+  {
+   "level": 9,
+   "move": "SING"
+  },
+  {
+   "level": 13,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 17,
+   "move": "FOLLOW ME"
+  },
+  {
+   "level": 21,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 25,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 29,
+   "move": "METRONOME"
+  },
+  {
+   "level": 33,
+   "move": "COSMIC POWER"
+  },
+  {
+   "level": 37,
+   "move": "MOONLIGHT"
+  },
+  {
+   "level": 41,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 45,
+   "move": "METEOR MASH"
+  }
+ ],
+ "36": [
+  {
+   "level": 1,
+   "move": "SING"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 1,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 1,
+   "move": "METRONOME"
+  }
+ ],
+ "37": [
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 9,
+   "move": "ROAR"
+  },
+  {
+   "level": 13,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 17,
+   "move": "WILL-O-WISP"
+  },
+  {
+   "level": 21,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 25,
+   "move": "IMPRISON"
+  },
+  {
+   "level": 29,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 33,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 37,
+   "move": "GRUDGE"
+  },
+  {
+   "level": 41,
+   "move": "FIRE SPIN"
+  }
+ ],
+ "38": [
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 1,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 45,
+   "move": "FIRE SPIN"
+  }
+ ],
+ "39": [
+  {
+   "level": 1,
+   "move": "SING"
+  },
+  {
+   "level": 4,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 9,
+   "move": "POUND"
+  },
+  {
+   "level": 14,
+   "move": "DISABLE"
+  },
+  {
+   "level": 19,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 24,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 29,
+   "move": "REST"
+  },
+  {
+   "level": 34,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 39,
+   "move": "MIMIC"
+  },
+  {
+   "level": 44,
+   "move": "HYPER VOICE"
+  },
+  {
+   "level": 49,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "40": [
+  {
+   "level": 1,
+   "move": "SING"
+  },
+  {
+   "level": 1,
+   "move": "DISABLE"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLESLAP"
+  }
+ ],
+ "41": [
+  {
+   "level": 1,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 6,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 11,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 16,
+   "move": "BITE"
+  },
+  {
+   "level": 21,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 26,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 31,
+   "move": "AIR CUTTER"
+  },
+  {
+   "level": 36,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 41,
+   "move": "POISON FANG"
+  },
+  {
+   "level": 46,
+   "move": "HAZE"
+  }
+ ],
+ "42": [
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 1,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 1,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 6,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 11,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 16,
+   "move": "BITE"
+  },
+  {
+   "level": 21,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 28,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 35,
+   "move": "AIR CUTTER"
+  },
+  {
+   "level": 42,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 49,
+   "move": "POISON FANG"
+  },
+  {
+   "level": 56,
+   "move": "HAZE"
+  }
+ ],
+ "43": [
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 7,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 14,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 16,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 18,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 23,
+   "move": "ACID"
+  },
+  {
+   "level": 32,
+   "move": "MOONLIGHT"
+  },
+  {
+   "level": 39,
+   "move": "PETAL DANCE"
+  }
+ ],
+ "44": [
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 1,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 1,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 7,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 14,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 16,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 18,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 24,
+   "move": "ACID"
+  },
+  {
+   "level": 35,
+   "move": "MOONLIGHT"
+  },
+  {
+   "level": 44,
+   "move": "PETAL DANCE"
+  }
+ ],
+ "45": [
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 1,
+   "move": "AROMATHERAPY"
+  },
+  {
+   "level": 1,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 1,
+   "move": "MEGA DRAIN"
+  },
+  {
+   "level": 44,
+   "move": "PETAL DANCE"
+  }
+ ],
+ "46": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 7,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 13,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 19,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 25,
+   "move": "SPORE"
+  },
+  {
+   "level": 31,
+   "move": "SLASH"
+  },
+  {
+   "level": 37,
+   "move": "GROWTH"
+  },
+  {
+   "level": 43,
+   "move": "GIGA DRAIN"
+  },
+  {
+   "level": 49,
+   "move": "AROMATHERAPY"
+  }
+ ],
+ "47": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 1,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 7,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 13,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 19,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 27,
+   "move": "SPORE"
+  },
+  {
+   "level": 35,
+   "move": "SLASH"
+  },
+  {
+   "level": 43,
+   "move": "GROWTH"
+  },
+  {
+   "level": 51,
+   "move": "GIGA DRAIN"
+  },
+  {
+   "level": 59,
+   "move": "AROMATHERAPY"
+  }
+ ],
+ "48": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "DISABLE"
+  },
+  {
+   "level": 1,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 9,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 17,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 20,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 25,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 28,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 33,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 36,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 41,
+   "move": "PSYCHIC"
+  }
+ ],
+ "49": [
+  {
+   "level": 1,
+   "move": "SILVER WIND"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "DISABLE"
+  },
+  {
+   "level": 1,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 9,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 17,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 20,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 25,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 28,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 31,
+   "move": "GUST"
+  },
+  {
+   "level": 36,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 42,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 52,
+   "move": "PSYCHIC"
+  }
+ ],
+ "50": [
+  {
+   "level": 1,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 5,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "MAGNITUDE"
+  },
+  {
+   "level": 17,
+   "move": "DIG"
+  },
+  {
+   "level": 21,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 25,
+   "move": "MUD-SLAP"
+  },
+  {
+   "level": 33,
+   "move": "SLASH"
+  },
+  {
+   "level": 41,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 49,
+   "move": "FISSURE"
+  }
+ ],
+ "51": [
+  {
+   "level": 1,
+   "move": "TRI ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 5,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "MAGNITUDE"
+  },
+  {
+   "level": 17,
+   "move": "DIG"
+  },
+  {
+   "level": 21,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 25,
+   "move": "MUD-SLAP"
+  },
+  {
+   "level": 26,
+   "move": "SAND TOMB"
+  },
+  {
+   "level": 38,
+   "move": "SLASH"
+  },
+  {
+   "level": 51,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 64,
+   "move": "FISSURE"
+  }
+ ],
+ "52": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 10,
+   "move": "BITE"
+  },
+  {
+   "level": 18,
+   "move": "PAY DAY"
+  },
+  {
+   "level": 25,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "SCREECH"
+  },
+  {
+   "level": 36,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 40,
+   "move": "SLASH"
+  },
+  {
+   "level": 43,
+   "move": "FAKE OUT"
+  },
+  {
+   "level": 45,
+   "move": "SWAGGER"
+  }
+ ],
+ "53": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 10,
+   "move": "BITE"
+  },
+  {
+   "level": 18,
+   "move": "PAY DAY"
+  },
+  {
+   "level": 25,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 34,
+   "move": "SCREECH"
+  },
+  {
+   "level": 42,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 49,
+   "move": "SLASH"
+  },
+  {
+   "level": 55,
+   "move": "FAKE OUT"
+  },
+  {
+   "level": 61,
+   "move": "SWAGGER"
+  }
+ ],
+ "54": [
+  {
+   "level": 1,
+   "move": "WATER SPORT"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "DISABLE"
+  },
+  {
+   "level": 16,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 23,
+   "move": "SCREECH"
+  },
+  {
+   "level": 31,
+   "move": "PSYCH UP"
+  },
+  {
+   "level": 40,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 50,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "55": [
+  {
+   "level": 1,
+   "move": "WATER SPORT"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "DISABLE"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "DISABLE"
+  },
+  {
+   "level": 16,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 23,
+   "move": "SCREECH"
+  },
+  {
+   "level": 31,
+   "move": "PSYCH UP"
+  },
+  {
+   "level": 44,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 58,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "56": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 6,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 11,
+   "move": "KARATE CHOP"
+  },
+  {
+   "level": 16,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 21,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 26,
+   "move": "SEISMIC TOSS"
+  },
+  {
+   "level": 31,
+   "move": "CROSS CHOP"
+  },
+  {
+   "level": 36,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 41,
+   "move": "SCREECH"
+  },
+  {
+   "level": 46,
+   "move": "THRASH"
+  }
+ ],
+ "57": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 1,
+   "move": "RAGE"
+  },
+  {
+   "level": 6,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 11,
+   "move": "KARATE CHOP"
+  },
+  {
+   "level": 16,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 21,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 26,
+   "move": "SEISMIC TOSS"
+  },
+  {
+   "level": 28,
+   "move": "RAGE"
+  },
+  {
+   "level": 35,
+   "move": "CROSS CHOP"
+  },
+  {
+   "level": 44,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 53,
+   "move": "SCREECH"
+  },
+  {
+   "level": 62,
+   "move": "THRASH"
+  }
+ ],
+ "58": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "ROAR"
+  },
+  {
+   "level": 7,
+   "move": "EMBER"
+  },
+  {
+   "level": 13,
+   "move": "LEER"
+  },
+  {
+   "level": 19,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 25,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 31,
+   "move": "FLAME WHEEL"
+  },
+  {
+   "level": 37,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 43,
+   "move": "AGILITY"
+  },
+  {
+   "level": 49,
+   "move": "FLAMETHROWER"
+  }
+ ],
+ "59": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "ROAR"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 1,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 49,
+   "move": "EXTREMESPEED"
+  }
+ ],
+ "60": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 7,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 19,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 25,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 31,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 37,
+   "move": "BELLY DRUM"
+  },
+  {
+   "level": 43,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "61": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 7,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 19,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 27,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 35,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 43,
+   "move": "BELLY DRUM"
+  },
+  {
+   "level": 51,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "62": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 1,
+   "move": "SUBMISSION"
+  },
+  {
+   "level": 35,
+   "move": "SUBMISSION"
+  },
+  {
+   "level": 51,
+   "move": "MIND READER"
+  }
+ ],
+ "63": [
+  {
+   "level": 1,
+   "move": "TELEPORT"
+  }
+ ],
+ "64": [
+  {
+   "level": 1,
+   "move": "TELEPORT"
+  },
+  {
+   "level": 1,
+   "move": "KINESIS"
+  },
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 16,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 18,
+   "move": "DISABLE"
+  },
+  {
+   "level": 21,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 23,
+   "move": "REFLECT"
+  },
+  {
+   "level": 25,
+   "move": "RECOVER"
+  },
+  {
+   "level": 30,
+   "move": "FUTURE SIGHT"
+  },
+  {
+   "level": 33,
+   "move": "ROLE PLAY"
+  },
+  {
+   "level": 36,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 43,
+   "move": "TRICK"
+  }
+ ],
+ "65": [
+  {
+   "level": 1,
+   "move": "TELEPORT"
+  },
+  {
+   "level": 1,
+   "move": "KINESIS"
+  },
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 16,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 18,
+   "move": "DISABLE"
+  },
+  {
+   "level": 21,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 23,
+   "move": "REFLECT"
+  },
+  {
+   "level": 25,
+   "move": "RECOVER"
+  },
+  {
+   "level": 30,
+   "move": "FUTURE SIGHT"
+  },
+  {
+   "level": 33,
+   "move": "CALM MIND"
+  },
+  {
+   "level": 36,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 43,
+   "move": "TRICK"
+  }
+ ],
+ "66": [
+  {
+   "level": 1,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 7,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 13,
+   "move": "KARATE CHOP"
+  },
+  {
+   "level": 19,
+   "move": "SEISMIC TOSS"
+  },
+  {
+   "level": 22,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 25,
+   "move": "REVENGE"
+  },
+  {
+   "level": 31,
+   "move": "VITAL THROW"
+  },
+  {
+   "level": 37,
+   "move": "SUBMISSION"
+  },
+  {
+   "level": 40,
+   "move": "CROSS CHOP"
+  },
+  {
+   "level": 43,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 49,
+   "move": "DYNAMICPUNCH"
+  }
+ ],
+ "67": [
+  {
+   "level": 1,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 7,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 13,
+   "move": "KARATE CHOP"
+  },
+  {
+   "level": 19,
+   "move": "SEISMIC TOSS"
+  },
+  {
+   "level": 22,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 25,
+   "move": "REVENGE"
+  },
+  {
+   "level": 33,
+   "move": "VITAL THROW"
+  },
+  {
+   "level": 41,
+   "move": "SUBMISSION"
+  },
+  {
+   "level": 46,
+   "move": "CROSS CHOP"
+  },
+  {
+   "level": 51,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 59,
+   "move": "DYNAMICPUNCH"
+  }
+ ],
+ "68": [
+  {
+   "level": 1,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 7,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 13,
+   "move": "KARATE CHOP"
+  },
+  {
+   "level": 19,
+   "move": "SEISMIC TOSS"
+  },
+  {
+   "level": 22,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 25,
+   "move": "REVENGE"
+  },
+  {
+   "level": 33,
+   "move": "VITAL THROW"
+  },
+  {
+   "level": 41,
+   "move": "SUBMISSION"
+  },
+  {
+   "level": 46,
+   "move": "CROSS CHOP"
+  },
+  {
+   "level": 51,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 59,
+   "move": "DYNAMICPUNCH"
+  }
+ ],
+ "69": [
+  {
+   "level": 1,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 6,
+   "move": "GROWTH"
+  },
+  {
+   "level": 11,
+   "move": "WRAP"
+  },
+  {
+   "level": 15,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 17,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 19,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 23,
+   "move": "ACID"
+  },
+  {
+   "level": 30,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 37,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 45,
+   "move": "SLAM"
+  }
+ ],
+ "70": [
+  {
+   "level": 1,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 1,
+   "move": "GROWTH"
+  },
+  {
+   "level": 1,
+   "move": "WRAP"
+  },
+  {
+   "level": 6,
+   "move": "GROWTH"
+  },
+  {
+   "level": 11,
+   "move": "WRAP"
+  },
+  {
+   "level": 15,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 17,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 19,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 24,
+   "move": "ACID"
+  },
+  {
+   "level": 33,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 42,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 54,
+   "move": "SLAM"
+  }
+ ],
+ "71": [
+  {
+   "level": 1,
+   "move": "STOCKPILE"
+  },
+  {
+   "level": 1,
+   "move": "SPIT UP"
+  },
+  {
+   "level": 1,
+   "move": "SWALLOW"
+  },
+  {
+   "level": 1,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 1,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 1,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 1,
+   "move": "RAZOR LEAF"
+  }
+ ],
+ "72": [
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 6,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 12,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 19,
+   "move": "ACID"
+  },
+  {
+   "level": 25,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 30,
+   "move": "WRAP"
+  },
+  {
+   "level": 36,
+   "move": "BARRIER"
+  },
+  {
+   "level": 43,
+   "move": "SCREECH"
+  },
+  {
+   "level": 49,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "73": [
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 1,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 6,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 12,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 19,
+   "move": "ACID"
+  },
+  {
+   "level": 25,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 30,
+   "move": "WRAP"
+  },
+  {
+   "level": 38,
+   "move": "BARRIER"
+  },
+  {
+   "level": 47,
+   "move": "SCREECH"
+  },
+  {
+   "level": 55,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "74": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 6,
+   "move": "MUD SPORT"
+  },
+  {
+   "level": 11,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 16,
+   "move": "MAGNITUDE"
+  },
+  {
+   "level": 21,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 26,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 31,
+   "move": "ROCK BLAST"
+  },
+  {
+   "level": 36,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 41,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 46,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "75": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 1,
+   "move": "MUD SPORT"
+  },
+  {
+   "level": 1,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 6,
+   "move": "MUD SPORT"
+  },
+  {
+   "level": 11,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 16,
+   "move": "MAGNITUDE"
+  },
+  {
+   "level": 21,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 29,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 37,
+   "move": "ROCK BLAST"
+  },
+  {
+   "level": 45,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 53,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 62,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "76": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 1,
+   "move": "MUD SPORT"
+  },
+  {
+   "level": 1,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 6,
+   "move": "MUD SPORT"
+  },
+  {
+   "level": 11,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 16,
+   "move": "MAGNITUDE"
+  },
+  {
+   "level": 21,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 29,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 37,
+   "move": "ROCK BLAST"
+  },
+  {
+   "level": 45,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 53,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 62,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "77": [
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 5,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 14,
+   "move": "EMBER"
+  },
+  {
+   "level": 19,
+   "move": "STOMP"
+  },
+  {
+   "level": 25,
+   "move": "FIRE SPIN"
+  },
+  {
+   "level": 31,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 38,
+   "move": "AGILITY"
+  },
+  {
+   "level": 45,
+   "move": "BOUNCE"
+  },
+  {
+   "level": 53,
+   "move": "FIRE BLAST"
+  }
+ ],
+ "78": [
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 5,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 14,
+   "move": "EMBER"
+  },
+  {
+   "level": 19,
+   "move": "STOMP"
+  },
+  {
+   "level": 25,
+   "move": "FIRE SPIN"
+  },
+  {
+   "level": 31,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 38,
+   "move": "AGILITY"
+  },
+  {
+   "level": 40,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 50,
+   "move": "BOUNCE"
+  },
+  {
+   "level": 63,
+   "move": "FIRE BLAST"
+  }
+ ],
+ "79": [
+  {
+   "level": 1,
+   "move": "CURSE"
+  },
+  {
+   "level": 1,
+   "move": "YAWN"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 6,
+   "move": "GROWL"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 17,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 24,
+   "move": "DISABLE"
+  },
+  {
+   "level": 29,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 36,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 40,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 47,
+   "move": "PSYCH UP"
+  }
+ ],
+ "80": [
+  {
+   "level": 1,
+   "move": "CURSE"
+  },
+  {
+   "level": 1,
+   "move": "YAWN"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 6,
+   "move": "GROWL"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 17,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 24,
+   "move": "DISABLE"
+  },
+  {
+   "level": 29,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 36,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 37,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 44,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 55,
+   "move": "PSYCH UP"
+  }
+ ],
+ "81": [
+  {
+   "level": 1,
+   "move": "METAL SOUND"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 6,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 11,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 16,
+   "move": "SONICBOOM"
+  },
+  {
+   "level": 21,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 26,
+   "move": "SPARK"
+  },
+  {
+   "level": 32,
+   "move": "LOCK-ON"
+  },
+  {
+   "level": 38,
+   "move": "SWIFT"
+  },
+  {
+   "level": 44,
+   "move": "SCREECH"
+  },
+  {
+   "level": 50,
+   "move": "ZAP CANNON"
+  }
+ ],
+ "82": [
+  {
+   "level": 1,
+   "move": "METAL SOUND"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 6,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 11,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 16,
+   "move": "SONICBOOM"
+  },
+  {
+   "level": 21,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 26,
+   "move": "SPARK"
+  },
+  {
+   "level": 35,
+   "move": "LOCK-ON"
+  },
+  {
+   "level": 44,
+   "move": "TRI ATTACK"
+  },
+  {
+   "level": 53,
+   "move": "SCREECH"
+  },
+  {
+   "level": 62,
+   "move": "ZAP CANNON"
+  }
+ ],
+ "83": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 6,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 11,
+   "move": "LEER"
+  },
+  {
+   "level": 16,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 21,
+   "move": "KNOCK OFF"
+  },
+  {
+   "level": 26,
+   "move": "FURY CUTTER"
+  },
+  {
+   "level": 31,
+   "move": "SWORDS DANCE"
+  },
+  {
+   "level": 36,
+   "move": "AGILITY"
+  },
+  {
+   "level": 41,
+   "move": "SLASH"
+  },
+  {
+   "level": 46,
+   "move": "FALSE SWIPE"
+  }
+ ],
+ "84": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 13,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 21,
+   "move": "TRI ATTACK"
+  },
+  {
+   "level": 25,
+   "move": "RAGE"
+  },
+  {
+   "level": 33,
+   "move": "UPROAR"
+  },
+  {
+   "level": 37,
+   "move": "DRILL PECK"
+  },
+  {
+   "level": 45,
+   "move": "AGILITY"
+  }
+ ],
+ "85": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 1,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 9,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 13,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 21,
+   "move": "TRI ATTACK"
+  },
+  {
+   "level": 25,
+   "move": "RAGE"
+  },
+  {
+   "level": 38,
+   "move": "UPROAR"
+  },
+  {
+   "level": 47,
+   "move": "DRILL PECK"
+  },
+  {
+   "level": 60,
+   "move": "AGILITY"
+  }
+ ],
+ "86": [
+  {
+   "level": 1,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 9,
+   "move": "GROWL"
+  },
+  {
+   "level": 17,
+   "move": "ICY WIND"
+  },
+  {
+   "level": 21,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 29,
+   "move": "REST"
+  },
+  {
+   "level": 37,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 41,
+   "move": "ICE BEAM"
+  },
+  {
+   "level": 49,
+   "move": "SAFEGUARD"
+  }
+ ],
+ "87": [
+  {
+   "level": 1,
+   "move": "SIGNAL BEAM"
+  },
+  {
+   "level": 1,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "ICY WIND"
+  },
+  {
+   "level": 1,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 9,
+   "move": "GROWL"
+  },
+  {
+   "level": 17,
+   "move": "ICY WIND"
+  },
+  {
+   "level": 21,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 29,
+   "move": "REST"
+  },
+  {
+   "level": 34,
+   "move": "SHEER COLD"
+  },
+  {
+   "level": 42,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 51,
+   "move": "ICE BEAM"
+  },
+  {
+   "level": 64,
+   "move": "SAFEGUARD"
+  }
+ ],
+ "88": [
+  {
+   "level": 1,
+   "move": "POISON GAS"
+  },
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 4,
+   "move": "HARDEN"
+  },
+  {
+   "level": 8,
+   "move": "DISABLE"
+  },
+  {
+   "level": 13,
+   "move": "SLUDGE"
+  },
+  {
+   "level": 19,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 26,
+   "move": "SCREECH"
+  },
+  {
+   "level": 34,
+   "move": "ACID ARMOR"
+  },
+  {
+   "level": 43,
+   "move": "SLUDGE BOMB"
+  },
+  {
+   "level": 53,
+   "move": "MEMENTO"
+  }
+ ],
+ "89": [
+  {
+   "level": 1,
+   "move": "POISON GAS"
+  },
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 4,
+   "move": "HARDEN"
+  },
+  {
+   "level": 8,
+   "move": "DISABLE"
+  },
+  {
+   "level": 13,
+   "move": "SLUDGE"
+  },
+  {
+   "level": 19,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 26,
+   "move": "SCREECH"
+  },
+  {
+   "level": 34,
+   "move": "ACID ARMOR"
+  },
+  {
+   "level": 47,
+   "move": "SLUDGE BOMB"
+  },
+  {
+   "level": 61,
+   "move": "MEMENTO"
+  }
+ ],
+ "90": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 8,
+   "move": "ICICLE SPEAR"
+  },
+  {
+   "level": 15,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 22,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 29,
+   "move": "PROTECT"
+  },
+  {
+   "level": 36,
+   "move": "LEER"
+  },
+  {
+   "level": 43,
+   "move": "CLAMP"
+  },
+  {
+   "level": 50,
+   "move": "ICE BEAM"
+  }
+ ],
+ "91": [
+  {
+   "level": 1,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 1,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 1,
+   "move": "PROTECT"
+  },
+  {
+   "level": 36,
+   "move": "SPIKES"
+  },
+  {
+   "level": 43,
+   "move": "SPIKE CANNON"
+  }
+ ],
+ "92": [
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 8,
+   "move": "SPITE"
+  },
+  {
+   "level": 13,
+   "move": "CURSE"
+  },
+  {
+   "level": 16,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 21,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 28,
+   "move": "DREAM EATER"
+  },
+  {
+   "level": 33,
+   "move": "DESTINY BOND"
+  },
+  {
+   "level": 36,
+   "move": "SHADOW BALL"
+  },
+  {
+   "level": 41,
+   "move": "NIGHTMARE"
+  },
+  {
+   "level": 48,
+   "move": "MEAN LOOK"
+  }
+ ],
+ "93": [
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 1,
+   "move": "SPITE"
+  },
+  {
+   "level": 8,
+   "move": "SPITE"
+  },
+  {
+   "level": 13,
+   "move": "CURSE"
+  },
+  {
+   "level": 16,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 21,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 25,
+   "move": "SHADOW PUNCH"
+  },
+  {
+   "level": 31,
+   "move": "DREAM EATER"
+  },
+  {
+   "level": 39,
+   "move": "DESTINY BOND"
+  },
+  {
+   "level": 45,
+   "move": "SHADOW BALL"
+  },
+  {
+   "level": 53,
+   "move": "NIGHTMARE"
+  },
+  {
+   "level": 64,
+   "move": "MEAN LOOK"
+  }
+ ],
+ "94": [
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 1,
+   "move": "SPITE"
+  },
+  {
+   "level": 8,
+   "move": "SPITE"
+  },
+  {
+   "level": 13,
+   "move": "CURSE"
+  },
+  {
+   "level": 16,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 21,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 25,
+   "move": "SHADOW PUNCH"
+  },
+  {
+   "level": 31,
+   "move": "DREAM EATER"
+  },
+  {
+   "level": 39,
+   "move": "DESTINY BOND"
+  },
+  {
+   "level": 45,
+   "move": "SHADOW BALL"
+  },
+  {
+   "level": 53,
+   "move": "NIGHTMARE"
+  },
+  {
+   "level": 64,
+   "move": "MEAN LOOK"
+  }
+ ],
+ "95": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 8,
+   "move": "BIND"
+  },
+  {
+   "level": 12,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 19,
+   "move": "HARDEN"
+  },
+  {
+   "level": 23,
+   "move": "RAGE"
+  },
+  {
+   "level": 30,
+   "move": "DRAGONBREATH"
+  },
+  {
+   "level": 34,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 41,
+   "move": "SLAM"
+  },
+  {
+   "level": 45,
+   "move": "IRON TAIL"
+  },
+  {
+   "level": 52,
+   "move": "SAND TOMB"
+  },
+  {
+   "level": 56,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "96": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 7,
+   "move": "DISABLE"
+  },
+  {
+   "level": 11,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 17,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 21,
+   "move": "POISON GAS"
+  },
+  {
+   "level": 27,
+   "move": "MEDITATE"
+  },
+  {
+   "level": 31,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 37,
+   "move": "PSYCH UP"
+  },
+  {
+   "level": 41,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 47,
+   "move": "FUTURE SIGHT"
+  }
+ ],
+ "97": [
+  {
+   "level": 1,
+   "move": "NIGHTMARE"
+  },
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "DISABLE"
+  },
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 7,
+   "move": "DISABLE"
+  },
+  {
+   "level": 11,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 17,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 21,
+   "move": "POISON GAS"
+  },
+  {
+   "level": 29,
+   "move": "MEDITATE"
+  },
+  {
+   "level": 35,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 43,
+   "move": "PSYCH UP"
+  },
+  {
+   "level": 49,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 57,
+   "move": "FUTURE SIGHT"
+  }
+ ],
+ "98": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 5,
+   "move": "LEER"
+  },
+  {
+   "level": 12,
+   "move": "VICEGRIP"
+  },
+  {
+   "level": 16,
+   "move": "HARDEN"
+  },
+  {
+   "level": 23,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 27,
+   "move": "STOMP"
+  },
+  {
+   "level": 34,
+   "move": "GUILLOTINE"
+  },
+  {
+   "level": 38,
+   "move": "PROTECT"
+  },
+  {
+   "level": 45,
+   "move": "CRABHAMMER"
+  },
+  {
+   "level": 49,
+   "move": "FLAIL"
+  }
+ ],
+ "99": [
+  {
+   "level": 1,
+   "move": "METAL CLAW"
+  },
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "VICEGRIP"
+  },
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 5,
+   "move": "LEER"
+  },
+  {
+   "level": 12,
+   "move": "VICEGRIP"
+  },
+  {
+   "level": 16,
+   "move": "HARDEN"
+  },
+  {
+   "level": 23,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 27,
+   "move": "STOMP"
+  },
+  {
+   "level": 38,
+   "move": "GUILLOTINE"
+  },
+  {
+   "level": 42,
+   "move": "PROTECT"
+  },
+  {
+   "level": 57,
+   "move": "CRABHAMMER"
+  },
+  {
+   "level": 65,
+   "move": "FLAIL"
+  }
+ ],
+ "100": [
+  {
+   "level": 1,
+   "move": "CHARGE"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 8,
+   "move": "SCREECH"
+  },
+  {
+   "level": 15,
+   "move": "SONICBOOM"
+  },
+  {
+   "level": 21,
+   "move": "SPARK"
+  },
+  {
+   "level": 27,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 32,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 37,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 42,
+   "move": "SWIFT"
+  },
+  {
+   "level": 46,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 49,
+   "move": "MIRROR COAT"
+  }
+ ],
+ "101": [
+  {
+   "level": 1,
+   "move": "CHARGE"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 1,
+   "move": "SONICBOOM"
+  },
+  {
+   "level": 8,
+   "move": "SCREECH"
+  },
+  {
+   "level": 15,
+   "move": "SONICBOOM"
+  },
+  {
+   "level": 21,
+   "move": "SPARK"
+  },
+  {
+   "level": 27,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 34,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 41,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 48,
+   "move": "SWIFT"
+  },
+  {
+   "level": 54,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 59,
+   "move": "MIRROR COAT"
+  }
+ ],
+ "102": [
+  {
+   "level": 1,
+   "move": "BARRAGE"
+  },
+  {
+   "level": 1,
+   "move": "UPROAR"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 7,
+   "move": "REFLECT"
+  },
+  {
+   "level": 13,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 19,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 25,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 31,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 37,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 43,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "103": [
+  {
+   "level": 1,
+   "move": "BARRAGE"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 19,
+   "move": "STOMP"
+  },
+  {
+   "level": 31,
+   "move": "EGG BOMB"
+  }
+ ],
+ "104": [
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 9,
+   "move": "BONE CLUB"
+  },
+  {
+   "level": 13,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 17,
+   "move": "LEER"
+  },
+  {
+   "level": 21,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 25,
+   "move": "BONEMERANG"
+  },
+  {
+   "level": 29,
+   "move": "RAGE"
+  },
+  {
+   "level": 33,
+   "move": "FALSE SWIPE"
+  },
+  {
+   "level": 37,
+   "move": "THRASH"
+  },
+  {
+   "level": 41,
+   "move": "BONE RUSH"
+  },
+  {
+   "level": 45,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "105": [
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "BONE CLUB"
+  },
+  {
+   "level": 1,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 9,
+   "move": "BONE CLUB"
+  },
+  {
+   "level": 13,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 17,
+   "move": "LEER"
+  },
+  {
+   "level": 21,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 25,
+   "move": "BONEMERANG"
+  },
+  {
+   "level": 32,
+   "move": "RAGE"
+  },
+  {
+   "level": 39,
+   "move": "FALSE SWIPE"
+  },
+  {
+   "level": 46,
+   "move": "THRASH"
+  },
+  {
+   "level": 53,
+   "move": "BONE RUSH"
+  },
+  {
+   "level": 61,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "106": [
+  {
+   "level": 1,
+   "move": "REVENGE"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 6,
+   "move": "MEDITATE"
+  },
+  {
+   "level": 11,
+   "move": "ROLLING KICK"
+  },
+  {
+   "level": 16,
+   "move": "JUMP KICK"
+  },
+  {
+   "level": 20,
+   "move": "BRICK BREAK"
+  },
+  {
+   "level": 21,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 26,
+   "move": "HI JUMP KICK"
+  },
+  {
+   "level": 31,
+   "move": "MIND READER"
+  },
+  {
+   "level": 36,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 41,
+   "move": "ENDURE"
+  },
+  {
+   "level": 46,
+   "move": "MEGA KICK"
+  },
+  {
+   "level": 51,
+   "move": "REVERSAL"
+  }
+ ],
+ "107": [
+  {
+   "level": 1,
+   "move": "REVENGE"
+  },
+  {
+   "level": 1,
+   "move": "COMET PUNCH"
+  },
+  {
+   "level": 7,
+   "move": "AGILITY"
+  },
+  {
+   "level": 13,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 20,
+   "move": "MACH PUNCH"
+  },
+  {
+   "level": 26,
+   "move": "THUNDERPUNCH"
+  },
+  {
+   "level": 26,
+   "move": "ICE PUNCH"
+  },
+  {
+   "level": 26,
+   "move": "FIRE PUNCH"
+  },
+  {
+   "level": 32,
+   "move": "SKY UPPERCUT"
+  },
+  {
+   "level": 38,
+   "move": "MEGA PUNCH"
+  },
+  {
+   "level": 44,
+   "move": "DETECT"
+  },
+  {
+   "level": 50,
+   "move": "COUNTER"
+  }
+ ],
+ "108": [
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 7,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 12,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 18,
+   "move": "KNOCK OFF"
+  },
+  {
+   "level": 23,
+   "move": "STOMP"
+  },
+  {
+   "level": 29,
+   "move": "WRAP"
+  },
+  {
+   "level": 34,
+   "move": "DISABLE"
+  },
+  {
+   "level": 40,
+   "move": "SLAM"
+  },
+  {
+   "level": 45,
+   "move": "SCREECH"
+  },
+  {
+   "level": 51,
+   "move": "REFRESH"
+  }
+ ],
+ "109": [
+  {
+   "level": 1,
+   "move": "POISON GAS"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 9,
+   "move": "SMOG"
+  },
+  {
+   "level": 17,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 21,
+   "move": "SLUDGE"
+  },
+  {
+   "level": 25,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 33,
+   "move": "HAZE"
+  },
+  {
+   "level": 41,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 45,
+   "move": "DESTINY BOND"
+  },
+  {
+   "level": 49,
+   "move": "MEMENTO"
+  }
+ ],
+ "110": [
+  {
+   "level": 1,
+   "move": "POISON GAS"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SMOG"
+  },
+  {
+   "level": 1,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 9,
+   "move": "SMOG"
+  },
+  {
+   "level": 17,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 21,
+   "move": "SLUDGE"
+  },
+  {
+   "level": 25,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 33,
+   "move": "HAZE"
+  },
+  {
+   "level": 44,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 51,
+   "move": "DESTINY BOND"
+  },
+  {
+   "level": 58,
+   "move": "MEMENTO"
+  }
+ ],
+ "111": [
+  {
+   "level": 1,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "STOMP"
+  },
+  {
+   "level": 15,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 24,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 29,
+   "move": "ROCK BLAST"
+  },
+  {
+   "level": 38,
+   "move": "HORN DRILL"
+  },
+  {
+   "level": 43,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 52,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 57,
+   "move": "MEGAHORN"
+  }
+ ],
+ "112": [
+  {
+   "level": 1,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "STOMP"
+  },
+  {
+   "level": 1,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 10,
+   "move": "STOMP"
+  },
+  {
+   "level": 15,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 24,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 29,
+   "move": "ROCK BLAST"
+  },
+  {
+   "level": 38,
+   "move": "HORN DRILL"
+  },
+  {
+   "level": 46,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 58,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 66,
+   "move": "MEGAHORN"
+  }
+ ],
+ "113": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 9,
+   "move": "REFRESH"
+  },
+  {
+   "level": 13,
+   "move": "SOFTBOILED"
+  },
+  {
+   "level": 17,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 23,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 29,
+   "move": "SING"
+  },
+  {
+   "level": 35,
+   "move": "EGG BOMB"
+  },
+  {
+   "level": 41,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 49,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 57,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "114": [
+  {
+   "level": 1,
+   "move": "INGRAIN"
+  },
+  {
+   "level": 1,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 4,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 10,
+   "move": "ABSORB"
+  },
+  {
+   "level": 13,
+   "move": "GROWTH"
+  },
+  {
+   "level": 19,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 22,
+   "move": "VINE WHIP"
+  },
+  {
+   "level": 28,
+   "move": "BIND"
+  },
+  {
+   "level": 31,
+   "move": "MEGA DRAIN"
+  },
+  {
+   "level": 37,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 40,
+   "move": "SLAM"
+  },
+  {
+   "level": 46,
+   "move": "TICKLE"
+  }
+ ],
+ "115": [
+  {
+   "level": 1,
+   "move": "COMET PUNCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 7,
+   "move": "BITE"
+  },
+  {
+   "level": 13,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 19,
+   "move": "FAKE OUT"
+  },
+  {
+   "level": 25,
+   "move": "MEGA PUNCH"
+  },
+  {
+   "level": 31,
+   "move": "RAGE"
+  },
+  {
+   "level": 37,
+   "move": "ENDURE"
+  },
+  {
+   "level": 43,
+   "move": "DIZZY PUNCH"
+  },
+  {
+   "level": 49,
+   "move": "REVERSAL"
+  }
+ ],
+ "116": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 8,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 15,
+   "move": "LEER"
+  },
+  {
+   "level": 22,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 29,
+   "move": "TWISTER"
+  },
+  {
+   "level": 36,
+   "move": "AGILITY"
+  },
+  {
+   "level": 43,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 50,
+   "move": "DRAGON DANCE"
+  }
+ ],
+ "117": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 8,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 15,
+   "move": "LEER"
+  },
+  {
+   "level": 22,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 29,
+   "move": "TWISTER"
+  },
+  {
+   "level": 40,
+   "move": "AGILITY"
+  },
+  {
+   "level": 51,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 62,
+   "move": "DRAGON DANCE"
+  }
+ ],
+ "118": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "WATER SPORT"
+  },
+  {
+   "level": 10,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 15,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 24,
+   "move": "FLAIL"
+  },
+  {
+   "level": 29,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 38,
+   "move": "WATERFALL"
+  },
+  {
+   "level": 43,
+   "move": "HORN DRILL"
+  },
+  {
+   "level": 52,
+   "move": "AGILITY"
+  },
+  {
+   "level": 57,
+   "move": "MEGAHORN"
+  }
+ ],
+ "119": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "WATER SPORT"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 10,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 15,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 24,
+   "move": "FLAIL"
+  },
+  {
+   "level": 29,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 41,
+   "move": "WATERFALL"
+  },
+  {
+   "level": 49,
+   "move": "HORN DRILL"
+  },
+  {
+   "level": 61,
+   "move": "AGILITY"
+  },
+  {
+   "level": 69,
+   "move": "MEGAHORN"
+  }
+ ],
+ "120": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 6,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 10,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 15,
+   "move": "RECOVER"
+  },
+  {
+   "level": 19,
+   "move": "CAMOUFLAGE"
+  },
+  {
+   "level": 24,
+   "move": "SWIFT"
+  },
+  {
+   "level": 28,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 33,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 37,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 42,
+   "move": "COSMIC POWER"
+  },
+  {
+   "level": 46,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "121": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 1,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 1,
+   "move": "RECOVER"
+  },
+  {
+   "level": 1,
+   "move": "SWIFT"
+  },
+  {
+   "level": 33,
+   "move": "CONFUSE RAY"
+  }
+ ],
+ "122": [
+  {
+   "level": 1,
+   "move": "BARRIER"
+  },
+  {
+   "level": 5,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 8,
+   "move": "SUBSTITUTE"
+  },
+  {
+   "level": 12,
+   "move": "MEDITATE"
+  },
+  {
+   "level": 15,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 19,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 19,
+   "move": "REFLECT"
+  },
+  {
+   "level": 22,
+   "move": "MAGICAL LEAF"
+  },
+  {
+   "level": 26,
+   "move": "ENCORE"
+  },
+  {
+   "level": 29,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 33,
+   "move": "RECYCLE"
+  },
+  {
+   "level": 36,
+   "move": "TRICK"
+  },
+  {
+   "level": 40,
+   "move": "ROLE PLAY"
+  },
+  {
+   "level": 43,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 47,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 50,
+   "move": "SAFEGUARD"
+  }
+ ],
+ "123": [
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 6,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 11,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 16,
+   "move": "FALSE SWIPE"
+  },
+  {
+   "level": 21,
+   "move": "AGILITY"
+  },
+  {
+   "level": 26,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "SLASH"
+  },
+  {
+   "level": 36,
+   "move": "SWORDS DANCE"
+  },
+  {
+   "level": 41,
+   "move": "DOUBLE TEAM"
+  },
+  {
+   "level": 46,
+   "move": "FURY CUTTER"
+  }
+ ],
+ "124": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 1,
+   "move": "LOVELY KISS"
+  },
+  {
+   "level": 1,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 9,
+   "move": "LOVELY KISS"
+  },
+  {
+   "level": 13,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 21,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 25,
+   "move": "ICE PUNCH"
+  },
+  {
+   "level": 35,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 41,
+   "move": "FAKE TEARS"
+  },
+  {
+   "level": 51,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 57,
+   "move": "PERISH SONG"
+  },
+  {
+   "level": 67,
+   "move": "BLIZZARD"
+  }
+ ],
+ "125": [
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "THUNDERPUNCH"
+  },
+  {
+   "level": 9,
+   "move": "THUNDERPUNCH"
+  },
+  {
+   "level": 17,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 25,
+   "move": "SWIFT"
+  },
+  {
+   "level": 36,
+   "move": "SCREECH"
+  },
+  {
+   "level": 47,
+   "move": "THUNDERBOLT"
+  },
+  {
+   "level": 58,
+   "move": "THUNDER"
+  }
+ ],
+ "126": [
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "SMOG"
+  },
+  {
+   "level": 1,
+   "move": "FIRE PUNCH"
+  },
+  {
+   "level": 7,
+   "move": "LEER"
+  },
+  {
+   "level": 13,
+   "move": "SMOG"
+  },
+  {
+   "level": 19,
+   "move": "FIRE PUNCH"
+  },
+  {
+   "level": 25,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 33,
+   "move": "SUNNY DAY"
+  },
+  {
+   "level": 41,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 49,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 57,
+   "move": "FIRE BLAST"
+  }
+ ],
+ "127": [
+  {
+   "level": 1,
+   "move": "VICEGRIP"
+  },
+  {
+   "level": 1,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 7,
+   "move": "BIND"
+  },
+  {
+   "level": 13,
+   "move": "SEISMIC TOSS"
+  },
+  {
+   "level": 19,
+   "move": "HARDEN"
+  },
+  {
+   "level": 25,
+   "move": "REVENGE"
+  },
+  {
+   "level": 31,
+   "move": "BRICK BREAK"
+  },
+  {
+   "level": 37,
+   "move": "GUILLOTINE"
+  },
+  {
+   "level": 43,
+   "move": "SUBMISSION"
+  },
+  {
+   "level": 49,
+   "move": "SWORDS DANCE"
+  }
+ ],
+ "128": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 4,
+   "move": "RAGE"
+  },
+  {
+   "level": 8,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 13,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 19,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 26,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 34,
+   "move": "REST"
+  },
+  {
+   "level": 43,
+   "move": "THRASH"
+  },
+  {
+   "level": 53,
+   "move": "TAKE DOWN"
+  }
+ ],
+ "129": [
+  {
+   "level": 1,
+   "move": "SPLASH"
+  },
+  {
+   "level": 15,
+   "move": "TACKLE"
+  },
+  {
+   "level": 30,
+   "move": "FLAIL"
+  }
+ ],
+ "130": [
+  {
+   "level": 1,
+   "move": "THRASH"
+  },
+  {
+   "level": 20,
+   "move": "BITE"
+  },
+  {
+   "level": 25,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 30,
+   "move": "LEER"
+  },
+  {
+   "level": 35,
+   "move": "TWISTER"
+  },
+  {
+   "level": 40,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 45,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 50,
+   "move": "DRAGON DANCE"
+  },
+  {
+   "level": 55,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "131": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "SING"
+  },
+  {
+   "level": 7,
+   "move": "MIST"
+  },
+  {
+   "level": 13,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 19,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 25,
+   "move": "PERISH SONG"
+  },
+  {
+   "level": 31,
+   "move": "ICE BEAM"
+  },
+  {
+   "level": 37,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 43,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 49,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 55,
+   "move": "SHEER COLD"
+  }
+ ],
+ "132": [
+  {
+   "level": 1,
+   "move": "TRANSFORM"
+  }
+ ],
+ "133": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 8,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 16,
+   "move": "GROWL"
+  },
+  {
+   "level": 23,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 30,
+   "move": "BITE"
+  },
+  {
+   "level": 36,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 42,
+   "move": "TAKE DOWN"
+  }
+ ],
+ "134": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 8,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 16,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 23,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 30,
+   "move": "BITE"
+  },
+  {
+   "level": 36,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 42,
+   "move": "HAZE"
+  },
+  {
+   "level": 47,
+   "move": "ACID ARMOR"
+  },
+  {
+   "level": 52,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "135": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 8,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 16,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 23,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 30,
+   "move": "DOUBLE KICK"
+  },
+  {
+   "level": 36,
+   "move": "PIN MISSILE"
+  },
+  {
+   "level": 42,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 47,
+   "move": "AGILITY"
+  },
+  {
+   "level": 52,
+   "move": "THUNDER"
+  }
+ ],
+ "136": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 8,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 16,
+   "move": "EMBER"
+  },
+  {
+   "level": 23,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 30,
+   "move": "BITE"
+  },
+  {
+   "level": 36,
+   "move": "FIRE SPIN"
+  },
+  {
+   "level": 42,
+   "move": "SMOG"
+  },
+  {
+   "level": 47,
+   "move": "LEER"
+  },
+  {
+   "level": 52,
+   "move": "FLAMETHROWER"
+  }
+ ],
+ "137": [
+  {
+   "level": 1,
+   "move": "CONVERSION 2"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "CONVERSION"
+  },
+  {
+   "level": 9,
+   "move": "AGILITY"
+  },
+  {
+   "level": 12,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 20,
+   "move": "RECOVER"
+  },
+  {
+   "level": 24,
+   "move": "SHARPEN"
+  },
+  {
+   "level": 32,
+   "move": "LOCK-ON"
+  },
+  {
+   "level": 36,
+   "move": "TRI ATTACK"
+  },
+  {
+   "level": 44,
+   "move": "RECYCLE"
+  },
+  {
+   "level": 48,
+   "move": "ZAP CANNON"
+  }
+ ],
+ "138": [
+  {
+   "level": 1,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 1,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 13,
+   "move": "BITE"
+  },
+  {
+   "level": 19,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 25,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 31,
+   "move": "LEER"
+  },
+  {
+   "level": 37,
+   "move": "PROTECT"
+  },
+  {
+   "level": 43,
+   "move": "TICKLE"
+  },
+  {
+   "level": 49,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 55,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "139": [
+  {
+   "level": 1,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 1,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 13,
+   "move": "BITE"
+  },
+  {
+   "level": 19,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 25,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 31,
+   "move": "LEER"
+  },
+  {
+   "level": 37,
+   "move": "PROTECT"
+  },
+  {
+   "level": 40,
+   "move": "SPIKE CANNON"
+  },
+  {
+   "level": 46,
+   "move": "TICKLE"
+  },
+  {
+   "level": 55,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 65,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "140": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 13,
+   "move": "ABSORB"
+  },
+  {
+   "level": 19,
+   "move": "LEER"
+  },
+  {
+   "level": 25,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 31,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 37,
+   "move": "ENDURE"
+  },
+  {
+   "level": 43,
+   "move": "METAL SOUND"
+  },
+  {
+   "level": 49,
+   "move": "MEGA DRAIN"
+  },
+  {
+   "level": 55,
+   "move": "ANCIENTPOWER"
+  }
+ ],
+ "141": [
+  {
+   "level": 1,
+   "move": "FURY CUTTER"
+  },
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "HARDEN"
+  },
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 13,
+   "move": "ABSORB"
+  },
+  {
+   "level": 19,
+   "move": "LEER"
+  },
+  {
+   "level": 25,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 31,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 37,
+   "move": "ENDURE"
+  },
+  {
+   "level": 40,
+   "move": "SLASH"
+  },
+  {
+   "level": 46,
+   "move": "METAL SOUND"
+  },
+  {
+   "level": 55,
+   "move": "MEGA DRAIN"
+  },
+  {
+   "level": 65,
+   "move": "ANCIENTPOWER"
+  }
+ ],
+ "142": [
+  {
+   "level": 1,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 8,
+   "move": "AGILITY"
+  },
+  {
+   "level": 15,
+   "move": "BITE"
+  },
+  {
+   "level": 22,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 29,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 36,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 43,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 50,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "143": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 5,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 9,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 13,
+   "move": "BELLY DRUM"
+  },
+  {
+   "level": 17,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 21,
+   "move": "YAWN"
+  },
+  {
+   "level": 25,
+   "move": "REST"
+  },
+  {
+   "level": 29,
+   "move": "SNORE"
+  },
+  {
+   "level": 33,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 37,
+   "move": "SLEEP TALK"
+  },
+  {
+   "level": 41,
+   "move": "BLOCK"
+  },
+  {
+   "level": 45,
+   "move": "COVET"
+  },
+  {
+   "level": 49,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 53,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "144": [
+  {
+   "level": 1,
+   "move": "GUST"
+  },
+  {
+   "level": 1,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 13,
+   "move": "MIST"
+  },
+  {
+   "level": 25,
+   "move": "AGILITY"
+  },
+  {
+   "level": 37,
+   "move": "MIND READER"
+  },
+  {
+   "level": 49,
+   "move": "ICE BEAM"
+  },
+  {
+   "level": 61,
+   "move": "REFLECT"
+  },
+  {
+   "level": 73,
+   "move": "BLIZZARD"
+  },
+  {
+   "level": 85,
+   "move": "SHEER COLD"
+  }
+ ],
+ "145": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 13,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 25,
+   "move": "AGILITY"
+  },
+  {
+   "level": 37,
+   "move": "DETECT"
+  },
+  {
+   "level": 49,
+   "move": "DRILL PECK"
+  },
+  {
+   "level": 61,
+   "move": "CHARGE"
+  },
+  {
+   "level": 73,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 85,
+   "move": "THUNDER"
+  }
+ ],
+ "146": [
+  {
+   "level": 1,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 13,
+   "move": "FIRE SPIN"
+  },
+  {
+   "level": 25,
+   "move": "AGILITY"
+  },
+  {
+   "level": 37,
+   "move": "ENDURE"
+  },
+  {
+   "level": 49,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 61,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 73,
+   "move": "HEAT WAVE"
+  },
+  {
+   "level": 85,
+   "move": "SKY ATTACK"
+  }
+ ],
+ "147": [
+  {
+   "level": 1,
+   "move": "WRAP"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 8,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 15,
+   "move": "TWISTER"
+  },
+  {
+   "level": 22,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 29,
+   "move": "SLAM"
+  },
+  {
+   "level": 36,
+   "move": "AGILITY"
+  },
+  {
+   "level": 43,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 50,
+   "move": "OUTRAGE"
+  },
+  {
+   "level": 57,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "148": [
+  {
+   "level": 1,
+   "move": "WRAP"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 1,
+   "move": "TWISTER"
+  },
+  {
+   "level": 8,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 15,
+   "move": "TWISTER"
+  },
+  {
+   "level": 22,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 29,
+   "move": "SLAM"
+  },
+  {
+   "level": 38,
+   "move": "AGILITY"
+  },
+  {
+   "level": 47,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 56,
+   "move": "OUTRAGE"
+  },
+  {
+   "level": 65,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "149": [
+  {
+   "level": 1,
+   "move": "WRAP"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 1,
+   "move": "TWISTER"
+  },
+  {
+   "level": 8,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 15,
+   "move": "TWISTER"
+  },
+  {
+   "level": 22,
+   "move": "DRAGON RAGE"
+  },
+  {
+   "level": 29,
+   "move": "SLAM"
+  },
+  {
+   "level": 38,
+   "move": "AGILITY"
+  },
+  {
+   "level": 47,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 55,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 61,
+   "move": "OUTRAGE"
+  },
+  {
+   "level": 75,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "150": [
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 1,
+   "move": "DISABLE"
+  },
+  {
+   "level": 11,
+   "move": "BARRIER"
+  },
+  {
+   "level": 22,
+   "move": "MIST"
+  },
+  {
+   "level": 33,
+   "move": "SWIFT"
+  },
+  {
+   "level": 44,
+   "move": "RECOVER"
+  },
+  {
+   "level": 55,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 66,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 77,
+   "move": "PSYCH UP"
+  },
+  {
+   "level": 88,
+   "move": "FUTURE SIGHT"
+  },
+  {
+   "level": 99,
+   "move": "AMNESIA"
+  }
+ ],
+ "151": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 10,
+   "move": "TRANSFORM"
+  },
+  {
+   "level": 20,
+   "move": "MEGA PUNCH"
+  },
+  {
+   "level": 30,
+   "move": "METRONOME"
+  },
+  {
+   "level": 40,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 50,
+   "move": "ANCIENTPOWER"
+  }
+ ],
+ "152": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 8,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 12,
+   "move": "REFLECT"
+  },
+  {
+   "level": 15,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 22,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 29,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 36,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 43,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 50,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "153": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 1,
+   "move": "REFLECT"
+  },
+  {
+   "level": 8,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 12,
+   "move": "REFLECT"
+  },
+  {
+   "level": 15,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 23,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 31,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 39,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 47,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 55,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "154": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 1,
+   "move": "REFLECT"
+  },
+  {
+   "level": 8,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 12,
+   "move": "REFLECT"
+  },
+  {
+   "level": 15,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 23,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 31,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 41,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 51,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 61,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "155": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 6,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 12,
+   "move": "EMBER"
+  },
+  {
+   "level": 19,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 27,
+   "move": "FLAME WHEEL"
+  },
+  {
+   "level": 36,
+   "move": "SWIFT"
+  },
+  {
+   "level": 46,
+   "move": "FLAMETHROWER"
+  }
+ ],
+ "156": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 6,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 12,
+   "move": "EMBER"
+  },
+  {
+   "level": 21,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "FLAME WHEEL"
+  },
+  {
+   "level": 42,
+   "move": "SWIFT"
+  },
+  {
+   "level": 54,
+   "move": "FLAMETHROWER"
+  }
+ ],
+ "157": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 6,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 12,
+   "move": "EMBER"
+  },
+  {
+   "level": 21,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "FLAME WHEEL"
+  },
+  {
+   "level": 45,
+   "move": "SWIFT"
+  },
+  {
+   "level": 60,
+   "move": "FLAMETHROWER"
+  }
+ ],
+ "158": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 7,
+   "move": "RAGE"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 20,
+   "move": "BITE"
+  },
+  {
+   "level": 27,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 35,
+   "move": "SLASH"
+  },
+  {
+   "level": 43,
+   "move": "SCREECH"
+  },
+  {
+   "level": 52,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "159": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "RAGE"
+  },
+  {
+   "level": 7,
+   "move": "RAGE"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 21,
+   "move": "BITE"
+  },
+  {
+   "level": 28,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 37,
+   "move": "SLASH"
+  },
+  {
+   "level": 45,
+   "move": "SCREECH"
+  },
+  {
+   "level": 55,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "160": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "RAGE"
+  },
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 7,
+   "move": "RAGE"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 21,
+   "move": "BITE"
+  },
+  {
+   "level": 28,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 38,
+   "move": "SLASH"
+  },
+  {
+   "level": 47,
+   "move": "SCREECH"
+  },
+  {
+   "level": 58,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "161": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 4,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 7,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 12,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 17,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 24,
+   "move": "SLAM"
+  },
+  {
+   "level": 31,
+   "move": "FOLLOW ME"
+  },
+  {
+   "level": 40,
+   "move": "REST"
+  },
+  {
+   "level": 49,
+   "move": "AMNESIA"
+  }
+ ],
+ "162": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 4,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 7,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 12,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 19,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 28,
+   "move": "SLAM"
+  },
+  {
+   "level": 37,
+   "move": "FOLLOW ME"
+  },
+  {
+   "level": 48,
+   "move": "REST"
+  },
+  {
+   "level": 59,
+   "move": "AMNESIA"
+  }
+ ],
+ "163": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 6,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 11,
+   "move": "PECK"
+  },
+  {
+   "level": 16,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 22,
+   "move": "REFLECT"
+  },
+  {
+   "level": 28,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 34,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 48,
+   "move": "DREAM EATER"
+  }
+ ],
+ "164": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 6,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 11,
+   "move": "PECK"
+  },
+  {
+   "level": 16,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 25,
+   "move": "REFLECT"
+  },
+  {
+   "level": 33,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 41,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 57,
+   "move": "DREAM EATER"
+  }
+ ],
+ "165": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 8,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 15,
+   "move": "COMET PUNCH"
+  },
+  {
+   "level": 22,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 22,
+   "move": "REFLECT"
+  },
+  {
+   "level": 22,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 29,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 36,
+   "move": "SWIFT"
+  },
+  {
+   "level": 43,
+   "move": "AGILITY"
+  },
+  {
+   "level": 50,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "166": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 8,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 15,
+   "move": "COMET PUNCH"
+  },
+  {
+   "level": 24,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 24,
+   "move": "REFLECT"
+  },
+  {
+   "level": 24,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 33,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 42,
+   "move": "SWIFT"
+  },
+  {
+   "level": 51,
+   "move": "AGILITY"
+  },
+  {
+   "level": 60,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "167": [
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 1,
+   "move": "STRING SHOT"
+  },
+  {
+   "level": 6,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 11,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 17,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 23,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 30,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 37,
+   "move": "SPIDER WEB"
+  },
+  {
+   "level": 45,
+   "move": "AGILITY"
+  },
+  {
+   "level": 53,
+   "move": "PSYCHIC"
+  }
+ ],
+ "168": [
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 1,
+   "move": "STRING SHOT"
+  },
+  {
+   "level": 1,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 1,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 6,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 11,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 17,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 25,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 34,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 43,
+   "move": "SPIDER WEB"
+  },
+  {
+   "level": 53,
+   "move": "AGILITY"
+  },
+  {
+   "level": 63,
+   "move": "PSYCHIC"
+  }
+ ],
+ "169": [
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 1,
+   "move": "LEECH LIFE"
+  },
+  {
+   "level": 1,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 6,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 11,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 16,
+   "move": "BITE"
+  },
+  {
+   "level": 21,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 28,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 35,
+   "move": "AIR CUTTER"
+  },
+  {
+   "level": 42,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 49,
+   "move": "POISON FANG"
+  },
+  {
+   "level": 56,
+   "move": "HAZE"
+  }
+ ],
+ "170": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 5,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 13,
+   "move": "FLAIL"
+  },
+  {
+   "level": 17,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 25,
+   "move": "SPARK"
+  },
+  {
+   "level": 29,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 37,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 41,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 49,
+   "move": "CHARGE"
+  }
+ ],
+ "171": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 1,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 5,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 13,
+   "move": "FLAIL"
+  },
+  {
+   "level": 17,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 25,
+   "move": "SPARK"
+  },
+  {
+   "level": 32,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 43,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 50,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 61,
+   "move": "CHARGE"
+  }
+ ],
+ "172": [
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 1,
+   "move": "CHARM"
+  },
+  {
+   "level": 6,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 8,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 11,
+   "move": "SWEET KISS"
+  }
+ ],
+ "173": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "CHARM"
+  },
+  {
+   "level": 4,
+   "move": "ENCORE"
+  },
+  {
+   "level": 8,
+   "move": "SING"
+  },
+  {
+   "level": 13,
+   "move": "SWEET KISS"
+  },
+  {
+   "level": 17,
+   "move": "MAGICAL LEAF"
+  }
+ ],
+ "174": [
+  {
+   "level": 1,
+   "move": "SING"
+  },
+  {
+   "level": 1,
+   "move": "CHARM"
+  },
+  {
+   "level": 4,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 9,
+   "move": "POUND"
+  },
+  {
+   "level": 14,
+   "move": "SWEET KISS"
+  }
+ ],
+ "175": [
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "CHARM"
+  },
+  {
+   "level": 4,
+   "move": "METRONOME"
+  },
+  {
+   "level": 9,
+   "move": "SWEET KISS"
+  },
+  {
+   "level": 13,
+   "move": "YAWN"
+  },
+  {
+   "level": 17,
+   "move": "ENCORE"
+  },
+  {
+   "level": 21,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 25,
+   "move": "FOLLOW ME"
+  },
+  {
+   "level": 29,
+   "move": "WISH"
+  },
+  {
+   "level": 33,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 37,
+   "move": "DOUBLE-EDGE"
+  },
+  {
+   "level": 41,
+   "move": "BATON PASS"
+  }
+ ],
+ "176": [
+  {
+   "level": 1,
+   "move": "MAGICAL LEAF"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "CHARM"
+  },
+  {
+   "level": 1,
+   "move": "METRONOME"
+  },
+  {
+   "level": 1,
+   "move": "SWEET KISS"
+  },
+  {
+   "level": 4,
+   "move": "METRONOME"
+  },
+  {
+   "level": 9,
+   "move": "SWEET KISS"
+  },
+  {
+   "level": 13,
+   "move": "YAWN"
+  },
+  {
+   "level": 17,
+   "move": "ENCORE"
+  },
+  {
+   "level": 21,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 25,
+   "move": "FOLLOW ME"
+  },
+  {
+   "level": 29,
+   "move": "WISH"
+  },
+  {
+   "level": 33,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 37,
+   "move": "DOUBLE-EDGE"
+  },
+  {
+   "level": 41,
+   "move": "BATON PASS"
+  }
+ ],
+ "177": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 10,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 20,
+   "move": "TELEPORT"
+  },
+  {
+   "level": 30,
+   "move": "WISH"
+  },
+  {
+   "level": 30,
+   "move": "FUTURE SIGHT"
+  },
+  {
+   "level": 40,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 50,
+   "move": "PSYCHIC"
+  }
+ ],
+ "178": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 10,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 20,
+   "move": "TELEPORT"
+  },
+  {
+   "level": 35,
+   "move": "WISH"
+  },
+  {
+   "level": 35,
+   "move": "FUTURE SIGHT"
+  },
+  {
+   "level": 50,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 65,
+   "move": "PSYCHIC"
+  }
+ ],
+ "179": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 16,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 23,
+   "move": "COTTON SPORE"
+  },
+  {
+   "level": 30,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 37,
+   "move": "THUNDER"
+  }
+ ],
+ "180": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 9,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 18,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 27,
+   "move": "COTTON SPORE"
+  },
+  {
+   "level": 36,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 45,
+   "move": "THUNDER"
+  }
+ ],
+ "181": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 1,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 9,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 18,
+   "move": "THUNDER WAVE"
+  },
+  {
+   "level": 27,
+   "move": "COTTON SPORE"
+  },
+  {
+   "level": 30,
+   "move": "THUNDERPUNCH"
+  },
+  {
+   "level": 42,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 57,
+   "move": "THUNDER"
+  }
+ ],
+ "182": [
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 1,
+   "move": "SWEET SCENT"
+  },
+  {
+   "level": 1,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 1,
+   "move": "MAGICAL LEAF"
+  },
+  {
+   "level": 44,
+   "move": "PETAL DANCE"
+  },
+  {
+   "level": 55,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "183": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 3,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 6,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 15,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 21,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 28,
+   "move": "DOUBLE-EDGE"
+  },
+  {
+   "level": 36,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 45,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "184": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 3,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 6,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 15,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 24,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 34,
+   "move": "DOUBLE-EDGE"
+  },
+  {
+   "level": 45,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 57,
+   "move": "HYDRO PUMP"
+  }
+ ],
+ "185": [
+  {
+   "level": 1,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 1,
+   "move": "MIMIC"
+  },
+  {
+   "level": 9,
+   "move": "FLAIL"
+  },
+  {
+   "level": 17,
+   "move": "LOW KICK"
+  },
+  {
+   "level": 25,
+   "move": "ROCK SLIDE"
+  },
+  {
+   "level": 33,
+   "move": "BLOCK"
+  },
+  {
+   "level": 41,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 49,
+   "move": "SLAM"
+  },
+  {
+   "level": 57,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "186": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 1,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 1,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 1,
+   "move": "PERISH SONG"
+  },
+  {
+   "level": 35,
+   "move": "PERISH SONG"
+  },
+  {
+   "level": 51,
+   "move": "SWAGGER"
+  }
+ ],
+ "187": [
+  {
+   "level": 1,
+   "move": "SPLASH"
+  },
+  {
+   "level": 5,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "TACKLE"
+  },
+  {
+   "level": 13,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 15,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 17,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 20,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 25,
+   "move": "COTTON SPORE"
+  },
+  {
+   "level": 30,
+   "move": "MEGA DRAIN"
+  }
+ ],
+ "188": [
+  {
+   "level": 1,
+   "move": "SPLASH"
+  },
+  {
+   "level": 1,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 5,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "TACKLE"
+  },
+  {
+   "level": 13,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 15,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 17,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 22,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 29,
+   "move": "COTTON SPORE"
+  },
+  {
+   "level": 36,
+   "move": "MEGA DRAIN"
+  }
+ ],
+ "189": [
+  {
+   "level": 1,
+   "move": "SPLASH"
+  },
+  {
+   "level": 1,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 5,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 5,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 10,
+   "move": "TACKLE"
+  },
+  {
+   "level": 13,
+   "move": "POISONPOWDER"
+  },
+  {
+   "level": 15,
+   "move": "STUN SPORE"
+  },
+  {
+   "level": 17,
+   "move": "SLEEP POWDER"
+  },
+  {
+   "level": 22,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 33,
+   "move": "COTTON SPORE"
+  },
+  {
+   "level": 44,
+   "move": "MEGA DRAIN"
+  }
+ ],
+ "190": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 6,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 13,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 18,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 25,
+   "move": "TICKLE"
+  },
+  {
+   "level": 31,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 38,
+   "move": "SWIFT"
+  },
+  {
+   "level": 43,
+   "move": "SCREECH"
+  },
+  {
+   "level": 50,
+   "move": "AGILITY"
+  }
+ ],
+ "191": [
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 6,
+   "move": "GROWTH"
+  },
+  {
+   "level": 13,
+   "move": "MEGA DRAIN"
+  },
+  {
+   "level": 18,
+   "move": "INGRAIN"
+  },
+  {
+   "level": 25,
+   "move": "ENDEAVOR"
+  },
+  {
+   "level": 30,
+   "move": "SUNNY DAY"
+  },
+  {
+   "level": 37,
+   "move": "SYNTHESIS"
+  },
+  {
+   "level": 42,
+   "move": "GIGA DRAIN"
+  }
+ ],
+ "192": [
+  {
+   "level": 1,
+   "move": "ABSORB"
+  },
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 6,
+   "move": "GROWTH"
+  },
+  {
+   "level": 13,
+   "move": "RAZOR LEAF"
+  },
+  {
+   "level": 18,
+   "move": "INGRAIN"
+  },
+  {
+   "level": 25,
+   "move": "BULLET SEED"
+  },
+  {
+   "level": 30,
+   "move": "SUNNY DAY"
+  },
+  {
+   "level": 37,
+   "move": "PETAL DANCE"
+  },
+  {
+   "level": 42,
+   "move": "SOLARBEAM"
+  }
+ ],
+ "193": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "FORESIGHT"
+  },
+  {
+   "level": 6,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 12,
+   "move": "DOUBLE TEAM"
+  },
+  {
+   "level": 17,
+   "move": "SONICBOOM"
+  },
+  {
+   "level": 23,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 28,
+   "move": "DETECT"
+  },
+  {
+   "level": 34,
+   "move": "UPROAR"
+  },
+  {
+   "level": 39,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 45,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 50,
+   "move": "SCREECH"
+  }
+ ],
+ "194": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 11,
+   "move": "SLAM"
+  },
+  {
+   "level": 16,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 21,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 31,
+   "move": "YAWN"
+  },
+  {
+   "level": 36,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 41,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 51,
+   "move": "MIST"
+  },
+  {
+   "level": 51,
+   "move": "HAZE"
+  }
+ ],
+ "195": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 11,
+   "move": "SLAM"
+  },
+  {
+   "level": 16,
+   "move": "MUD SHOT"
+  },
+  {
+   "level": 23,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 35,
+   "move": "YAWN"
+  },
+  {
+   "level": 42,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 49,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 61,
+   "move": "MIST"
+  },
+  {
+   "level": 61,
+   "move": "HAZE"
+  }
+ ],
+ "196": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 8,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 16,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 23,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 30,
+   "move": "SWIFT"
+  },
+  {
+   "level": 36,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 42,
+   "move": "PSYCH UP"
+  },
+  {
+   "level": 47,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 52,
+   "move": "MORNING SUN"
+  }
+ ],
+ "197": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 1,
+   "move": "HELPING HAND"
+  },
+  {
+   "level": 8,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 16,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 23,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 30,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 36,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 42,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 47,
+   "move": "SCREECH"
+  },
+  {
+   "level": 52,
+   "move": "MOONLIGHT"
+  }
+ ],
+ "198": [
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 9,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 14,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 22,
+   "move": "HAZE"
+  },
+  {
+   "level": 27,
+   "move": "NIGHT SHADE"
+  },
+  {
+   "level": 35,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 40,
+   "move": "TAUNT"
+  },
+  {
+   "level": 48,
+   "move": "MEAN LOOK"
+  }
+ ],
+ "199": [
+  {
+   "level": 1,
+   "move": "CURSE"
+  },
+  {
+   "level": 1,
+   "move": "YAWN"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 6,
+   "move": "GROWL"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 17,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 24,
+   "move": "DISABLE"
+  },
+  {
+   "level": 29,
+   "move": "HEADBUTT"
+  },
+  {
+   "level": 36,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 40,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 47,
+   "move": "PSYCH UP"
+  }
+ ],
+ "200": [
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 1,
+   "move": "PSYWAVE"
+  },
+  {
+   "level": 6,
+   "move": "SPITE"
+  },
+  {
+   "level": 11,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 17,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 23,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 30,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 37,
+   "move": "PAIN SPLIT"
+  },
+  {
+   "level": 45,
+   "move": "PERISH SONG"
+  },
+  {
+   "level": 53,
+   "move": "GRUDGE"
+  }
+ ],
+ "201": [
+  {
+   "level": 1,
+   "move": "HIDDEN POWER"
+  }
+ ],
+ "202": [
+  {
+   "level": 1,
+   "move": "COUNTER"
+  },
+  {
+   "level": 1,
+   "move": "MIRROR COAT"
+  },
+  {
+   "level": 1,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 1,
+   "move": "DESTINY BOND"
+  }
+ ],
+ "203": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 7,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 13,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 19,
+   "move": "STOMP"
+  },
+  {
+   "level": 25,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 31,
+   "move": "AGILITY"
+  },
+  {
+   "level": 37,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 43,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 49,
+   "move": "CRUNCH"
+  }
+ ],
+ "204": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "PROTECT"
+  },
+  {
+   "level": 8,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 15,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 22,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 29,
+   "move": "BIDE"
+  },
+  {
+   "level": 36,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 43,
+   "move": "SPIKES"
+  },
+  {
+   "level": 50,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "205": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "PROTECT"
+  },
+  {
+   "level": 1,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 8,
+   "move": "SELFDESTRUCT"
+  },
+  {
+   "level": 15,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 22,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 29,
+   "move": "BIDE"
+  },
+  {
+   "level": 31,
+   "move": "ZAP CANNON"
+  },
+  {
+   "level": 39,
+   "move": "EXPLOSION"
+  },
+  {
+   "level": 49,
+   "move": "SPIKES"
+  },
+  {
+   "level": 59,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "206": [
+  {
+   "level": 1,
+   "move": "RAGE"
+  },
+  {
+   "level": 4,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 11,
+   "move": "YAWN"
+  },
+  {
+   "level": 14,
+   "move": "GLARE"
+  },
+  {
+   "level": 21,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 24,
+   "move": "SPITE"
+  },
+  {
+   "level": 31,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 34,
+   "move": "SCREECH"
+  },
+  {
+   "level": 41,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 44,
+   "move": "FLAIL"
+  },
+  {
+   "level": 51,
+   "move": "ENDEAVOR"
+  }
+ ],
+ "207": [
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 6,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 13,
+   "move": "HARDEN"
+  },
+  {
+   "level": 20,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 28,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 36,
+   "move": "SLASH"
+  },
+  {
+   "level": 44,
+   "move": "SCREECH"
+  },
+  {
+   "level": 52,
+   "move": "GUILLOTINE"
+  }
+ ],
+ "208": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 8,
+   "move": "BIND"
+  },
+  {
+   "level": 12,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 19,
+   "move": "HARDEN"
+  },
+  {
+   "level": 23,
+   "move": "RAGE"
+  },
+  {
+   "level": 30,
+   "move": "DRAGONBREATH"
+  },
+  {
+   "level": 34,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 41,
+   "move": "SLAM"
+  },
+  {
+   "level": 45,
+   "move": "IRON TAIL"
+  },
+  {
+   "level": 52,
+   "move": "CRUNCH"
+  },
+  {
+   "level": 56,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "209": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 4,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 8,
+   "move": "CHARM"
+  },
+  {
+   "level": 13,
+   "move": "BITE"
+  },
+  {
+   "level": 19,
+   "move": "LICK"
+  },
+  {
+   "level": 26,
+   "move": "ROAR"
+  },
+  {
+   "level": 34,
+   "move": "RAGE"
+  },
+  {
+   "level": 43,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 53,
+   "move": "CRUNCH"
+  }
+ ],
+ "210": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 4,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 8,
+   "move": "CHARM"
+  },
+  {
+   "level": 13,
+   "move": "BITE"
+  },
+  {
+   "level": 19,
+   "move": "LICK"
+  },
+  {
+   "level": 28,
+   "move": "ROAR"
+  },
+  {
+   "level": 38,
+   "move": "RAGE"
+  },
+  {
+   "level": 49,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 61,
+   "move": "CRUNCH"
+  }
+ ],
+ "211": [
+  {
+   "level": 1,
+   "move": "SPIKES"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "POISON STING"
+  },
+  {
+   "level": 9,
+   "move": "HARDEN"
+  },
+  {
+   "level": 9,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 13,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 21,
+   "move": "PIN MISSILE"
+  },
+  {
+   "level": 25,
+   "move": "REVENGE"
+  },
+  {
+   "level": 33,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 37,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 45,
+   "move": "DESTINY BOND"
+  }
+ ],
+ "212": [
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 6,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 11,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 16,
+   "move": "FALSE SWIPE"
+  },
+  {
+   "level": 21,
+   "move": "AGILITY"
+  },
+  {
+   "level": 26,
+   "move": "METAL CLAW"
+  },
+  {
+   "level": 31,
+   "move": "SLASH"
+  },
+  {
+   "level": 36,
+   "move": "SWORDS DANCE"
+  },
+  {
+   "level": 41,
+   "move": "IRON DEFENSE"
+  },
+  {
+   "level": 46,
+   "move": "FURY CUTTER"
+  }
+ ],
+ "213": [
+  {
+   "level": 1,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 1,
+   "move": "WITHDRAW"
+  },
+  {
+   "level": 9,
+   "move": "WRAP"
+  },
+  {
+   "level": 14,
+   "move": "ENCORE"
+  },
+  {
+   "level": 23,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 28,
+   "move": "BIDE"
+  },
+  {
+   "level": 37,
+   "move": "REST"
+  }
+ ],
+ "214": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 6,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 11,
+   "move": "ENDURE"
+  },
+  {
+   "level": 17,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 23,
+   "move": "BRICK BREAK"
+  },
+  {
+   "level": 30,
+   "move": "COUNTER"
+  },
+  {
+   "level": 37,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 45,
+   "move": "REVERSAL"
+  },
+  {
+   "level": 53,
+   "move": "MEGAHORN"
+  }
+ ],
+ "215": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "TAUNT"
+  },
+  {
+   "level": 8,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 15,
+   "move": "SCREECH"
+  },
+  {
+   "level": 22,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 29,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 36,
+   "move": "AGILITY"
+  },
+  {
+   "level": 43,
+   "move": "ICY WIND"
+  },
+  {
+   "level": 50,
+   "move": "SLASH"
+  },
+  {
+   "level": 57,
+   "move": "BEAT UP"
+  },
+  {
+   "level": 64,
+   "move": "METAL CLAW"
+  }
+ ],
+ "216": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 7,
+   "move": "LICK"
+  },
+  {
+   "level": 13,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 19,
+   "move": "FAKE TEARS"
+  },
+  {
+   "level": 25,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "REST"
+  },
+  {
+   "level": 37,
+   "move": "SLASH"
+  },
+  {
+   "level": 43,
+   "move": "SNORE"
+  },
+  {
+   "level": 49,
+   "move": "THRASH"
+  }
+ ],
+ "217": [
+  {
+   "level": 1,
+   "move": "SCRATCH"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 1,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 7,
+   "move": "LICK"
+  },
+  {
+   "level": 13,
+   "move": "FURY SWIPES"
+  },
+  {
+   "level": 19,
+   "move": "FAKE TEARS"
+  },
+  {
+   "level": 25,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "REST"
+  },
+  {
+   "level": 37,
+   "move": "SLASH"
+  },
+  {
+   "level": 43,
+   "move": "SNORE"
+  },
+  {
+   "level": 49,
+   "move": "THRASH"
+  }
+ ],
+ "218": [
+  {
+   "level": 1,
+   "move": "YAWN"
+  },
+  {
+   "level": 1,
+   "move": "SMOG"
+  },
+  {
+   "level": 8,
+   "move": "EMBER"
+  },
+  {
+   "level": 15,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 22,
+   "move": "HARDEN"
+  },
+  {
+   "level": 29,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 36,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 43,
+   "move": "ROCK SLIDE"
+  },
+  {
+   "level": 50,
+   "move": "BODY SLAM"
+  }
+ ],
+ "219": [
+  {
+   "level": 1,
+   "move": "YAWN"
+  },
+  {
+   "level": 1,
+   "move": "SMOG"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 1,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 8,
+   "move": "EMBER"
+  },
+  {
+   "level": 15,
+   "move": "ROCK THROW"
+  },
+  {
+   "level": 22,
+   "move": "HARDEN"
+  },
+  {
+   "level": 29,
+   "move": "AMNESIA"
+  },
+  {
+   "level": 36,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 48,
+   "move": "ROCK SLIDE"
+  },
+  {
+   "level": 60,
+   "move": "BODY SLAM"
+  }
+ ],
+ "220": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 10,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 19,
+   "move": "ENDURE"
+  },
+  {
+   "level": 28,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 37,
+   "move": "MIST"
+  },
+  {
+   "level": 46,
+   "move": "BLIZZARD"
+  },
+  {
+   "level": 55,
+   "move": "AMNESIA"
+  }
+ ],
+ "221": [
+  {
+   "level": 1,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 1,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 1,
+   "move": "ENDURE"
+  },
+  {
+   "level": 10,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 19,
+   "move": "ENDURE"
+  },
+  {
+   "level": 28,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 33,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 42,
+   "move": "MIST"
+  },
+  {
+   "level": 56,
+   "move": "BLIZZARD"
+  },
+  {
+   "level": 70,
+   "move": "AMNESIA"
+  }
+ ],
+ "222": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 6,
+   "move": "HARDEN"
+  },
+  {
+   "level": 12,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 17,
+   "move": "RECOVER"
+  },
+  {
+   "level": 17,
+   "move": "REFRESH"
+  },
+  {
+   "level": 23,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 28,
+   "move": "SPIKE CANNON"
+  },
+  {
+   "level": 34,
+   "move": "ROCK BLAST"
+  },
+  {
+   "level": 39,
+   "move": "MIRROR COAT"
+  },
+  {
+   "level": 45,
+   "move": "ANCIENTPOWER"
+  }
+ ],
+ "223": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 11,
+   "move": "LOCK-ON"
+  },
+  {
+   "level": 22,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 22,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 22,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 33,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 44,
+   "move": "ICE BEAM"
+  },
+  {
+   "level": 55,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "224": [
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 11,
+   "move": "CONSTRICT"
+  },
+  {
+   "level": 22,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 22,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 22,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 25,
+   "move": "OCTAZOOKA"
+  },
+  {
+   "level": 38,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 54,
+   "move": "ICE BEAM"
+  },
+  {
+   "level": 70,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "225": [
+  {
+   "level": 1,
+   "move": "PRESENT"
+  }
+ ],
+ "226": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 8,
+   "move": "SUPERSONIC"
+  },
+  {
+   "level": 15,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 22,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 29,
+   "move": "AGILITY"
+  },
+  {
+   "level": 36,
+   "move": "WING ATTACK"
+  },
+  {
+   "level": 43,
+   "move": "WATER PULSE"
+  },
+  {
+   "level": 50,
+   "move": "CONFUSE RAY"
+  }
+ ],
+ "227": [
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "PECK"
+  },
+  {
+   "level": 10,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 13,
+   "move": "SWIFT"
+  },
+  {
+   "level": 16,
+   "move": "AGILITY"
+  },
+  {
+   "level": 26,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 29,
+   "move": "AIR CUTTER"
+  },
+  {
+   "level": 32,
+   "move": "STEEL WING"
+  },
+  {
+   "level": 42,
+   "move": "SPIKES"
+  },
+  {
+   "level": 45,
+   "move": "METAL SOUND"
+  }
+ ],
+ "228": [
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 7,
+   "move": "HOWL"
+  },
+  {
+   "level": 13,
+   "move": "SMOG"
+  },
+  {
+   "level": 19,
+   "move": "ROAR"
+  },
+  {
+   "level": 25,
+   "move": "BITE"
+  },
+  {
+   "level": 31,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 37,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 43,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 49,
+   "move": "CRUNCH"
+  }
+ ],
+ "229": [
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 1,
+   "move": "HOWL"
+  },
+  {
+   "level": 7,
+   "move": "HOWL"
+  },
+  {
+   "level": 13,
+   "move": "SMOG"
+  },
+  {
+   "level": 19,
+   "move": "ROAR"
+  },
+  {
+   "level": 27,
+   "move": "BITE"
+  },
+  {
+   "level": 35,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 43,
+   "move": "FAINT ATTACK"
+  },
+  {
+   "level": 51,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 59,
+   "move": "CRUNCH"
+  }
+ ],
+ "230": [
+  {
+   "level": 1,
+   "move": "BUBBLE"
+  },
+  {
+   "level": 1,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 8,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 15,
+   "move": "LEER"
+  },
+  {
+   "level": 22,
+   "move": "WATER GUN"
+  },
+  {
+   "level": 29,
+   "move": "TWISTER"
+  },
+  {
+   "level": 40,
+   "move": "AGILITY"
+  },
+  {
+   "level": 51,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 62,
+   "move": "DRAGON DANCE"
+  }
+ ],
+ "231": [
+  {
+   "level": 1,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 17,
+   "move": "FLAIL"
+  },
+  {
+   "level": 25,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 33,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 41,
+   "move": "ENDURE"
+  },
+  {
+   "level": 49,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "232": [
+  {
+   "level": 1,
+   "move": "ODOR SLEUTH"
+  },
+  {
+   "level": 1,
+   "move": "HORN ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 9,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 17,
+   "move": "FLAIL"
+  },
+  {
+   "level": 25,
+   "move": "FURY ATTACK"
+  },
+  {
+   "level": 33,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 41,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 49,
+   "move": "EARTHQUAKE"
+  }
+ ],
+ "233": [
+  {
+   "level": 1,
+   "move": "CONVERSION 2"
+  },
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 1,
+   "move": "CONVERSION"
+  },
+  {
+   "level": 9,
+   "move": "AGILITY"
+  },
+  {
+   "level": 12,
+   "move": "PSYBEAM"
+  },
+  {
+   "level": 20,
+   "move": "RECOVER"
+  },
+  {
+   "level": 24,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 32,
+   "move": "LOCK-ON"
+  },
+  {
+   "level": 36,
+   "move": "TRI ATTACK"
+  },
+  {
+   "level": 44,
+   "move": "RECYCLE"
+  },
+  {
+   "level": 48,
+   "move": "ZAP CANNON"
+  }
+ ],
+ "234": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 7,
+   "move": "LEER"
+  },
+  {
+   "level": 11,
+   "move": "ASTONISH"
+  },
+  {
+   "level": 17,
+   "move": "HYPNOSIS"
+  },
+  {
+   "level": 21,
+   "move": "STOMP"
+  },
+  {
+   "level": 27,
+   "move": "SAND-ATTACK"
+  },
+  {
+   "level": 31,
+   "move": "ROLE PLAY"
+  },
+  {
+   "level": 37,
+   "move": "TAKE DOWN"
+  },
+  {
+   "level": 41,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 47,
+   "move": "CALM MIND"
+  }
+ ],
+ "235": [
+  {
+   "level": 1,
+   "move": "SKETCH"
+  },
+  {
+   "level": 11,
+   "move": "SKETCH"
+  },
+  {
+   "level": 21,
+   "move": "SKETCH"
+  },
+  {
+   "level": 31,
+   "move": "SKETCH"
+  },
+  {
+   "level": 41,
+   "move": "SKETCH"
+  },
+  {
+   "level": 51,
+   "move": "SKETCH"
+  },
+  {
+   "level": 61,
+   "move": "SKETCH"
+  },
+  {
+   "level": 71,
+   "move": "SKETCH"
+  },
+  {
+   "level": 81,
+   "move": "SKETCH"
+  },
+  {
+   "level": 91,
+   "move": "SKETCH"
+  }
+ ],
+ "236": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  }
+ ],
+ "237": [
+  {
+   "level": 1,
+   "move": "REVENGE"
+  },
+  {
+   "level": 1,
+   "move": "ROLLING KICK"
+  },
+  {
+   "level": 7,
+   "move": "FOCUS ENERGY"
+  },
+  {
+   "level": 13,
+   "move": "PURSUIT"
+  },
+  {
+   "level": 19,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 20,
+   "move": "TRIPLE KICK"
+  },
+  {
+   "level": 25,
+   "move": "RAPID SPIN"
+  },
+  {
+   "level": 31,
+   "move": "COUNTER"
+  },
+  {
+   "level": 37,
+   "move": "AGILITY"
+  },
+  {
+   "level": 43,
+   "move": "DETECT"
+  },
+  {
+   "level": 49,
+   "move": "ENDEAVOR"
+  }
+ ],
+ "238": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "LICK"
+  },
+  {
+   "level": 9,
+   "move": "SWEET KISS"
+  },
+  {
+   "level": 13,
+   "move": "POWDER SNOW"
+  },
+  {
+   "level": 21,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 25,
+   "move": "SING"
+  },
+  {
+   "level": 33,
+   "move": "MEAN LOOK"
+  },
+  {
+   "level": 37,
+   "move": "FAKE TEARS"
+  },
+  {
+   "level": 45,
+   "move": "PSYCHIC"
+  },
+  {
+   "level": 49,
+   "move": "PERISH SONG"
+  },
+  {
+   "level": 57,
+   "move": "BLIZZARD"
+  }
+ ],
+ "239": [
+  {
+   "level": 1,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 9,
+   "move": "THUNDERPUNCH"
+  },
+  {
+   "level": 17,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 25,
+   "move": "SWIFT"
+  },
+  {
+   "level": 33,
+   "move": "SCREECH"
+  },
+  {
+   "level": 41,
+   "move": "THUNDERBOLT"
+  },
+  {
+   "level": 49,
+   "move": "THUNDER"
+  }
+ ],
+ "240": [
+  {
+   "level": 1,
+   "move": "EMBER"
+  },
+  {
+   "level": 7,
+   "move": "LEER"
+  },
+  {
+   "level": 13,
+   "move": "SMOG"
+  },
+  {
+   "level": 19,
+   "move": "FIRE PUNCH"
+  },
+  {
+   "level": 25,
+   "move": "SMOKESCREEN"
+  },
+  {
+   "level": 31,
+   "move": "SUNNY DAY"
+  },
+  {
+   "level": 37,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 43,
+   "move": "CONFUSE RAY"
+  },
+  {
+   "level": 49,
+   "move": "FIRE BLAST"
+  }
+ ],
+ "241": [
+  {
+   "level": 1,
+   "move": "TACKLE"
+  },
+  {
+   "level": 4,
+   "move": "GROWL"
+  },
+  {
+   "level": 8,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 13,
+   "move": "STOMP"
+  },
+  {
+   "level": 19,
+   "move": "MILK DRINK"
+  },
+  {
+   "level": 26,
+   "move": "BIDE"
+  },
+  {
+   "level": 34,
+   "move": "ROLLOUT"
+  },
+  {
+   "level": 43,
+   "move": "BODY SLAM"
+  },
+  {
+   "level": 53,
+   "move": "HEAL BELL"
+  }
+ ],
+ "242": [
+  {
+   "level": 1,
+   "move": "POUND"
+  },
+  {
+   "level": 1,
+   "move": "GROWL"
+  },
+  {
+   "level": 4,
+   "move": "TAIL WHIP"
+  },
+  {
+   "level": 7,
+   "move": "REFRESH"
+  },
+  {
+   "level": 10,
+   "move": "SOFTBOILED"
+  },
+  {
+   "level": 13,
+   "move": "DOUBLESLAP"
+  },
+  {
+   "level": 18,
+   "move": "MINIMIZE"
+  },
+  {
+   "level": 23,
+   "move": "SING"
+  },
+  {
+   "level": 28,
+   "move": "EGG BOMB"
+  },
+  {
+   "level": 33,
+   "move": "DEFENSE CURL"
+  },
+  {
+   "level": 40,
+   "move": "LIGHT SCREEN"
+  },
+  {
+   "level": 47,
+   "move": "DOUBLE-EDGE"
+  }
+ ],
+ "243": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 11,
+   "move": "THUNDERSHOCK"
+  },
+  {
+   "level": 21,
+   "move": "ROAR"
+  },
+  {
+   "level": 31,
+   "move": "QUICK ATTACK"
+  },
+  {
+   "level": 41,
+   "move": "SPARK"
+  },
+  {
+   "level": 51,
+   "move": "REFLECT"
+  },
+  {
+   "level": 61,
+   "move": "CRUNCH"
+  },
+  {
+   "level": 71,
+   "move": "THUNDER"
+  },
+  {
+   "level": 81,
+   "move": "CALM MIND"
+  }
+ ],
+ "244": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 11,
+   "move": "EMBER"
+  },
+  {
+   "level": 21,
+   "move": "ROAR"
+  },
+  {
+   "level": 31,
+   "move": "FIRE SPIN"
+  },
+  {
+   "level": 41,
+   "move": "STOMP"
+  },
+  {
+   "level": 51,
+   "move": "FLAMETHROWER"
+  },
+  {
+   "level": 61,
+   "move": "SWAGGER"
+  },
+  {
+   "level": 71,
+   "move": "FIRE BLAST"
+  },
+  {
+   "level": 81,
+   "move": "CALM MIND"
+  }
+ ],
+ "245": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 11,
+   "move": "BUBBLEBEAM"
+  },
+  {
+   "level": 21,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 31,
+   "move": "GUST"
+  },
+  {
+   "level": 41,
+   "move": "AURORA BEAM"
+  },
+  {
+   "level": 51,
+   "move": "MIST"
+  },
+  {
+   "level": 61,
+   "move": "MIRROR COAT"
+  },
+  {
+   "level": 71,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 81,
+   "move": "CALM MIND"
+  }
+ ],
+ "246": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 8,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 15,
+   "move": "SCREECH"
+  },
+  {
+   "level": 22,
+   "move": "ROCK SLIDE"
+  },
+  {
+   "level": 29,
+   "move": "THRASH"
+  },
+  {
+   "level": 36,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 43,
+   "move": "CRUNCH"
+  },
+  {
+   "level": 50,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 57,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "247": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 8,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 15,
+   "move": "SCREECH"
+  },
+  {
+   "level": 22,
+   "move": "ROCK SLIDE"
+  },
+  {
+   "level": 29,
+   "move": "THRASH"
+  },
+  {
+   "level": 38,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 47,
+   "move": "CRUNCH"
+  },
+  {
+   "level": 56,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 65,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "248": [
+  {
+   "level": 1,
+   "move": "BITE"
+  },
+  {
+   "level": 1,
+   "move": "LEER"
+  },
+  {
+   "level": 1,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 1,
+   "move": "SCREECH"
+  },
+  {
+   "level": 8,
+   "move": "SANDSTORM"
+  },
+  {
+   "level": 15,
+   "move": "SCREECH"
+  },
+  {
+   "level": 22,
+   "move": "ROCK SLIDE"
+  },
+  {
+   "level": 29,
+   "move": "THRASH"
+  },
+  {
+   "level": 38,
+   "move": "SCARY FACE"
+  },
+  {
+   "level": 47,
+   "move": "CRUNCH"
+  },
+  {
+   "level": 61,
+   "move": "EARTHQUAKE"
+  },
+  {
+   "level": 75,
+   "move": "HYPER BEAM"
+  }
+ ],
+ "249": [
+  {
+   "level": 1,
+   "move": "WHIRLWIND"
+  },
+  {
+   "level": 11,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 22,
+   "move": "GUST"
+  },
+  {
+   "level": 33,
+   "move": "RECOVER"
+  },
+  {
+   "level": 44,
+   "move": "HYDRO PUMP"
+  },
+  {
+   "level": 55,
+   "move": "RAIN DANCE"
+  },
+  {
+   "level": 66,
+   "move": "SWIFT"
+  },
+  {
+   "level": 77,
+   "move": "AEROBLAST"
+  },
+  {
+   "level": 88,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 99,
+   "move": "FUTURE SIGHT"
+  }
+ ],
+ "250": [
+  {
+   "level": 1,
+   "move": "WHIRLWIND"
+  },
+  {
+   "level": 11,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 22,
+   "move": "GUST"
+  },
+  {
+   "level": 33,
+   "move": "RECOVER"
+  },
+  {
+   "level": 44,
+   "move": "FIRE BLAST"
+  },
+  {
+   "level": 55,
+   "move": "SUNNY DAY"
+  },
+  {
+   "level": 66,
+   "move": "SWIFT"
+  },
+  {
+   "level": 77,
+   "move": "SACRED FIRE"
+  },
+  {
+   "level": 88,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 99,
+   "move": "FUTURE SIGHT"
+  }
+ ],
+ "251": [
+  {
+   "level": 1,
+   "move": "LEECH SEED"
+  },
+  {
+   "level": 1,
+   "move": "CONFUSION"
+  },
+  {
+   "level": 1,
+   "move": "RECOVER"
+  },
+  {
+   "level": 1,
+   "move": "HEAL BELL"
+  },
+  {
+   "level": 10,
+   "move": "SAFEGUARD"
+  },
+  {
+   "level": 20,
+   "move": "ANCIENTPOWER"
+  },
+  {
+   "level": 30,
+   "move": "FUTURE SIGHT"
+  },
+  {
+   "level": 40,
+   "move": "BATON PASS"
+  },
+  {
+   "level": 50,
+   "move": "PERISH SONG"
+  }
+ ]
+}

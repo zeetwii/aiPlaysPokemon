@@ -142,8 +142,21 @@ EDGE_ABOVE, EDGE_BELOW = 106, 118
 #
 # The rectangle is fixed - FRLG draws this window in the same place every time
 # - so the bounds are literal rather than searched for.
+#
+# There are two such places, though, and for a long time this file only knew
+# about one. A battle draws its own yes/no window about twenty-four pixels
+# further right, and the one prompt that matters most in a battle - "Delete a
+# move to make room for X?" - was therefore scored as no menu at all: fill and
+# edge both fail, the frame reports no question, and the harness offers the
+# model a damage table while a decision it cannot undo waits on screen. Same
+# rows, same algorithm, different column, so the bounds became a parameter
+# instead of a constant.
 YESNO_TOP, YESNO_BOTTOM = 70, 106
 YESNO_LEFT, YESNO_RIGHT = 166, 218
+
+# Where a battle puts it. Measured off a live "Delete a move to make room for
+# POISONPOWDER?" frame: interior x 190-233, y 70-105.
+BATTLE_YESNO_LEFT, BATTLE_YESNO_RIGHT = 190, 234
 
 # Share of the menu's interior that is its own white. The text glyphs are the
 # only thing breaking it up, which puts a real menu at 0.877.
@@ -154,29 +167,56 @@ MIN_YESNO_FILL = 0.80
 # scores 0.181 here, because it carries on past the edges instead of stopping.
 MIN_YESNO_EDGE = 0.80
 
-# Where the cursor sits, and the two rows it chooses between.
-CURSOR_LEFT, CURSOR_RIGHT = 169, 177
+# Where the cursor sits, relative to the menu's left edge, and the two rows it
+# chooses between. Held as offsets rather than absolute columns so the battle
+# menu gets the same gutter without a second set of numbers to keep in step.
+CURSOR_INSET, CURSOR_WIDTH = 3, 8
 YES_TOP, YES_BOTTOM = 75, 87
 NO_TOP, NO_BOTTOM = 90, 102
 # The arrow is a triangle about ten rows tall, so it puts ~40 non-white pixels
 # in the gutter; the row it is not on has none at all.
 MIN_CURSOR_PIXELS = 10
 
+# The two places FRLG draws the window, tried in this order. Overworld first
+# because it is the common one and because a battle frame cannot accidentally
+# satisfy it - the edge test wants the world showing past both borders.
+YESNO_BOXES = (("overworld", YESNO_LEFT, YESNO_RIGHT),
+               ("battle", BATTLE_YESNO_LEFT, BATTLE_YESNO_RIGHT))
+
+# Kept so `from screen_state import CURSOR_LEFT` still means something.
+CURSOR_LEFT = YESNO_LEFT + CURSOR_INSET
+CURSOR_RIGHT = CURSOR_LEFT + CURSOR_WIDTH
+
 
 def yesNoMenu(image) -> dict:
     """Is a YES/NO menu up, and which option is the cursor on?
 
-    Returns {"open": bool, "choice": "yes" | "no" | None}. `choice` is what is
-    currently highlighted, not an answer - it is what pressing A would pick.
+    Returns {"open": bool, "choice": "yes" | "no" | None, "where": str}.
+    `choice` is what is currently highlighted, not an answer - it is what
+    pressing A would pick. `where` says which of the two windows matched, which
+    is only interesting when something has gone wrong.
     """
     frame = _load(image)
     if frame is None:
-        return {"open": False, "choice": None, "fill": 0.0, "edge": 0.0}
-    return _yesNo(_codes(frame))
+        return {"open": False, "choice": None, "fill": 0.0, "edge": 0.0,
+                "where": ""}
+    codes = _codes(frame)
+    result = {"open": False, "choice": None, "fill": 0.0, "edge": 0.0, "where": ""}
+    for where, left, right in YESNO_BOXES:
+        found = _yesNo(codes, left, right)
+        if found["open"]:
+            found["where"] = where
+            return found
+        # Keep the best-scoring miss, so the CLI's numbers still mean something
+        # when nothing matched.
+        if found["fill"] > result["fill"]:
+            result = {**found, "where": where}
+    return result
 
 
-def _yesNo(codes: np.ndarray) -> dict:
-    box = codes[YESNO_TOP:YESNO_BOTTOM, YESNO_LEFT:YESNO_RIGHT]
+def _yesNo(codes: np.ndarray, left: int = YESNO_LEFT,
+           right: int = YESNO_RIGHT) -> dict:
+    box = codes[YESNO_TOP:YESNO_BOTTOM, left:right]
     white = int(np.bincount(box.ravel()).argmax()) if box.size else 0
     fill = float(np.count_nonzero(box == white) / max(1, box.size))
 
@@ -184,8 +224,9 @@ def _yesNo(codes: np.ndarray) -> dict:
     # menu scores 1.00 on all four; anything that merely covers the corner runs
     # past at least one of them.
     rows = slice(YESNO_TOP, YESNO_BOTTOM)
-    cols = slice(YESNO_LEFT, YESNO_RIGHT)
-    sides = np.concatenate([codes[rows, YESNO_LEFT - 2], codes[rows, YESNO_RIGHT + 1]])
+    cols = slice(left, right)
+    sides = np.concatenate([codes[rows, left - 2],
+                            codes[rows, min(right + 1, codes.shape[1] - 1)]])
     caps = np.concatenate([codes[YESNO_TOP - 3, cols], codes[YESNO_BOTTOM + 2, cols]])
     outside = np.concatenate([sides, caps])
     edge = float(np.count_nonzero(outside != white) / max(1, outside.size))
@@ -195,7 +236,7 @@ def _yesNo(codes: np.ndarray) -> dict:
         return result
 
     result["open"] = True
-    gutter = slice(CURSOR_LEFT, CURSOR_RIGHT)
+    gutter = slice(left + CURSOR_INSET, left + CURSOR_INSET + CURSOR_WIDTH)
     onYes = int(np.count_nonzero(codes[YES_TOP:YES_BOTTOM, gutter] != white))
     onNo = int(np.count_nonzero(codes[NO_TOP:NO_BOTTOM, gutter] != white))
     if max(onYes, onNo) >= MIN_CURSOR_PIXELS:

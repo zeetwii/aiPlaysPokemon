@@ -98,6 +98,17 @@ from matchup import (  # noqa: E402
     levelsNeeded,
     summarize as summarizeReadiness,
 )
+from move_learn import (  # noqa: E402
+    CURSOR_ROWS,
+    SUMMARY_CALLBACK,
+    LearnError,
+    MoveBook,
+    battleText,
+    pendingLearn,
+    rank as rankLearn,
+    readCursor,
+    report as learnReport,
+)
 from objectives import (  # noqa: E402
     Memory,
     ObjectiveBook,
@@ -431,6 +442,15 @@ COMMANDS = (
             "Ask the damage calculator whether your party could beat a trainer "
             "you have already met, and what to train.",
             aliases=("assess", "readiness", "scout")),
+    Command("forget", "forget <move name>",
+            "Pick which of the four old moves to delete so the new one can be "
+            "learned, e.g. `forget growl`. The harness aims the cursor and "
+            "confirms. This cannot be undone.",
+            aliases=("delete", "replace", "overwrite"), context="learn"),
+    Command("keep", "keep",
+            "Turn the new move down and keep the current four. Backs out of "
+            "the move list.",
+            aliases=("skip", "refuse_move"), context="learn"),
     Command("name", "name <a short name>",
             "Type a name on the keyboard screen and confirm it. Give a cute or "
             "silly name of 1-10 letters, e.g. `name noodle`; the harness "
@@ -469,6 +489,10 @@ CONTEXT_REFUSALS = {
                "waiting behind this screen and will still be there"),
     "choice": ("the game is asking you a yes/no question and nothing else can "
                "happen until you answer it. Use `yes` or `no`"),
+    "learn": ("a move list is open, waiting for you to say which move to "
+              "delete so a new one can be learned. Nothing else can happen "
+              "until you answer. Use `forget <move name>`, or `keep` to turn "
+              "the new move down"),
     "dialog": ("there is a text box on screen, and the game ignores every "
                "button except A and B until it is cleared. `press a` to "
                "advance it"),
@@ -521,6 +545,11 @@ class Actions:
         # Likewise for `bag <item>`: what it took out, and how many there were
         # before it did, so the next turn can check one actually left the bag.
         self.lastItem: dict | None = None
+        # And for `forget`: which move was deleted and which arrived, checked
+        # next turn against the moves the Pokemon actually has. This is the one
+        # action in the harness with no undo, so "it worked" is never asserted
+        # on the strength of the taps alone.
+        self.lastForget: dict | None = None
 
     # ---- primitives -------------------------------------------------------
 
@@ -608,8 +637,16 @@ class Actions:
                 dialog = bool(measureScreen(self.client.screenshot())["open"])
             except (MGBAError, ValueError):
                 dialog = False
-        return {"battle": bool(state.get("in_battle")),
+        # In a battle the dialog test above is skipped and the map never moves,
+        # so every one of the checks in _pressEffect used to come back negative
+        # and an A that advanced a battle message was reported as "nothing
+        # responded" - the bluntest wrong answer the harness can give, because
+        # it tells the model to stop doing the thing that was working. The
+        # battle's own message buffer is the witness the other branches have.
+        inBattle = bool(state.get("in_battle"))
+        return {"battle": inBattle,
                 "dialog": dialog,
+                "text": battleText(self.client) if inBattle else "",
                 "ram": (player.get("map_bank"), player.get("map_number"),
                         player.get("x"), player.get("y"))}
 
@@ -632,6 +669,10 @@ class Actions:
             return ""
         if after["battle"] and not before["battle"]:
             return " - a battle started"
+        if after["battle"] and before["battle"]:
+            if after["text"] and after["text"] != before["text"]:
+                return f' - the battle moved on: "{after["text"]}"'
+            return " - the battle is saying the same thing it was"
         if after["dialog"]:
             return " - there is a text box on screen now; keep pressing A"
         if before["dialog"]:
@@ -987,6 +1028,129 @@ class Actions:
                     f"open - check the screen and press A to accept it")
         return f"named it {result['name']!r}{note} and confirmed"
 
+    # ---- learning a move --------------------------------------------------
+
+    # How many nudges the five-row move list gets before we give up on aiming
+    # it. Four is the furthest any row can be from any other once the wrap is
+    # used, so this is one spare tap, not a search.
+    AIM_TRIES = 5
+
+    def forget(self, args: list) -> str:
+        """Delete one of the four old moves so the new one can be learned.
+
+        The one command in here that cannot be taken back, so it is the one that
+        refuses to guess. The move list wraps in both directions, which means
+        counting taps from an assumed starting row - the way every other menu in
+        this file is driven - would be a guess that deletes a Pokemon's best
+        attack and reports success. The cursor is readable in RAM, so this aims
+        by reading, checks it arrived, and only then presses A.
+        """
+        obs = self.observation
+        pending = obs.learn if obs is not None else None
+        if pending is None or pending.stage != "list":
+            raise ActionError("the move list is not open, so there is nothing "
+                              "to forget yet")
+
+        names = ", ".join(m["name"] for m in pending.known)
+        if not args:
+            raise ActionError(f"forget needs a move name: {names}")
+
+        table = [(m["name"], m["slot"]) for m in pending.known]
+        wanted = " ".join(args)
+        hit = _bestMatch(wanted, table)
+        if hit is None:
+            # Naming the new move is a plausible way to mean "don't learn it",
+            # and it is one row down from the four that get deleted - so say
+            # which command does that rather than aiming at row five.
+            if _bestMatch(wanted, [(pending.offeredName, 0)]) is not None:
+                raise ActionError(
+                    f"{pending.offeredName} is the move being offered, not one "
+                    f"you can delete - use `keep` to turn it down")
+            raise ActionError(f"{wanted!r} is not one of the four moves it "
+                              f"knows ({names})")
+        name, slot = hit
+
+        landed = self._aimList(slot)
+        if landed != slot:
+            raise ActionError(f"could not get the cursor onto {name} (row "
+                              f"{slot + 1}) - it is on row {landed + 1}. "
+                              f"Nothing was deleted; try again")
+
+        # Recorded before the press, so next turn can check the party rather
+        # than believe this sentence.
+        self.lastForget = {"species": pending.species,
+                           "forgot": name,
+                           "learned": pending.offeredName}
+        if not self._confirmList():
+            return (f"aimed at {name} and pressed A, but the move list is "
+                    f"still on screen, so nothing may have been deleted - the "
+                    f"next report will say which moves it actually has")
+        return (f"deleting {name} and learning {pending.offeredName} - the "
+                f"next report will confirm which moves it actually has")
+
+    def keep(self, args: list) -> str:
+        """Back out of the move list without deleting anything.
+
+        B here is not "cancel and come back later" - it opens the "Stop
+        learning X?" question, which is a real fork with a real YES. So this
+        says what is now on screen instead of claiming the matter is settled.
+        """
+        obs = self.observation
+        pending = obs.learn if obs is not None else None
+        if pending is None or pending.stage != "list":
+            raise ActionError("the move list is not open")
+        self._menuTap("B")
+        return (f"backing out of the move list - the game will now ask whether "
+                f"to stop learning {pending.offeredName}. Answer `yes` to keep "
+                f"the current four moves")
+
+    # A confirm fired straight after a cursor move is eaten. The move list
+    # redraws for a few frames after each nudge, and the A that lands in that
+    # window does nothing at all - measured: aiming at GROWL and pressing A one
+    # MENU_TAP_DELAY later left the list open with the cursor sitting on the
+    # right row, which reads from the outside exactly like a confirm that was
+    # ignored on purpose. So the confirm waits longer than a menu tap, and then
+    # checks that the screen actually left the list rather than assuming.
+    LIST_SETTLE = 0.45
+    CONFIRM_TRIES = 3
+
+    def _confirmList(self) -> bool:
+        """Press A on the move list until the list is no longer on screen."""
+        for _ in range(self.CONFIRM_TRIES):
+            time.sleep(self.LIST_SETTLE)
+            self._menuTap("A")
+            if self._leftMoveList():
+                return True
+        return False
+
+    def _leftMoveList(self, tries: int = 8) -> bool:
+        """Has the summary screen closed? callback2 answers outright."""
+        for _ in range(tries):
+            time.sleep(self.LIST_SETTLE / 3)
+            try:
+                if self.client.screen().get("callback2") != SUMMARY_CALLBACK:
+                    return True
+            except (MGBAError, ValueError):
+                return False
+        return False
+
+    def _aimList(self, row: int) -> int:
+        """Walk the five-row move cursor to `row`, reading it after each nudge.
+
+        Returns where the cursor actually ended up, which the caller is
+        expected to check. The list wraps, so the shortest way round is
+        sometimes up and sometimes down; working that out is cheap and being
+        wrong about it is not.
+        """
+        for _ in range(self.AIM_TRIES):
+            now = readCursor(self.client)
+            if now == row:
+                return now
+            down = (row - now) % CURSOR_ROWS
+            up = (now - row) % CURSOR_ROWS
+            self._menuTap("DOWN" if down <= up else "UP")
+        return readCursor(self.client)
+
     # ---- yes/no questions -------------------------------------------------
 
     # How many nudges to give the cursor before giving up on moving it. Two
@@ -1070,6 +1234,7 @@ class Actions:
             raise ActionError(f"unknown command {verb!r}")
         self._requireContext(verb)
         self.lastTarget, self.lastStatus, self.lastItem = "", "", None
+        self.lastForget = None
         return method(args)
 
     def _requireContext(self, verb: str):
@@ -1289,6 +1454,7 @@ class Observation:
     liveRequest: str = ""               # a short-term ask from the operator GUI
     dialogOpen: bool = False            # a message box is covering the screen
     dialogText: str = ""                # what it says, if gStringVar4 is known
+    dialogTextLive: bool = False        # ...and that text is current, not stale
     dialogDoubted: bool = False         # asserted too long without anything moving
     choiceOpen: bool = False            # a YES/NO menu is waiting on an answer
     choiceCursor: str = ""              # which of the two it is currently on
@@ -1298,6 +1464,8 @@ class Observation:
     foeSpecies: str = ""                # who is across from us, in battle
     trainerBattle: bool = False         # more than one enemy Pokemon: not wild
     balls: int = 0                      # Poke Balls in the bag, all kinds
+    learn: object = None                # move_learn.Pending, if a prompt is up
+    learnBlock: str = ""                # the ranked advice for that prompt
 
     # ---- rendering --------------------------------------------------------
 
@@ -1322,7 +1490,15 @@ class Observation:
         elif self.noDialogNotice:
             blocks.append(self._noDialogBlock())
         blocks.append(self._situation())
-        if self.inBattle and self._screenCovered():
+        if self.learn is not None:
+            # Deliberately instead of the battle report, not alongside it. The
+            # game is still `in_battle` here, so everything the battle branch
+            # below prints is true of the fight underneath and false of the
+            # screen: a damage table invites `use ember`, `use` is four button
+            # presses, and those presses go into a move list. The two blocks
+            # cannot both be obeyed, so only one of them is shown.
+            blocks.append(self.learnBlock)
+        elif self.inBattle and self._screenCovered():
             # A battle is still running underneath a nickname keyboard - the
             # catch succeeded, the screen moved on, and in_battle stays set
             # until the naming is done. Everything the battle branch prints
@@ -1405,6 +1581,13 @@ class Observation:
         """
         if self.namingOpen:
             return "naming"
+        # Ahead of the battle branch, and ahead of `choice` only for the list
+        # stage: the two message stages of a learn prompt really are yes/no
+        # questions and are answered with the commands that answer those. The
+        # list is its own thing, and every battle command is wrong while it is
+        # up.
+        if self.learn is not None and self.learn.stage == "list":
+            return "learn"
         if self.choiceOpen and not self.dialogDoubted:
             # A question is its own context, and a narrower one than dialog:
             # `press` stays available, but `yes` and `no` are the answers, and
@@ -1457,9 +1640,15 @@ class Observation:
         if self.dialogText:
             flat = " ".join(self.dialogText.split())
             lines.append(f'  It says: "{flat[:400]}"')
-            lines.append("  (That text is the last message the game wrote, which "
-                         "it keeps after a box closes - so it may be older than "
-                         "what is on screen.)")
+            # Only hedge when the text is actually hedgeable. gStringVar4 keeps
+            # the last message long after its box has gone, so the caveat is
+            # honest there - but a battle message is read live out of its own
+            # buffer, and warning the model that accurate text might be stale
+            # teaches it to ignore the one line on screen that is certain.
+            if not self.dialogTextLive:
+                lines.append("  (That text is the last message the game wrote, "
+                             "which it keeps after a box closes - so it may be "
+                             "older than what is on screen.)")
         lines.append("  While text is on screen the game ignores every button "
                      "except A and B. You cannot walk anywhere, and no amount "
                      "of moving will change that.")
@@ -1915,6 +2104,9 @@ ACTION: press a
 
 THINK: The keyboard is up for my new Charmander, and TOASTY suits it.
 ACTION: name toasty
+
+THINK: Growl is the weakest of the four and dropping it keeps both my attacks.
+ACTION: forget growl
 """
 
 # Anchored on the ACTION: line, but tolerant of the wrappers small models add
@@ -2140,6 +2332,16 @@ class PlayerAI:
         # is, and one honest "that did not happen" beats a model rereading a
         # screenshot for evidence of a ball it never threw.
         self._pendingItem = None
+        # And for `forget`, which has no undo at all - see _checkPendingForget.
+        self._pendingForget = None
+        # The ROM's move table and learnsets, for the level-up prompt. Optional
+        # on purpose: it is one `python battle/rom_dump.py` away, and a run that
+        # has not done that should still play, just without the advice.
+        try:
+            self.moveBook = MoveBook.load()
+        except (LearnError, OSError, ValueError) as exc:
+            self.moveBook = None
+            print(f"move-learn advice disabled: {exc}")
         self._loadAddresses()
 
         # Set by main() when running in `gui` mode: an operator_inbox.OperatorInbox
@@ -2212,8 +2414,18 @@ class PlayerAI:
         objective = (self.book.current(self.memory)
                      if self.cfg.useObjectives else None)
 
+        # Before the battle table, because it decides whether there should be
+        # one: a level-up prompt runs with in_battle still set, and the table is
+        # advice for a fight that is not what the screen is asking about.
+        self._checkLearn(obs, state, screen)
+
         if inBattle:
-            self._fillBattle(obs, state)
+            # The battle table is skipped while a learn prompt is up - see
+            # render() - but who we are fighting is still worth knowing, and
+            # the alternative branch below would try to take a map fix during
+            # a battle.
+            if obs.learn is None:
+                self._fillBattle(obs, state)
             enemy = (state.get("battle") or {}).get("enemy_active") or {}
             obs.foeSpecies = str(enemy.get("species") or "")
             # Only ever used to *withhold* catching advice, so a one-Pokemon
@@ -2257,6 +2469,7 @@ class PlayerAI:
 
         obs.note = " ".join(n for n in (self._checkPendingMove(state, inBattle),
                                         self._checkPendingItem(state, inBattle),
+                                        self._checkPendingForget(state),
                                         self._repeatAlert()) if n)
         return obs
 
@@ -2647,6 +2860,90 @@ class PlayerAI:
             obs.recommendation = ("CALCULATOR'S PICK: none of your moves damage "
                                   "this foe. Consider switching or running.")
 
+    def _checkLearn(self, obs: Observation, state: dict, screen: dict):
+        """Is the game asking which move to delete, and what should it be?
+
+        Failing quietly is the right failure here. If the move book was never
+        dumped, or the emulator refuses a read, the worst outcome is the report
+        the harness produced before any of this existed - which is bad, but it
+        is bad in the way it already was, and a turn that raises instead takes
+        the whole run down over a prompt that appears twice an hour.
+        """
+        if self.moveBook is None:
+            return
+        try:
+            pending = pendingLearn(self.moveBook, self.client, screen, state)
+        except (MGBAError, ValueError, LearnError, KeyError):
+            return
+        if pending is None:
+            return
+
+        obs.learn = pending
+        try:
+            obs.learnBlock = learnReport(self.moveBook, pending,
+                                         rankLearn(self.moveBook, pending))
+        except (LearnError, KeyError, ValueError):
+            obs.learn = None
+            return
+
+        # The two message stages really are yes/no questions, so they borrow the
+        # machinery that answers those rather than growing a second pair of
+        # verbs that mean the same thing. screen_state now finds the battle's
+        # menu as well as the overworld one, so the cursor reads here too.
+        if pending.stage in ("question", "giveup"):
+            menu = yesNoMenu(str(self.cfg.screenshotPath))
+            obs.choiceOpen = True
+            obs.choiceCursor = menu.get("choice") or ""
+        elif pending.stage == "intro":
+            # The messages before the question are an ordinary text box, and A
+            # is the only thing that moves them along - so they get the dialog
+            # context, which takes the battle commands off the menu. Saying
+            # nothing here would leave the model with `use` and `switch` during
+            # the two turns that lead into the decision.
+            obs.dialogOpen = True
+            # And it gets the real text, which gStringVar4 does not have: in a
+            # battle that buffer is still showing the last thing an NPC said.
+            obs.dialogText = pending.text
+            obs.dialogTextLive = True
+
+    def _checkPendingForget(self, state: dict) -> str:
+        """Did the move we deleted actually go, and did the new one arrive?
+
+        The one action with no undo gets the most direct check in the harness:
+        not PP, not a quantity, but the move list itself. A cursor that landed
+        one row off deletes the wrong move and looks exactly like success from
+        the outside, and this is the turn to say so - while the model still has
+        the context to understand what happened.
+        """
+        pending, self._pendingForget = self._pendingForget, None
+        if not pending:
+            return ""
+
+        mon = next((m for m in (state.get("party") or [])
+                    if m.get("species") == pending["species"]), None)
+        if mon is None:
+            return ""
+        names = {_norm(m.get("name", "")) for m in (mon.get("moves") or [])}
+        if not names:
+            return ""
+        gone = _norm(pending["forgot"]) not in names
+        arrived = _norm(pending["learned"]) in names
+        if gone and arrived:
+            return ""       # exactly what was asked for
+        if not arrived and not gone:
+            return (f"{pending['species']} still knows {pending['forgot']} and "
+                    f"did not learn {pending['learned']} - nothing was deleted, "
+                    f"so the prompt was probably answered some other way. Check "
+                    f"the screen before trying again.")
+        if arrived and not gone:
+            return (f"{pending['species']} learned {pending['learned']}, but "
+                    f"{pending['forgot']} is still there - a different move was "
+                    f"deleted instead. Its moves are now "
+                    f"{', '.join(m['name'] for m in mon.get('moves') or [])}.")
+        return (f"{pending['forgot']} is gone but {pending['learned']} was not "
+                f"learned. Its moves are now "
+                f"{', '.join(m['name'] for m in mon.get('moves') or [])}.")
+
     def _checkPendingMove(self, state: dict, inBattle: bool) -> str:
         """Confirm the move we selected is the move whose PP went down.
 
@@ -2765,6 +3062,9 @@ class PlayerAI:
             # the name, so it hands the baseline back rather than being asked
             # to compute it twice.
             self._pendingItem = self.actions.lastItem
+            # Same arrangement for `forget`: the action knows which move it
+            # aimed at, and next turn checks the party rather than trusting it.
+            self._pendingForget = self.actions.lastForget
             return outcome
         except ActionError as exc:
             self._pendingMove = None
@@ -2871,8 +3171,11 @@ MANUAL_HELP = """Commands (the same grammar the model uses):
   ask                  run one full model turn
   raw                  print the model's last raw reply
   memory               print memories.json as the harness sees it
-  forget <text|all>    drop remembered notes matching that text
+  drop <text|all>      drop remembered notes matching that text
   help / quit
+
+`forget` is a game command now - it deletes a move at a level-up prompt - so
+the memory version is spelled `drop`.
 """
 
 
@@ -2913,10 +3216,16 @@ def manual(player: PlayerAI):
             if low == "memory":
                 print(json.dumps(player.memory.data, indent=2))
                 continue
-            if low.startswith("forget"):
-                target = line[len("forget"):].strip()
+            # `forget` used to live here and mean "drop a memory". It is a game
+            # command now - the one that deletes a move at a level-up prompt -
+            # and two meanings for a word that destroys something in both
+            # senses is not a collision worth keeping. The memory version moved
+            # to `drop`; anyone reaching for the old spelling gets told so
+            # rather than silently deleting notes about Growl.
+            if low.startswith("drop"):
+                target = line[len("drop"):].strip()
                 if not target:
-                    print("Usage: forget <text|all>")
+                    print("Usage: drop <text|all>")
                 else:
                     print(f"dropped {player.memory.forget(target)} note(s)")
                 continue
