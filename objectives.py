@@ -513,6 +513,11 @@ class Memory:
         # counter does. Listed here so switching saves drops it with everything
         # else - somebody else's half-finished Pidgey hunt is worse than none.
         "pursuit": None,
+        # player_ai.PPWatcher: the highest PP ever seen for each move, which is
+        # the only maximum the harness gets. Here for the same reason as the
+        # pursuit - a restart shouldn't unlearn it - and dropped with everything
+        # else on a new save, where another trainer's move list means nothing.
+        "pp_seen": {},
         "completed": [], "notes": [], "updated": None,
     }
 

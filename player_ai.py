@@ -855,11 +855,42 @@ class Actions:
                               f"({', '.join(m for m, _i in obs.moveSlots)})")
         name, slot = hit
 
+        # Refused here rather than in the menu, for the reason `switch` refuses
+        # a fainted Pokemon: the taps would go in, the game would bounce them
+        # off "There's no PP left for this move!", and the only thing anyone
+        # would learn is what the PP column already said. Refusing by name says
+        # it in one line and leaves the cursor where it was.
+        pp = self._movePP(obs.state)
+        left = [m for m, _i in obs.moveSlots if pp.get(m, 1) > 0]
+        if pp.get(name, 1) <= 0:
+            if not left:
+                raise ActionError(
+                    f"{name} is out of PP, and so is every other move - "
+                    f"attacking now only gets you Struggle, which damages you "
+                    f"too. Switch, use an item from the bag, or run, and heal "
+                    f"at a Pokemon Center")
+            raise ActionError(f"{name} is out of PP - the game will not let you "
+                              f"pick it. Still usable: {', '.join(left)}")
+
         self._chooseAction(ACTION_FIGHT)
         self._resetCursor()          # the move cursor remembers last turn too
         self._cursorTo(slot)
         self._menuTap("A")
         return f"attacking with {name} (move slot {slot + 1})"
+
+    @staticmethod
+    def _movePP(state: dict) -> dict:
+        """{move name: PP} for whoever is out in front.
+
+        The battler struct rather than the party entry, because those two
+        disagree mid-battle: Mimic and Transform rewrite the battler's move
+        list and the party copy never hears about it. An empty dict is a real
+        answer - the structs are not populated for the first few frames - and
+        every caller treats an unknown move as usable.
+        """
+        active = (state.get("battle") or {}).get("player_active") or {}
+        return {m["name"]: int(m.get("pp") or 0)
+                for m in active.get("moves") or [] if m.get("name")}
 
     def switch(self, args: list) -> str:
         obs = self._requireBattle()
@@ -1317,6 +1348,31 @@ class PPWatcher:
         at anything we can call full."""
         return self._seen.get(self._key(mon, move)) or None
 
+    # ---- persistence ------------------------------------------------------
+    # The marks are learned by watching, so a restart used to throw away every
+    # maximum this run had earned - and a harness restarted in front of a spent
+    # move would then read that move's shortage as its maximum and say nothing.
+    # Saving them alongside the turn counter and the pursuit is the same bargain
+    # those make: the things that took a run to learn survive one.
+
+    def asDict(self) -> dict:
+        """JSON-safe marks. The tuple key is stored as its own JSON text so a
+        nickname can contain anything the naming screen allows."""
+        return {json.dumps(list(key)): pp for key, pp in self._seen.items()}
+
+    @classmethod
+    def fromDict(cls, data) -> "PPWatcher":
+        """Rebuild from asDict(). Anything unreadable is dropped rather than
+        raised on: a lost mark costs one silent turn, and observe() earns it
+        back the moment the move is seen full again."""
+        watcher = cls()
+        for key, pp in (data or {}).items():
+            try:
+                watcher._seen[tuple(json.loads(key))] = int(pp)
+            except (TypeError, ValueError):
+                continue
+        return watcher
+
 
 def healReasons(party: list, watcher: "PPWatcher | None" = None) -> list:
     """Everything a nurse would fix right now, one short phrase each.
@@ -1343,9 +1399,20 @@ def healReasons(party: list, watcher: "PPWatcher | None" = None) -> list:
             reasons.append(f"{label} {where}")
 
         for move in mon.get("moves") or []:
+            if not move.get("name"):
+                continue           # an empty slot is not a move with no PP
             full = watcher.maxFor(mon, move) if watcher else None
             pp = int(move.get("pp") or 0)
-            if full and pp < full * HEAL_PP_FRACTION:
+            # Zero is the one shortage that needs no maximum to recognise, and
+            # it is the worst one: the move cannot be used at all. Reporting it
+            # only when the high-water mark happens to be known is how a move
+            # already spent when the harness started stayed invisible - the
+            # mark was zero, so `full` was falsy, so the block below skipped it
+            # and HEALING went on claiming every move was above half its PP.
+            if pp <= 0:
+                reasons.append(f"{label}'s {move.get('name')} is out of PP "
+                               f"and cannot be used")
+            elif full and pp < full * HEAL_PP_FRACTION:
                 reasons.append(f"{label}'s {move.get('name')} is on "
                                f"{pp}/{full} PP")
     return reasons
@@ -2319,8 +2386,9 @@ class PlayerAI:
         self.history = []
         self._readinessCache = {}
         # PP maxima are learned by watching, not read - see PPWatcher. It only
-        # ever grows, so folding every turn's party into it is the whole job.
-        self._pp = PPWatcher()
+        # ever grows, so folding every turn's party into it is the whole job,
+        # and the marks ride in memory so a restart doesn't unlearn them.
+        self._pp = PPWatcher.fromDict(self.memory.data.get("pp_seen"))
         self._dialogStreak = 0
         self._dialogMarker = None
         # Set after a `use`, checked on the next observation: the battle cursor
@@ -2849,13 +2917,32 @@ class PlayerAI:
         obs.moveSlots = [(name, i) for i, name in enumerate(names)]
 
         rows = build_rows(self.battle, snap.you, snap.foe, names, snap.you_raw)
-        best = next((r for r in rows if r.is_damaging), None)
+        # PP is a precondition, not a tiebreak. The rows are sorted by expected
+        # damage alone, so the old pick would name a move at zero PP whenever it
+        # was the strongest one - and this block is the most prescriptive line
+        # in the whole report ("you need a reason not to"), so the model took
+        # the advice, the game refused the move, and the turn was spent finding
+        # that out. A move that cannot be picked is not the best move.
+        best = next((r for r in rows if r.is_damaging and r.is_usable), None)
+        spent = next((r for r in rows if r.is_damaging and not r.is_usable), None)
         if best is not None:
             obs.recommendation = (
                 f"CALCULATOR'S PICK: {best.move.name} - highest expected damage "
-                f"({best.expected:.0f} per turn, {ko_text(best, snap.foe)}, "
-                f"{best.accuracy:.0%} accurate). You do not have to take this "
-                f"advice, but you need a reason not to.")
+                f"of the moves you can still use ({best.expected:.0f} per turn, "
+                f"{ko_text(best, snap.foe)}, {best.accuracy:.0%} accurate). You "
+                f"do not have to take this advice, but you need a reason not to.")
+            # Named rather than silently skipped: a model that can see the
+            # stronger move in the table and no mention of it in the pick reads
+            # the pick as broken and argues with it.
+            if spent is not None and spent.expected > best.expected:
+                obs.recommendation += (
+                    f" {spent.move.name} would hit harder but is out of PP - a "
+                    f"Pokemon Center refills it.")
+        elif spent is not None:
+            obs.recommendation = (
+                f"CALCULATOR'S PICK: none - the only moves that damage this foe "
+                f"are out of PP ({spent.move.name}). Switch, use an item, or run; "
+                f"attacking now means Struggle, which hurts you too.")
         elif rows:
             obs.recommendation = ("CALCULATOR'S PICK: none of your moves damage "
                                   "this foe. Consider switching or running.")
@@ -3040,6 +3127,7 @@ class PlayerAI:
         self.history.append(entry)
         self.memory.data["turns_played"] = self.turn
         self.memory.data["last_action"] = command
+        self.memory.data["pp_seen"] = self._pp.asDict()
         self.memory.save()
         self._log(obs, report, reply, entry)
         return entry

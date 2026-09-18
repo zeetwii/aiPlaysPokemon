@@ -276,6 +276,18 @@ class Row:
     def is_damaging(self) -> bool:
         return not self.move.is_status and self.result.max_damage > 0
 
+    @property
+    def is_usable(self) -> bool:
+        """Can this move be picked at all this turn?
+
+        A move at zero PP is not a worse option than the others, it is not an
+        option: the game refuses it. Unknown PP (None) reads as usable on
+        purpose - the same bargain PPWatcher makes - because withholding a move
+        the calculator merely failed to read a number for is the expensive way
+        to be wrong.
+        """
+        return self.pp is None or self.pp > 0
+
 
 def build_rows(session: Session, attacker: Pokemon, defender: Pokemon,
                names, raw_mon: dict) -> list[Row]:
@@ -330,6 +342,9 @@ def print_rows(session: Session, rows: list[Row], defender: Pokemon, unknown: li
             print(f" {i:>2}  {row.move.name:<13} {row.move.type:<9}{'Stat':<5}"
                   f"{(row.pp if row.pp is not None else '-'):>3}  "
                   f"{int(row.accuracy * 100):>3}%  {effect}")
+            if not row.is_usable:
+                print(f"     {'':<13} ! out of PP - the game will not let you "
+                      f"pick this move")
             continue
 
         dmg = f"{res.min_damage}-{res.max_damage}"
@@ -344,6 +359,9 @@ def print_rows(session: Session, rows: list[Row], defender: Pokemon, unknown: li
                f"{(row.pp if row.pp is not None else '-'):>3}  "
                f"{int(row.accuracy * 100):>3}%  {dmg:<11} {pct:<11} {crit:<9} "
                f"{ko_text(row, defender):<8} exp {row.expected:.1f}  {tag}").rstrip())
+        if not row.is_usable:
+            print(f"     {'':<13} ! out of PP - the game will not let you pick "
+                  f"this move")
         for note in res.notes:
             print(f"     {'':<13} ! {note}")
     if unknown:
