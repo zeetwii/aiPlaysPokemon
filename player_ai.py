@@ -1418,6 +1418,45 @@ def healReasons(party: list, watcher: "PPWatcher | None" = None) -> list:
     return reasons
 
 
+# Commands that walk the player, for _stuckOnDialog below. A refusal raised
+# before any of these ever reaches the navigator (wrong context, dialog
+# already known to be open) does not count as evidence of anything - see
+# where this is used.
+WALK_VERBS = {"move", "goto", "heal", "train", "catch", "collect"}
+
+# How many turns in a row a walking command can fail to move the player at
+# all before that is treated as an unskippable dialog or cutscene the pixel
+# detector missed, rather than a coincidence. One such turn happens on an
+# ordinary wall; the same tile refusing every direction tried, turn after
+# turn, is what the "trying to move instead of pressing A" symptom looks
+# like from RAM.
+STUCK_ALERT_TURNS = 2
+
+
+def _ramTuple(state: dict) -> tuple | None:
+    player = state.get("player") or {}
+    values = (player.get("map_bank"), player.get("map_number"),
+             player.get("x"), player.get("y"))
+    return None if any(v is None for v in values) else values
+
+
+def _partyWiped(state: dict) -> bool:
+    """True once every non-egg party member is at 0 HP.
+
+    This is the one moment the pixel dialog detector cannot be trusted. The
+    blackout/whiteout screen is plain text over a black background rather
+    than the bordered box screen_state.measure looks for, and it can be
+    running with in_battle already back to False - so the usual box heuristic
+    sees a full-screen flat colour and calls it scenery, and the harness hands
+    the model an ordinary overworld report while the game is ignoring
+    everything except A. Party HP is read straight from RAM, so this is the
+    one signal that sequence cannot hide from, and it needs no trust window:
+    it is self-clearing, since a blackout always ends with a full heal.
+    """
+    party = [m for m in (state.get("party") or []) if not m.get("is_egg")]
+    return bool(party) and all(int(m.get("hp") or 0) <= 0 for m in party)
+
+
 def _ballCount(state: dict) -> int:
     """How many Poke Balls of any kind are in the bag.
 
@@ -2391,6 +2430,13 @@ class PlayerAI:
         self._pp = PPWatcher.fromDict(self.memory.data.get("pp_seen"))
         self._dialogStreak = 0
         self._dialogMarker = None
+        # See _stuckOnDialog: RAM position from the previous observation, and
+        # how many turns in a row a walking command has failed to move it at
+        # all despite trying.
+        self._lastRam = None
+        self._immobileStreak = 0
+        self._stuckOverrideTurns = 0
+        self._stuckNote = ""
         # Set after a `use`, checked on the next observation: the battle cursor
         # trick is the one assumption in here the game could still surprise us
         # on, so it gets verified against the PP that actually moved.
@@ -2472,6 +2518,80 @@ class PlayerAI:
             obs.namingSoFar = currentName(self.client) or ""
         self._checkDialog(obs, state, screen, inBattle)
 
+        # Overrides whatever the pixel test and in_battle just decided - see
+        # _partyWiped for why the box detector cannot see this one. Not doubted
+        # like an ordinary text box: it takes several turns of pressing A to
+        # get through blackout's messages and the walk back to the Center, and
+        # the trust window would talk itself out of a box that is still very
+        # much there.
+        if _partyWiped(state):
+            obs.dialogOpen = True
+            obs.dialogDoubted = False
+            if not obs.dialogText:
+                obs.dialogText = ("Your Pokemon have all fainted. The game is "
+                                  "ending the battle and carrying you back to "
+                                  "a Pokemon Center - nothing else can happen "
+                                  "until that finishes.")
+                obs.dialogTextLive = True
+
+        # Same kind of override, for a different blind spot: an NPC's
+        # unskippable line (Mom's "you're back, I healed your team" after a
+        # blackout is the one that flushed this out) drawn over a busy,
+        # pale-walled room can push screen_state's box colour over its
+        # "that's just scenery" threshold, so the pixel test reports no box at
+        # all while the game accepts nothing but A. See _stuckOnDialog.
+        if obs.dialogOpen:
+            # Real detection - either the pixel test above, or _partyWiped -
+            # already has an answer for this turn, so the immobility heuristic
+            # stands down and resets rather than adding its own opinion. That
+            # reset matters as much as the check itself: this override only
+            # earns its keep by disproving itself the moment the player can
+            # actually move again, and `move`/`goto` never get offered while
+            # it is active, so it can only ever get that proof on a turn where
+            # something else - here, the real detector agreeing there is
+            # nothing on screen - hands control back long enough to try. Skip
+            # the reset and a conversation that legitimately ends leaves the
+            # streak sitting non-zero with no way to clear it, and the next
+            # `press a` this turn re-triggers Mom's whole line by facing her -
+            # forever, since the harness never let the model risk stepping
+            # away to find out it could.
+            self._immobileStreak = 0
+            self._stuckOverrideTurns = 0
+            self._stuckNote = ""
+            self._lastRam = _ramTuple(state)
+        elif self._stuckOnDialog(state):
+            obs.dialogOpen = True
+            obs.dialogDoubted = False
+            obs.dialogText = (
+                "Several turns of trying to walk in different directions "
+                "have not moved you at all. That is not an ordinary wall - "
+                "it almost certainly means a text box or cutscene is on "
+                "screen that the harness could not see in the picture.")
+            obs.dialogTextLive = True
+            # This keeps re-firing every turn the tile stays frozen and
+            # nothing else explains why, which is the right call while it is
+            # really a dialog the pixel test cannot see - the ordinary trust
+            # window would talk itself out of a box mid-conversation. But if
+            # pressing A for a long time hasn't budged the tile either, this
+            # probably isn't a box at all, and a human should know that rather
+            # than watch it press A in silence forever. Folded into the note
+            # built below, rather than set here, since that assignment
+            # overwrites whatever obs.note already holds.
+            self._stuckOverrideTurns += 1
+            if self._stuckOverrideTurns > self.cfg.dialogTrustTurns:
+                self._stuckNote = (
+                    f"You have been pressing A at a frozen tile for "
+                    f"{self._stuckOverrideTurns} turns with no change at all. "
+                    f"This may not be a text box - it could be a genuine stuck "
+                    f"state. Keep pressing A a little longer, but if this "
+                    f"continues, `note` exactly what is on screen so the "
+                    f"operator can look.")
+            else:
+                self._stuckNote = ""
+        else:
+            self._stuckOverrideTurns = 0
+            self._stuckNote = ""
+
         if self.inbox is not None:
             request = self.inbox.request
             obs.liveRequest = request.text if request is not None else ""
@@ -2538,10 +2658,50 @@ class PlayerAI:
         obs.note = " ".join(n for n in (self._checkPendingMove(state, inBattle),
                                         self._checkPendingItem(state, inBattle),
                                         self._checkPendingForget(state),
-                                        self._repeatAlert()) if n)
+                                        self._repeatAlert(),
+                                        self._stuckNote) if n)
         return obs
 
     # ---- what is on screen ------------------------------------------------
+
+    def _stuckOnDialog(self, state: dict) -> bool:
+        """True once walking commands have moved the player exactly nowhere
+        for STUCK_ALERT_TURNS turns in a row.
+
+        A real wall or a mismapped connection tile blocks one direction; it
+        does not block every direction a `goto` plans through, turn after
+        turn, while the RAM tile never once changes. That pattern is what an
+        unskippable dialog looks like from here: the harness keeps tapping,
+        the game keeps ignoring everything but A, and every attempt reads
+        back as "blocked" because nothing moved - not because a wall was
+        found. Refusals that never reached the navigator (wrong context, a
+        dialog already known to be open) do not count; those already got the
+        right answer.
+        """
+        ram = _ramTuple(state)
+        lastEntry = self.history[-1] if self.history else None
+        walked = False
+        if lastEntry is not None:
+            verb = str(lastEntry.get("action", "")).split()[:1]
+            result = str(lastEntry.get("result", ""))
+            walked = (bool(verb) and verb[0].lower() in WALK_VERBS
+                     and not result.startswith("that didn't work")
+                     and not result.startswith("the emulator refused that"))
+
+        if ram is None:
+            # No position feed to compare with; leave the streak as it was
+            # rather than guess.
+            return self._immobileStreak >= STUCK_ALERT_TURNS
+
+        if ram == self._lastRam and walked:
+            self._immobileStreak += 1
+        elif ram != self._lastRam:
+            self._immobileStreak = 0
+        # else: unchanged position but nothing tried to walk (`note`, `check`,
+        # `wait`) - leaves the streak exactly where it was, neither growing
+        # nor being cleared by a turn that was never going to move anyone.
+        self._lastRam = ram
+        return self._immobileStreak >= STUCK_ALERT_TURNS
 
     def _checkDialog(self, obs: Observation, state: dict, screen: dict,
                      inBattle: bool):
